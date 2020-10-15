@@ -1,0 +1,25 @@
+.App{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1.5em;
+}
+
+
+.SettingsBar{
+    grid-column: 1/5;
+}
+
+.Header{
+    grid-column: 1/5;
+}
+
+.FilterDisplay{
+    grid-column: 1;
+    border-right: solid #747474 2px;
+    height: 70vh;
+}
+
+.CountryDisplay{
+    display: flex;
+    grid-column: 2/5;
+}
