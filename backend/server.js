@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const routes = require("./router")
+//const countries = require('./routes/movies');
 
 app.get('/ping', function (req, res) {
  return res.send('pong');
@@ -18,5 +19,7 @@ mongoose.connection.once('open', () => {
 
 app.get("/", (req, res) => res.send("Hello world"))
 
+app.use(express.json())
 app.use("/api", routes)
+//app.use("/api", countries)
 app.listen(port, () => console.log("test" + port)) 

@@ -13,17 +13,25 @@ router.get('/', function (req, res) {
 
 // Get all country information
 router.get("/all", async (req, res) => {
-	const countries = await Country.find({})
+    const countries = await Country.find({})
+	//const countries = await Country.find({}, { projection: {"_id": 1, "name": 1, "alpha2Code": 1, "capital": 1, "region": 1, "population": 1, "area": 1 }})
 	return res.send(countries)
 })
 
 // Get all countries in europe
 
 router.get("/region/europe", async (req, res) => {
-	const name = await Country.find({'region': 'Europe'})
+    var query = { name: /^S/ };
+	const name = await Country.find(query)
 	return res.send(name)
 })
 
+// Get all countries from northern europe
+router.get("/region/north", async (req, res) => {
+    var query = { subregion: "Northern Europe"};
+	const name = await Country.find(query)
+	return res.send(name)
+})
 
 
 module.exports = router
