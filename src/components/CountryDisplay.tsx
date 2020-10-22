@@ -8,8 +8,7 @@ export default function CountryDisplay() {
 
     const handleResponse = (countriesResponse: CountriesResponse) => {
         if (countriesResponse)
-        // setCountries(countriesResponse);
-        console.log(countriesResponse)
+        setCountries(countriesResponse);
       };
     
       useEffect(() => {
@@ -23,7 +22,7 @@ export default function CountryDisplay() {
         <div className="CountryDisplay">
           <ul>
             {countries.map((country: CountrySummaryInfo) => {
-              return <Country key={country.alpha} {...country} />;
+              return <Country key={country.alpha2Code} {...country} />;
             })}
           </ul>
         </div>

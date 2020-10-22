@@ -1,19 +1,27 @@
 import React from "react";
 import { CountrySummaryInfo } from "../Fetch";
 
-export default function CountryDisplay({
-  alpha,
+export default function Country({
+  alpha2Code,
   name,
   capital,
   area,
   population,
 }: CountrySummaryInfo) {
-
   return (
     <div className="character">
-      <img src={"https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" + alpha + ".svg"} alt={alpha} width='400px' height="200px"></img>
+      <img
+        src={
+          "https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" +
+          alpha2Code +
+          ".svg"
+        }
+        alt={alpha2Code}
+        width="400px"
+        height="200px"
+      ></img>
       <h2>{name}</h2>
-      <div>capital: {capital} cm</div>
+      <div>capital: {capital}</div>
       <div>Area: {area}</div>
       <div>Population: {population}</div>
       {/* TODO her skal vi linke til mer info om hvert enkelt land. må gjøre nytt fetch innad i denne */}

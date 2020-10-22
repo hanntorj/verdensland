@@ -1,11 +1,9 @@
 const url = "https://restcountries.eu/rest/v2/";
 
-export interface CountriesResponse {
-  [index: number]: Array<CountrySummaryInfo>;
-}
+export interface CountriesResponse extends Array<CountrySummaryInfo>{}
 
 export interface CountrySummaryInfo {
-  alpha: string;
+  alpha2Code: string;
   name: string;
   capital: string;
   area: string;
