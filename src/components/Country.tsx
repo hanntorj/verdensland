@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
+import Wish from '../svg/wish.svg'
+import WishFilled from '../svg/wish_filled.svg'
+import Flag from '../svg/flag.svg'
+import FlagFilled from '../svg/flag_filled.svg'
 
 interface Props{
-    countryID: string
+    countryID: string,
+
+    wish: boolean, //Disse hentes fra databasen og brukes for at symbolene skal settes på refresh 
+    flag: boolean
 }
 
 interface State{
@@ -10,45 +17,76 @@ interface State{
     population: number,
     capital: string,
     language: string,
+    wish: boolean,
+    flag: boolean,
+    wishSVG: any,
+    flagSVG: any
 }
 
 export default class Country extends Component<Props, State> {
-    constructor(Props: {countryID : string}){
+    constructor(Props: {countryID : string, wish: boolean, flag: boolean}){
         super(Props)
+
+        let tempWish = Props.wish ? WishFilled : Wish
+        let tempFlag = Props.flag ? FlagFilled : Flag
         
         this.state = {
-            name: 'Sverige',
-            region: 'Europe',
-            population: 3,
-            capital: "Norway",
-            language: "European"
+            name: 'Loading',
+            region: 'Loading',
+            population: 4,
+            capital: "Loading",
+            language: "Loading",
+            wish: Props.wish,
+            flag: Props.flag,
+            wishSVG: tempWish,
+            flagSVG: tempFlag,
         }
         
-        //Fetch fra database og sett state her. 
-        /*var client = require('mongodb').MongoClient
-
-        client.connect('mongodb://it2810-74.idi.ntnu.no:27017/prosjekt3', function(err : Error, db){
-            if (err) throw err
-
-            db.collection('prosjekt3').find().toArray(function (err: Error, result: Array<String>){
-                if (err) throw err
-
-                console.log(result)
+        let apiURL = 'http://localhost:8080/api/country/' + this.props.countryID
+        fetch(apiURL)
+            .then(response => response.json())
+            .then(response => {
+                let country = response[0]
+                this.setState({name: country.name, 
+                    region: country.region, 
+                    population: country.population, 
+                    capital: country.capital,
+                    language: country.demonym
+                })
             })
-        })*/
+            .catch(err => {console.log(err)})
+    }
+
+    handleFlag() {
+        this.setState({flagSVG: this.state.flag ? Flag : FlagFilled, flag: !this.state.flag})
+        // TODO: Legg inn lagring tel database 
+
+    }
+
+    handleWish() {
+        this.setState({wishSVG: this.state.wish ? Wish : WishFilled, wish: !this.state.wish})
     }
 
     render() {
         return (
             <div>
                 <img src={"https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" + this.props.countryID + ".svg"} alt={this.props.countryID} width='400px' height="200px"></img>
+                <div className="ButtonBox">
+                    <button className="SVGButton" onClick={() => this.handleFlag()}>
+                        <img src={this.state.flagSVG} alt="wish" width="40px" height="40px"/>
+                        <p>Visited</p>
+                    </button>
+                    <button className="SVGButton" onClick={() => this.handleWish()}>
+                        <img src={this.state.wishSVG} alt="wish" width="40px" height="40px"/>
+                        <p>Wish to travel</p>
+                    </button>
+                </div>
                 <h2>{this.state.name}</h2>
                 <p> Region: {this.state.region} <br/>
-                    Capital: {this.state.name} <br/> 
-                    Language: {this.state.name} <br/>
+                    Capital: {this.state.capital} <br/> 
+                    Language: {this.state.language} <br/>
                     Population: {this.state.population} <br/>
                 </p>
-                Heisann hoppsann
             </div>
         )
     }

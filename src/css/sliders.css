@@ -103,6 +103,7 @@ input {
     background-color: #4aa8ff;
     margin: 5px;
     outline: none;
+    color: #ffffff;
 }
 
 .RegionButton:hover{

@@ -33,5 +33,12 @@ router.get("/region/north", async (req, res) => {
 	return res.send(name)
 })
 
+router.get("/country/:id", async (req, res) => {
+    const id = req.params.id
+    var query = { alpha2Code: id};
+	const name = await Country.find(query)
+	return res.send(name)
+})
+
 
 module.exports = router

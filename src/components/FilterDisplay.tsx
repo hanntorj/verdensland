@@ -1,8 +1,10 @@
-import React, {useLayoutEffect} from 'react'
+import React, {useLayoutEffect, useState} from 'react'
+import { connect } from 'react-redux'
 import '../css/sliders.css'
 
-export default function FilterDisplay() {
+function FilterDisplay() {
 
+    const [activeRegions, setactiveRegions] = useState([])
     var regions = [
         "Africa", "Americas", "Antarctica", "Asia", "Europe", "Oceania"
     ]
@@ -104,3 +106,5 @@ export default function FilterDisplay() {
         </div>
     )
 }
+
+export default connect()(FilterDisplay);
