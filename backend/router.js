@@ -16,7 +16,7 @@ router.get("/all", async (req, res) => {
     const countries = await Country.find({})
 	//const countries = await Country.find({}, { projection: {"_id": 1, "name": 1, "alpha2Code": 1, "capital": 1, "region": 1, "population": 1, "area": 1 }})
 	return res.send(countries)
-}) 
+})
 
 // Get all countries in europe
 
