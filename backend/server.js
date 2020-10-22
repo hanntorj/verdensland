@@ -19,7 +19,11 @@ mongoose.connection.once('open', () => {
 
 app.get("/", (req, res) => res.send("Hello world"))
 
-app.use(express.json())
+app.use((req, res,next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.use("/api", routes)
 //app.use("/api", countries)
 app.listen(port, () => console.log("test" + port)) 
