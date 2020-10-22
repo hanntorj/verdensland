@@ -7,9 +7,9 @@ export default function CountryDisplay() {
     const [countries, setCountries] = useState<Array<CountrySummaryInfo>>([]);
 
     const handleResponse = (countriesResponse: CountriesResponse) => {
-        if (countriesResponse && countriesResponse.results)
-          setCountries(countriesResponse.results);
-          console.log(countriesResponse)
+        if (countriesResponse)
+        // setCountries(countriesResponse);
+        console.log(countriesResponse)
       };
     
       useEffect(() => {
@@ -22,8 +22,8 @@ export default function CountryDisplay() {
     return (
         <div className="CountryDisplay">
           <ul>
-            {countries.map((character: CountrySummaryInfo) => {
-              return <Country key={character.alpha} {...character} />;
+            {countries.map((country: CountrySummaryInfo) => {
+              return <Country key={country.alpha} {...country} />;
             })}
           </ul>
         </div>

@@ -4,17 +4,16 @@ import { CountrySummaryInfo } from "../Fetch";
 export default function CountryDisplay({
   alpha,
   name,
-  capitol,
+  capital,
   area,
   population,
 }: CountrySummaryInfo) {
 
   return (
     <div className="character">
-            <h1>test</h1>
       <img src={"https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" + alpha + ".svg"} alt={alpha} width='400px' height="200px"></img>
       <h2>{name}</h2>
-      <div>Capitol: {capitol} cm</div>
+      <div>capital: {capital} cm</div>
       <div>Area: {area}</div>
       <div>Population: {population}</div>
       {/* TODO her skal vi linke til mer info om hvert enkelt land. må gjøre nytt fetch innad i denne */}

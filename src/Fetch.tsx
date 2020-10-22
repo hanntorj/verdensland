@@ -1,16 +1,13 @@
 const url = "https://restcountries.eu/rest/v2/";
 
 export interface CountriesResponse {
-  count: number;
-  next: unknown;
-  previous: unknown;
-  results: Array<CountrySummaryInfo>;
+  [index: number]: Array<CountrySummaryInfo>;
 }
 
 export interface CountrySummaryInfo {
   alpha: string;
   name: string;
-  capitol: string;
+  capital: string;
   area: string;
   population: string;
 }
