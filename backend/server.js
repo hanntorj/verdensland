@@ -18,8 +18,6 @@ mongoose.connection.once('open', () => {
 })
 
 app.get("/", (req, res) => res.send("Hello world"))
-
-app.use(express.json())
 app.use("/api", routes)
 //app.use("/api", countries)
-app.listen(port, () => console.log("test" + port)) 
+app.listen(port, () => console.log("Server is running on port "  + port)) 
