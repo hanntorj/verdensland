@@ -31,18 +31,30 @@ export default class Country extends Component<Props, State> {
         let tempFlag = Props.flag ? FlagFilled : Flag
         
         this.state = {
-            name: 'Sverige',
-            region: 'Europe',
-            population: 3,
-            capital: "Norway",
-            language: "European", 
+            name: 'Loading',
+            region: 'Loading',
+            population: 4,
+            capital: "Loading",
+            language: "Loading",
             wish: Props.wish,
             flag: Props.flag,
             wishSVG: tempWish,
             flagSVG: tempFlag,
         }
-
-
+        
+        let apiURL = 'http://localhost:8080/api/country/' + this.props.countryID
+        fetch(apiURL)
+            .then(response => response.json())
+            .then(response => {
+                let country = response[0]
+                this.setState({name: country.name, 
+                    region: country.region, 
+                    population: country.population, 
+                    capital: country.capital,
+                    language: country.demonym
+                })
+            })
+            .catch(err => {console.log(err)})
     }
 
     handleFlag() {
@@ -72,7 +84,7 @@ export default class Country extends Component<Props, State> {
                 <h2>{this.state.name}</h2>
                 <p> Region: {this.state.region} <br/>
                     Capital: {this.state.capital} <br/> 
-                    Language: {this.state.name} <br/>
+                    Language: {this.state.language} <br/>
                     Population: {this.state.population} <br/>
                 </p>
             </div>

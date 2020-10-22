@@ -20,3 +20,13 @@ mongoose.connect('mongodb://it2810-74.idi.ntnu.no:27017', { useNewUrlParser: tru
 mongoose.connection.once('open', () => {
   console.log("MongoDB db connection established successfully")
 })
+
+app.get("/", (req, res) => res.send("Hello world"))
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  next()
+})
+app.use("/api", routes)
+//app.use("/api", countries)
+app.listen(port, () => console.log("test" + port)) 
