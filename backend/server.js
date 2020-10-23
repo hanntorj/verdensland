@@ -26,4 +26,4 @@ app.use((req, res,next) => {
 
 app.use("/api", routes)
 //app.use("/api", countries)
-app.listen(port, () => console.log("test" + port)) 
+app.listen(port, () => console.log("Server is running on port "  + port)) 
