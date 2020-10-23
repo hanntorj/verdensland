@@ -4,11 +4,11 @@ const url = "http://localhost:8080/api/all";
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
 
 export interface CountrySummaryInfo {
-  alpha2Code: string;
-  name: string;
-  capital: string;
-  area: string;
-  population: string;
+  alpha2Code?: string;
+  name?: string;
+  capital?: string;
+  area?: number;
+  population?: number;
 }
 
 export interface GetCountryList {
@@ -23,8 +23,8 @@ export async function getCountryList({
   skip,
 }: GetCountryList) {
   const response = await fetch(
-    url + "?limit=" + { limit } + "&skip=" + { skip }
-  );
+    url+`?limit=${ limit }&skip=${ skip }`
+  )
   const data = await response.json();
   handleResponse(data);
 }
