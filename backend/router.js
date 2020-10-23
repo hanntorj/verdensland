@@ -7,12 +7,18 @@ const router = express.Router()
 
 // Get all country information
 router.get("/all", async (req, res) => {
-    const options = { 
-        projection: { _id: 0, name: 1, capital: 1 },
+    const limit =  req.query.limit
+    const skip = req.query.skip
+    try {
+        const country = await Country.find().skip(parseInt(skip)).limit(parseInt(limit))
+        return res.send(country)
     }
-    const country = await Country.find({capital: "Oslo"}, options)
+    catch(e) {
+       return res.send(e)
+    }
+    
 	//const countries = await Country.find({}, )
-	return res.send(country)
+	
 })
 
 // Get all countries starting with
@@ -26,11 +32,11 @@ router.get("/name/:id", async (req, res) => {
 
 // Get all countries from id
 //nb!! case sensitive
-router.get("/region/:id", async (req, res) => {
+router.get("/countries/", async (req, res) => {
     const id = req.params.id
-    const test = req.query.test
+    const test = req.query.region
     //const query = { region: id};
-	const country = await Country.find({region: id})
+	const country = await Country.find({region: test})
 	return res.send(country)
 })
 
