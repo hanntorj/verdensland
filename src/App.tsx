@@ -5,21 +5,15 @@ import Header from './components/Header'
 import CountryDisplay from './components/CountryDisplay'
 import SettingsBar from './components/SettingsBar'
 import FilterDisplay from './components/FilterDisplay'
-import { createStore } from 'redux'
+
 import { Provider } from 'react-redux'
+import { store } from './app/store'
 
-function reducer(){
-  return {
-    regions : ["Europe"], 
-    regionsActive: false
-  }
-}
-
-const store = createStore(reducer);
 
 function App() {
+  const reduxStore = store;
   return (
-    <Provider store={store}>
+    <Provider store={reduxStore}>
       <div className="App">
         <Header/>
         <SettingsBar/>
