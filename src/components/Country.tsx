@@ -1,5 +1,7 @@
 import React from "react";
 import { CountrySummaryInfo } from "../Fetch";
+import { Link } from 'react-router-dom';
+
 
 export default function Country({
   alpha2Code,
@@ -24,8 +26,7 @@ export default function Country({
       <div>capital: {capital}</div>
       <div>Area: {area}</div>
       <div>Population: {population}</div>
-      {/* TODO her skal vi linke til mer info om hvert enkelt land. må gjøre nytt fetch innad i denne */}
-      {/* <Link to={`country/${aplha}`}>Link to character page</Link> */}
+      <Link to={`country/${alpha2Code}`}>See more</Link>
     </div>
   );
 }
