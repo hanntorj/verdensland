@@ -16,7 +16,7 @@ interface State{
     region: string,
     population: number,
     capital: string,
-    language: string,
+    demonym: string,
     wish: boolean,
     flag: boolean,
     wishSVG: any,
@@ -35,7 +35,7 @@ export default class Country extends Component<Props, State> {
             region: 'Loading',
             population: 4,
             capital: "Loading",
-            language: "Loading",
+            demonym: "Loading",
             wish: Props.wish,
             flag: Props.flag,
             wishSVG: tempWish,
@@ -51,7 +51,7 @@ export default class Country extends Component<Props, State> {
                     region: country.region, 
                     population: country.population, 
                     capital: country.capital,
-                    language: country.demonym
+                    demonym: country.demonym
                 })
             })
             .catch(err => {console.log(err)})
@@ -84,7 +84,7 @@ export default class Country extends Component<Props, State> {
                 <h2>{this.state.name}</h2>
                 <p> Region: {this.state.region} <br/>
                     Capital: {this.state.capital} <br/> 
-                    Language: {this.state.language} <br/>
+                    Demonym: {this.state.demonym} <br/>
                     Population: {this.state.population} <br/>
                 </p>
             </div>
