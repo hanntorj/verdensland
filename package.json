@@ -11,14 +11,14 @@
     "@types/node": "^12.12.62",
     "@types/react": "^16.9.50",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.6",
     "express": "^4.17.1",
     "mongodb": "^3.6.2",
-    "proxy": "http://localhost:8080",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "^3.4.4",
     "typescript": "^3.7.5"
   },
   "scripts": {

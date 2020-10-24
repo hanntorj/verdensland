@@ -13,6 +13,7 @@ function App() {
       <SearchBar />
       <FilterDisplay />
       <Router />
+      
     </div>
   );
 }

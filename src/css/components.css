@@ -1,25 +1,25 @@
-.App{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 1.5em;
+.App {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1.5em;
 }
 
-
-.SearchBar{
-    grid-column: 1/5;
+.SearchBar {
+  grid-column: 1/5;
 }
 
-.Header{
-    grid-column: 1/5;
+.Header {
+  grid-column: 1/5;
 }
 
-.FilterDisplay{
-    grid-column: 1;
-    border-right: solid #747474 2px;
-    height: 70vh;
+.FilterDisplay {
+  grid-column: 1;
+  border-right: solid #747474 2px;
+  height: 70vh;
 }
 
-.CountryDisplay{
-    display: flex;
-    grid-column: 2/5;
+.CountryDisplay {
+  display: flex;
+  grid-column: 2/5;
 }
+
