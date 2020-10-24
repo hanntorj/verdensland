@@ -4,9 +4,9 @@ import { CountriesResponse, CountrySummaryInfo } from "../Fetch";
 import Country from "./Country";
 
 export default function CountryDisplay() {
-  const [countries, setCountries] = useState<Array<CountrySummaryInfo>>([]);
+  const [countries, setCountries] = useState<CountriesResponse>([]);
   const [skip, setSkip] = useState(0);
-  const limit = 10;
+  const limit = 6;
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
     if (countriesResponse) setCountries(countriesResponse);
@@ -16,34 +16,45 @@ export default function CountryDisplay() {
     const countryListRequest: GetCountryList = {
       handleResponse,
       limit,
-      skip
+      skip,
     };
     getCountryList(countryListRequest);
   }, [skip]);
 
   const handleNextClick = () => {
     const nextSkip = skip + 1 * limit;
-    setSkip(skip + 1 * limit);
+    setSkip(nextSkip);
   };
 
   const handlePreviousClick = () => {
     const previousSkip = skip - 1 * limit;
-    setSkip(skip - 1 * limit);
+    setSkip(previousSkip);
   };
 
   return (
     <div className="CountryDisplay">
+      {!!countries && (
       <ul>
         {countries.map((country: CountrySummaryInfo) => {
           return <Country key={country.alpha2Code} {...country} />;
         })}
-      </ul>
-     <div> <button className="button" type="button" onClick={handleNextClick}>
-        Next
-      </button>
-      <button className="button" type="button" onClick={handlePreviousClick}>
-        Previous
-      </button></div>
+      </ul>)}
+      <div>
+        {!!skip && (
+          <button
+            className="button"
+            type="button"
+            onClick={handlePreviousClick}
+          >
+            Previous
+          </button>
+        )}
+        {!!!(countries.length < limit) && (
+          <button className="button" type="button" onClick={handleNextClick}>
+            Next
+          </button>
+        )}
+      </div>
     </div>
   );
 }

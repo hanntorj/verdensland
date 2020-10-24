@@ -1,14 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route} from 'react-router-dom';
 import CountryDisplay from "./CountryDisplay";
-
+import SearchBar from "./SearchBar"
 
 
 export default function Router() {
   return (
-    // <div>
-    // <CountryDisplay/>
-    // </div>
     <BrowserRouter>
       <div className="router">
         <Switch>
@@ -17,6 +14,9 @@ export default function Router() {
           </Route>
           <Route exact path="/country/AF">
              <h2>her skal vi ha komponent for enkeltland med mer info</h2>
+          </Route>
+          <Route path="/search">
+            <SearchBar />
           </Route>
         </Switch>
       </div>
