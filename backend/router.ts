@@ -65,10 +65,10 @@ router.get("/", async (req, res) => {
     const country = await Country.find(
       {
         $or: [
-          { name: {$regex: search, $options: "i" }},
-          { region: { $regex: search, $options: "i" } },
-          { capital:{ $regex: search, $options: "im" }},
-          { alpha2Code:{ $regex: search, $options: "i" }},
+          { name: {$regex: "^" + search, $options: "im" }},
+          { region: { $regex: "^" + search, $options: "im" } },
+          { capital:{ $regex: "^" + search, $options: "im" }},
+          { alpha2Code:{ $regex: "^" + search, $options: "im" }},
         ],
       },
       {

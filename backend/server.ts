@@ -13,9 +13,9 @@ mongoose.connection.once("open", () => {
   console.log("MongoDB db connection established successfully");
 });
 
-app.use((req, res) => {
+app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  //next();
+  next();
 });
 
 
