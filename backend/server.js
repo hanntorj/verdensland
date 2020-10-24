@@ -13,7 +13,11 @@ mongoose.connection.once("open", () => {
   console.log("MongoDB db connection established successfully");
 });
 
-app.get("/", (req, res) => res.send("Hello world"));
-app.use("/api", routes);
+app.use((req, res,next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
+app.use("/api", routes)
 //app.use("/api", countries)
 app.listen(port, () => console.log("Server is running on port " + port));
