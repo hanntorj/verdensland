@@ -1,17 +1,18 @@
 import { createStore } from 'redux'
+import { loadState, saveState } from './sessionStorage'
 
 interface filters{
-  regions: Array<string>
-  areaGreater : boolean
-  popGreater : boolean
-  pop : number
-  area: number
+  regions: Array<string>          // List of current regions to filter on
+  areaGreater : boolean           // value for sorting out countries with area greater or lesser than area
+  popGreater : boolean            // value for sorting out countries with population greater or lesser than pop
+  area: number                    // threshold for area to filer on
+  pop : number                    // threshold for population to filter on
 }
 export interface reduxState{
   currentCountries: Array<string> // List of alpha2code for the current countries that should be visible
   currentPage : number            // Variable for the current page of the countrydisplay
   filters : filters
-  regionsActive : boolean
+  regionsActive : boolean         // boolean values for if a filter is active or not
   areaActive: boolean
   popActive: boolean
 }
@@ -92,7 +93,12 @@ function reducer(state : any, {type, payload} : {type: string, payload: string|b
   }
 }
 
-export const store = createStore(reducer, initialState)
+const currentState = loadState(initialState)
+
+export const store = createStore(reducer, currentState)
+store.subscribe(()=>{
+  saveState(store.getState())
+})
 
 export const addRegionAction = (region : string) => ({
   type: "ADD_REGION",
