@@ -1,6 +1,6 @@
 import React, {useLayoutEffect} from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { toggleFilterAction, addRegionAction, removeRegionAction, updatePopAction, updateAreaAction, reduxState} from '../app/store'
+import { toggleFilterAction, addRegionAction, removeRegionAction, updatePopAction, updateAreaAction, toggleGreaterThanAction, reduxState} from '../app/store'
 import '../css/sliders.css'
 
 function FilterDisplay() {
@@ -9,40 +9,58 @@ function FilterDisplay() {
         "Africa", "Americas", "Antarctica", "Asia", "Europe", "Oceania"
     ]
 
+    // Fetch state from redux-store
+    const filterState = useSelector((state: reduxState) => state.filters)
+
+    // Setup of  actions to change redux-store
     const dispatch = useDispatch()
     const addRegion = (id : string) => {dispatch(addRegionAction(id))}
     const removeRegion = (id : string) => {dispatch(removeRegionAction(id))}
     //const updatePopNumber = (amount : number) => {dispatch(updatePopAction(amount))}
     //const updateAreaNumber = (amount : number) => {dispatch(updateAreaAction(amount))}
+    const toggleGreaterThan = (filter : string) => {dispatch(toggleGreaterThanAction(filter))}
     const toggleFilter = (filterType: string) => dispatch(toggleFilterAction(filterType))
 
-    console.log(useSelector((state : reduxState) => state))
+    //console.log(useSelector((state : reduxState) => state))
 
     function toggleButtonClass(id : string){
-        // Function that toggle the display of a button when it is clicked. 
-        // #TODO Link up to redux-store and update this on click
+        // Function that toggle the display of a button when it is clicked.
         let button : HTMLElement = document.getElementById(id)!
-        if(! JSON.parse(sessionStorage.getItem(id+"button")!)){
+        if(! filterState.regions.includes(id)){
             button.setAttribute("class", "RegionButtonClicked")
-            sessionStorage.setItem(id+"button", JSON.stringify(true))
             addRegion(id)
         } else {
             button.setAttribute("class", "RegionButton")
-            sessionStorage.setItem(id+"button", JSON.stringify(false))
             removeRegion(id)
         }
     }
 
     useLayoutEffect(()=>{
-        // Hook that handles display of buttons on refresh
+        // Hook that handles display of component on refreshes
+
+        //Sliders:
+        //TODO
+
+        //Area & population: 
+        if(filterState.areaGreater){
+            console.log("Kom meg inn i loopen")
+            let areaSelector : HTMLSelectElement = (document.getElementById("areaGreater") as HTMLSelectElement)!
+            areaSelector.value = 'greater'
+        }
+        if(filterState.popGreater){
+            let areaSelector : HTMLSelectElement = (document.getElementById("popGreater") as HTMLSelectElement)!
+            areaSelector.value = 'greater'
+        }
+
+        //Greater than-fields: 
+        //TODO
+
+        //Regional buttons:
         for(var x in regions){
             let region : string = regions[x]
-            if(! (sessionStorage.getItem(region+"button"))){
-                sessionStorage.setItem(region+"button", JSON.stringify(false))
-            } 
-            if(JSON.parse(sessionStorage.getItem(region + "button")!)) {
+            if(filterState.regions.includes(region)){
                 let button : HTMLElement = document.getElementById(region)!
-                button.setAttribute("class", "RegionButtonClicked")
+                button.setAttribute('class', 'RegionButtonClicked')
             }
         }
     })
@@ -53,20 +71,20 @@ function FilterDisplay() {
 
                 <div className="FilterTitle">  
                     <p>Area</p>
-                    <div className="Slider">
+                    <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input type="checkbox" onClick={()=>toggleFilter('area')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
                 </div>
 
                 <div className="inputFields">
-                    <input placeholder="Area"/>
+                    <input className="areaInput" placeholder="Area"/>
                     <form>
-                        <select>
-                            <option value="greater">Larger than input</option>
+                        <select id="areaGreater" onChange={()=>toggleGreaterThan('area')}>
                             <option value="lesser">Smaller than input</option>
+                            <option value="greater">Larger than input</option>
                         </select>
                     </form>
                 </div>
@@ -75,20 +93,20 @@ function FilterDisplay() {
             <div className="Filter Population">
                 <div className="FilterTitle">  
                     <p>Population</p>
-                    <div className="Slider">
+                    <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input type="checkbox" onClick={()=>toggleFilter('pop')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
                 </div>
 
                 <div className="inputFields">
-                    <input placeholder="Population"/>
+                    <input className="popInput" placeholder="Population"/>
                     <form>
-                        <select>
-                            <option value="greater">Larger than input</option>
+                        <select id="popGreater" onChange={()=>toggleGreaterThan('pop')}>
                             <option value="lesser">Smaller than input</option>
+                            <option value="greater">Larger than input</option>
                         </select>
                     </form>
                 </div>
@@ -97,9 +115,9 @@ function FilterDisplay() {
             <div className="Filter Region">
                 <div className="FilterTitle">  
                     <p>Region</p>
-                    <div className="Slider">
+                    <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input type="checkbox" onClick={()=>toggleFilter('regions')}/>
                             <span className="slider round"/>
                         </label>
                     </div>

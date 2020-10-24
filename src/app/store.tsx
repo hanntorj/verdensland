@@ -88,6 +88,25 @@ function reducer(state : any, {type, payload} : {type: string, payload: string|b
         default: 
           return state;
       }
+    case 'TOGGLE_GREATER':
+      switch(payload){
+        case 'pop':
+          return {
+            ...state,
+            filters: {
+              ...state.filters,
+              popGreater: !state.filters.popGreater
+            }
+          }
+        case 'area':
+          return {
+            ...state,
+            filters: {
+              ...state.filters,
+              areaGreater: !state.filters.areaGreater
+            }
+          }
+      }
     default: 
       return state;
   }
@@ -108,6 +127,11 @@ export const addRegionAction = (region : string) => ({
 export const removeRegionAction = (region: string) => ({
   type: "REMOVE_REGION",
   payload: region
+})
+
+export const toggleGreaterThanAction = (filter: string) => ({
+  type: "TOGGLE_GREATER",
+  payload: filter
 })
 
 export const toggleFilterAction = (filterType : string) => ({
