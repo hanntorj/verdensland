@@ -11,6 +11,7 @@ function FilterDisplay() {
 
     // Fetch state from redux-store
     const filterState = useSelector((state: reduxState) => state.filters)
+    const storeState = useSelector((state: reduxState) => state)
 
     // Setup of  actions to change redux-store
     const dispatch = useDispatch()
@@ -39,21 +40,32 @@ function FilterDisplay() {
         // Hook that handles display of component on refreshes
 
         //Sliders:
-        //TODO
-
+        if(storeState.regionsActive){
+            let regionSlider : HTMLInputElement = (document.getElementById('regionCheck') as HTMLInputElement)!
+            regionSlider.checked = true
+        }
+        if(storeState.popActive){
+            let slider : HTMLInputElement = (document.getElementById('popCheck') as HTMLInputElement)!
+            slider.checked = true
+        }
+        if(storeState.areaActive){
+            let slider : HTMLInputElement = (document.getElementById('areaCheck') as HTMLInputElement)!
+            slider.checked = true
+        }
+        
         //Area & population: 
-        if(filterState.areaGreater){
-            console.log("Kom meg inn i loopen")
-            let areaSelector : HTMLSelectElement = (document.getElementById("areaGreater") as HTMLSelectElement)!
-            areaSelector.value = 'greater'
-        }
-        if(filterState.popGreater){
-            let areaSelector : HTMLSelectElement = (document.getElementById("popGreater") as HTMLSelectElement)!
-            areaSelector.value = 'greater'
-        }
-
-        //Greater than-fields: 
         //TODO
+        
+        //Greater than-fields: 
+            if(filterState.areaGreater){
+                console.log("Kom meg inn i loopen")
+                let areaSelector : HTMLSelectElement = (document.getElementById("areaGreater") as HTMLSelectElement)!
+                areaSelector.value = 'greater'
+            }
+            if(filterState.popGreater){
+                let areaSelector : HTMLSelectElement = (document.getElementById("popGreater") as HTMLSelectElement)!
+                areaSelector.value = 'greater'
+            }
 
         //Regional buttons:
         for(var x in regions){
@@ -73,7 +85,7 @@ function FilterDisplay() {
                     <p>Area</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox" onClick={()=>toggleFilter('area')}/>
+                            <input id="areaCheck" type="checkbox" onClick={()=>toggleFilter('area')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
@@ -95,7 +107,7 @@ function FilterDisplay() {
                     <p>Population</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox" onClick={()=>toggleFilter('pop')}/>
+                            <input id="popCheck" type="checkbox" onClick={()=>toggleFilter('pop')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
@@ -117,7 +129,7 @@ function FilterDisplay() {
                     <p>Region</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox" onClick={()=>toggleFilter('regions')}/>
+                            <input id="regionCheck" type="checkbox" onClick={()=>toggleFilter('regions')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
