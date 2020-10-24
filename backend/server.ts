@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const app = express();
 const mongoose = require("mongoose");
 const routes = require("./router");
@@ -13,11 +13,12 @@ mongoose.connection.once("open", () => {
   console.log("MongoDB db connection established successfully");
 });
 
-app.use((req, res,next) => {
+app.use((req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
-  next();
+  //next();
 });
+
 
 app.use("/api", routes)
 //app.use("/api", countries)
-app.listen(port, () => console.log("Server is running on port " + port));
+app.listen(port, () => console.log("Server is running on port http://localhost:" + port));

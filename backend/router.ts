@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const Country = require("./models/countryModel"); // new
 const router = express.Router();
 
@@ -8,8 +8,8 @@ const router = express.Router();
 
 // Get all country information
 router.get("/all", async (req, res) => {
-  const limit = req.query.limit;
-  const skip = req.query.skip;
+  const limit = Number(req.query.limit)
+  const skip = Number(req.query.skip)
   try {
     const country = await Country.find(
       {},
@@ -23,8 +23,8 @@ router.get("/all", async (req, res) => {
         area: 1,
       }
     )
-      .skip(parseInt(skip))
-      .limit(parseInt(limit));
+      .skip(skip)
+      .limit(limit);
     return res.send(country);
   } catch (e) {
     return res.send(e);
@@ -58,14 +58,14 @@ router.get("/country/:id", async (req, res) => {
 //Search
 
 router.get("/", async (req, res) => {
-  const limit = req.query.limit;
-  const skip = req.query.skip;
+  const limit = Number(req.query.limit)
+  const skip = Number(req.query.skip)
   const search = req.query.search;
   try {
     const country = await Country.find(
       {
         $or: [
-          { name: new RegExp(search, 'i')},
+          { name: {$regex: search, $options: "i" }},
           { region: { $regex: search, $options: "i" } },
           { capital:{ $regex: search, $options: "im" }},
           { alpha2Code:{ $regex: search, $options: "i" }},
@@ -81,11 +81,11 @@ router.get("/", async (req, res) => {
         area: 1,
       }
     )
-      .skip(parseInt(skip))
-      .limit(parseInt(limit));
-    return res.send(country);
+      .skip(skip)
+      .limit(limit)
+    return res.send(country)
   } catch (e) {
-    return res.send(e);
+    return res.send(e)
   }
 });
 module.exports = router;
