@@ -50,6 +50,11 @@ function reducer(state : any, {type, payload} : {type: string, payload: string|b
         ...state,
         searchString : payload
       }
+      case 'SET_SKIP':
+        return {
+          ...state,
+          skip : payload
+        }
     case 'ADD_REGION':
       return {
         ...state,
@@ -123,6 +128,11 @@ export const setCountriesAction = (countries : CountriesResponse) => ({
 export const setSearchStringAction = (searchString : string) => ({
   type: 'SET_SEARCHSTRING',
   payload: searchString
+})
+
+export const setSkipAction = (skip : number) => ({
+  type: 'SET_SKIP',
+  payload: skip
 })
 
 export const addRegionAction = (region : string) => ({
