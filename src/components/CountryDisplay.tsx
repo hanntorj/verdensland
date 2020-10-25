@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { getCountryList, GetCountryList } from "../Fetch";
-import { CountriesResponse, CountrySummaryInfo } from "../Fetch";
+import {
+  GetCountryList,
+  CountriesResponse,
+  CountrySummaryInfo,
+} from "../Interfaces";
+import { getCountryList } from "../Fetch";
 import Country from "./Country";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { setCountriesAction, reduxState, setSkipAction } from "../app/store";
 
-export default function CountryDisplay() {
-  const [countries, setCountries] = useState<CountriesResponse>([]);
-  const [skip, setSkip] = useState(0);
-  const limit = 6;
+function CountryDisplay() {
+  const dispatch = useDispatch();
+  const setCountries = (countries : CountriesResponse) => {dispatch(setCountriesAction(countries))};
+  const countries = useSelector((state: reduxState) => state.currentCountries);
+  const searchString = useSelector((state: reduxState) => state.searchString);
+  const skip = useSelector((state: reduxState) => state.skip);
+  const setSkip = (skip : number) => {dispatch(setSkipAction(skip))};
+  const limit = useSelector((state: reduxState) => state.limit);
+
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
     if (countriesResponse) setCountries(countriesResponse);
@@ -14,6 +25,7 @@ export default function CountryDisplay() {
 
   useEffect(() => {
     const countryListRequest: GetCountryList = {
+      searchString,
       handleResponse,
       limit,
       skip,
@@ -34,11 +46,12 @@ export default function CountryDisplay() {
   return (
     <div className="CountryDisplay">
       {!!countries && (
-      <ul>
-        {countries.map((country: CountrySummaryInfo) => {
-          return <Country key={country.alpha2Code} {...country} />;
-        })}
-      </ul>)}
+        <ul>
+          {countries.map((country: CountrySummaryInfo) => {
+            return <Country key={country.alpha2Code} {...country} />;
+          })}
+        </ul>
+      )}
       <div>
         {!!skip && (
           <button
@@ -58,3 +71,5 @@ export default function CountryDisplay() {
     </div>
   );
 }
+
+export default connect()(CountryDisplay);

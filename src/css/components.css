@@ -23,3 +23,19 @@
   grid-column: 2/5;
 }
 
+.CountryDisplay{
+    display: flex;
+    grid-column: 2/5;
+}
+
+.SVGButton{
+    border: none;
+    outline: none;
+    background: none;
+    text-align: center;
+}
+
+.ButtonBox{
+    display: flex;
+    justify-content: space-evenly;
+}

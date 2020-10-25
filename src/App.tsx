@@ -6,15 +6,20 @@ import Router from "./components/Router";
 import SearchBar from "./components/SearchBar";
 import FilterDisplay from "./components/FilterDisplay";
 
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+
 function App() {
+  const reduxStore = store;
   return (
-    <div className="App">
-      <Header />
-      <SearchBar />
-      <FilterDisplay />
-      <Router />
-      
-    </div>
+    <Provider store={reduxStore}>
+      <div className="App">
+        <Header />
+        <SearchBar />
+        <FilterDisplay />
+        <Router />
+      </div>
+    </Provider>
   );
 }
 
