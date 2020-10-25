@@ -49,7 +49,7 @@ export default function SearchBar() {
           Søk
         </button>
       </div>
-      {/* TODO this needs to be moves */}
+      {/* TODO this needs to be moved */}
       <div>
         {countries.map((country: CountryMoreInfo) => {
           return <Country key={country.alpha2Code} {...country} />;

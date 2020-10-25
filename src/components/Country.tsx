@@ -26,7 +26,7 @@ export default function Country({
       <div>capital: {capital}</div>
       <div>Population: {population}</div>
       <div>Region: {region}</div>
-      <Link to={`country/${alpha2Code}`}>See more</Link>
+      {/* <Link to={`country/${alpha2Code}`}>See more</Link> */}
     </div>
   );
 }
