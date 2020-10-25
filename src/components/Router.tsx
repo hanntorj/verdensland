@@ -12,7 +12,7 @@ export default function Router() {
           <Route exact path="/">
           <CountryDisplay/>
           </Route>
-          <Route exact path="/country/AF">
+          <Route exact path="/country/:alpha2Code">
              <h2>her skal vi ha komponent for enkeltland med mer info</h2>
           </Route>
           <Route path="/search">

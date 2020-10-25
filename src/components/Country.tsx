@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CountrySummaryInfo } from "../Fetch";
+import { CountrySummaryInfo } from "../Interfaces";
 import Wish from '../svg/wish.svg'
 import WishFilled from '../svg/wish_filled.svg'
 import Flag from '../svg/flag.svg'
@@ -7,8 +7,7 @@ import FlagFilled from '../svg/flag_filled.svg'
 
 interface Props{
   countryID: string,
-
-  wish: boolean, //Disse hentes fra databasen og brukes for at symbolene skal settes på refresh 
+  wish: boolean, //These are collected from the DB and used so that the symbols can be set on refresh
   flag: boolean
 }
 

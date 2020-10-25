@@ -1,6 +1,3 @@
-// const url = "https://restcountries.eu/rest/v2/";
-const url = "http://localhost:8080/api/";
-
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
 
 export interface CountrySummaryInfo {
@@ -35,32 +32,8 @@ export interface searchCountries {
 }
 
 export interface GetCountryList {
+  searchString: string
   handleResponse: (countries: CountriesResponse) => void;
   limit: number;
   skip: number;
-}
-
-// export async function getCountryList({
-//   handleResponse,
-//   limit,
-//   skip,
-// }: GetCountryList) {
-//   const response = await fetch(
-//     url+'all'+`?limit=${ limit }&skip=${ skip }`
-//   )
-//   const data = await response.json();
-//   handleResponse(data);
-// }
-
-export async function getCountryList({
-  searchString,
-  handleResponse,
-  limit,
-  skip,
-}: searchCountries) {
-  const response = await fetch(
-    url +'?search='+ `${searchString}&limit=${ limit }&skip=${ skip }`
-  );
-  const data = await response.json();
-  handleResponse(data);
 }

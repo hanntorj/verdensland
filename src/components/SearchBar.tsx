@@ -2,30 +2,33 @@ import React, { useState } from "react";
 import {
   CountriesResponse,
   searchCountries,
-  getSearchCountries,
-  CountryMoreInfo,
-} from "../Fetch";
-import Country from "./Country";
+} from "../Interfaces";
+import { getCountryList } from "../Fetch";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { setCountriesAction, setSearchStringAction, reduxState } from "../app/store";
 
-export default function SearchBar() {
-  const [searchString, setSearchString] = useState<string>("");
-  const [countries, setCountries] = useState<CountriesResponse>([]);
+function SearchBar() {
+  // const [searchString, setSearchString] = useState<string>("");
   const [skip, setSkip] = useState(0);
   const limit = 6;
+  const dispatch = useDispatch();
+  const setCountries = (countries : CountriesResponse) => {dispatch(setCountriesAction(countries))};
+  const searchString = useSelector((state: reduxState) => state.searchString);
+  const setSearchString = (searchString : string) => {dispatch(setSearchStringAction(searchString))};
+
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
     if (countriesResponse) setCountries(countriesResponse);
   };
 
   const handleSubmit = () => {
-    if (searchString === "") return;
     const countriesRequest: searchCountries = {
       searchString,
       handleResponse,
       limit,
       skip,
     };
-    getSearchCountries(countriesRequest);
+    getCountryList(countriesRequest);
   };
 
   const handleChange = (inputEvent: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,13 +52,8 @@ export default function SearchBar() {
           Søk
         </button>
       </div>
-      {/* TODO this needs to be moved */}
-      <div>
-        {countries.map((country: CountryMoreInfo) => {
-          return <Country key={country.alpha2Code} {...country} />;
-        })}
-      </div>
-      {console.log(searchString)}
     </div>
   );
 }
+
+export default connect()(SearchBar);

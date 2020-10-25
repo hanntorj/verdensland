@@ -1,5 +1,6 @@
 import { createStore } from 'redux'
 import { loadState, saveState } from './sessionStorage'
+import {CountriesResponse} from '../Interfaces'
 
 interface filters{
   regions: Array<string>          // List of current regions to filter on
@@ -9,8 +10,10 @@ interface filters{
   pop : number                    // threshold for population to filter on
 }
 export interface reduxState{
-  currentCountries: Array<string> // List of alpha2code for the current countries that should be visible
-  currentPage : number            // Variable for the current page of the countrydisplay
+  currentCountries: CountriesResponse // List of alpha2code for the current countries that should be visible
+  searchString: string
+  skip : number            // Variable for the current page of the countrydisplay
+  limit : number
   filters : filters
   regionsActive : boolean         // boolean values for if a filter is active or not
   areaActive: boolean
@@ -18,8 +21,10 @@ export interface reduxState{
 }
 
 const initialState : reduxState = sessionStorage.getItem("reduxState") ? JSON.parse(sessionStorage.getItem("reduxState")!) : {
-  currentCountries: ["AF", "NO", "SE", "DK"],
-  currentPage: 0,
+  currentCountries: [],
+  searchString: "",
+  skip: 0,
+  limit: 10,
   filters: {
     regions: [],
     areaGreater: false,
@@ -33,8 +38,18 @@ const initialState : reduxState = sessionStorage.getItem("reduxState") ? JSON.pa
 
 }
 
-function reducer(state : any, {type, payload} : {type: string, payload: string|boolean|number}){ //TODO: Ender state fra å være any
+function reducer(state : any, {type, payload} : {type: string, payload: string|boolean|number|CountriesResponse}){ //TODO: Change state from any
   switch(type){
+    case 'SET_COUNTRIES':
+      return {
+        ...state,
+        currentCountries : payload
+      }
+      case 'SET_SEARCHSTRING':
+      return {
+        ...state,
+        searchString : payload
+      }
     case 'ADD_REGION':
       return {
         ...state,
@@ -98,6 +113,16 @@ const currentState = loadState(initialState)
 export const store = createStore(reducer, currentState)
 store.subscribe(()=>{
   saveState(store.getState())
+})
+
+export const setCountriesAction = (countries : CountriesResponse) => ({
+  type: 'SET_COUNTRIES',
+  payload: countries
+})
+
+export const setSearchStringAction = (searchString : string) => ({
+  type: 'SET_SEARCHSTRING',
+  payload: searchString
 })
 
 export const addRegionAction = (region : string) => ({
