@@ -15,14 +15,12 @@ function FilterDisplay() {
 
     // Setup of  actions to change redux-store
     const dispatch = useDispatch()
-    const addRegion = (id : string) => {dispatch(addRegionAction(id))}
-    const removeRegion = (id : string) => {dispatch(removeRegionAction(id))}
-    const updatePopNumber = (amount : number) => {dispatch(updatePopAction(amount))}
-    const updateAreaNumber = (amount : number) => {dispatch(updateAreaAction(amount))}
-    const toggleGreaterThan = (filter : string) => {dispatch(toggleGreaterThanAction(filter))}
-    const toggleFilter = (filterType: string) => dispatch(toggleFilterAction(filterType))
-
-    //console.log(useSelector((state : reduxState) => state))
+    const addRegion         = (id : string)        => {dispatch(addRegionAction(id))}
+    const removeRegion      = (id : string)        => {dispatch(removeRegionAction(id))}
+    const updatePopNumber   = (amount : number)    => {dispatch(updatePopAction(amount))}
+    const updateAreaNumber  = (amount : number)    => {dispatch(updateAreaAction(amount))}
+    const toggleGreaterThan = (filter : string)    => {dispatch(toggleGreaterThanAction(filter))}
+    const toggleFilter      = (filterType: string) => {dispatch(toggleFilterAction(filterType))}
 
     function toggleButtonClass(id : string){
         // Function that toggle the display of a button when it is clicked.
