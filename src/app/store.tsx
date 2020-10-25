@@ -106,6 +106,8 @@ function reducer(state : any, {type, payload} : {type: string, payload: string|b
               areaGreater: !state.filters.areaGreater
             }
           }
+        default: 
+          return state
       }
     default: 
       return state;

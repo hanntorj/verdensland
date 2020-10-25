@@ -11,14 +11,14 @@ function FilterDisplay() {
 
     // Fetch state from redux-store
     const filterState = useSelector((state: reduxState) => state.filters)
-    const storeState = useSelector((state: reduxState) => state)
+    const storeState = useSelector((state: reduxState) => state) // Should consider refactoring <filter>Active in store to be inside state.filters
 
     // Setup of  actions to change redux-store
     const dispatch = useDispatch()
     const addRegion = (id : string) => {dispatch(addRegionAction(id))}
     const removeRegion = (id : string) => {dispatch(removeRegionAction(id))}
-    //const updatePopNumber = (amount : number) => {dispatch(updatePopAction(amount))}
-    //const updateAreaNumber = (amount : number) => {dispatch(updateAreaAction(amount))}
+    const updatePopNumber = (amount : number) => {dispatch(updatePopAction(amount))}
+    const updateAreaNumber = (amount : number) => {dispatch(updateAreaAction(amount))}
     const toggleGreaterThan = (filter : string) => {dispatch(toggleGreaterThanAction(filter))}
     const toggleFilter = (filterType: string) => dispatch(toggleFilterAction(filterType))
 
@@ -52,20 +52,23 @@ function FilterDisplay() {
             let slider : HTMLInputElement = (document.getElementById('areaCheck') as HTMLInputElement)!
             slider.checked = true
         }
-        
+
         //Area & population: 
-        //TODO
+        let areaInput : HTMLInputElement = (document.getElementById('areaInput') as HTMLInputElement)!
+        let popInput  : HTMLInputElement = (document.getElementById('popInput')  as HTMLInputElement)!
+        areaInput.value = filterState.area > 0 ? JSON.stringify(filterState.area) : ''
+        popInput.value  = filterState.pop  > 0 ? JSON.stringify(filterState.pop)  : ''
         
         //Greater than-fields: 
-            if(filterState.areaGreater){
-                console.log("Kom meg inn i loopen")
-                let areaSelector : HTMLSelectElement = (document.getElementById("areaGreater") as HTMLSelectElement)!
-                areaSelector.value = 'greater'
-            }
-            if(filterState.popGreater){
-                let areaSelector : HTMLSelectElement = (document.getElementById("popGreater") as HTMLSelectElement)!
-                areaSelector.value = 'greater'
-            }
+        if(filterState.areaGreater){
+            console.log("Kom meg inn i loopen")
+            let areaSelector : HTMLSelectElement = (document.getElementById("areaGreater") as HTMLSelectElement)!
+            areaSelector.value = 'greater'
+        }
+        if(filterState.popGreater){
+            let areaSelector : HTMLSelectElement = (document.getElementById("popGreater") as HTMLSelectElement)!
+            areaSelector.value = 'greater'
+        }
 
         //Regional buttons:
         for(var x in regions){
@@ -76,6 +79,32 @@ function FilterDisplay() {
             }
         }
     })
+
+    const handleInput = (filter: string) => {
+        // Implement some try/catch that checks whether input is numer or not.
+        let inputField : HTMLInputElement = (document.getElementById(filter+"Input") as HTMLInputElement)!
+
+        let inputStringValue: string = inputField.value
+        let inputValue : number = -1
+        
+        if(inputStringValue === ''){
+            inputValue = 0
+        } else if (JSON.parse(inputStringValue) < 0) {
+            inputField.value = ''
+            inputField.placeholder = 'Please insert a valid number'
+            return 
+        } else {
+            inputValue = JSON.parse(inputStringValue)
+        }
+
+        if (filter === 'pop') {
+            inputField.placeholder = 'Population'
+            updatePopNumber(inputValue)
+        } else if (filter === 'area'){
+            inputField.placeholder = 'Area'
+            updateAreaNumber(inputValue)
+        }
+    }
 
     return (
         <div className="FilterDisplay">
@@ -92,7 +121,7 @@ function FilterDisplay() {
                 </div>
 
                 <div className="inputFields">
-                    <input className="areaInput" placeholder="Area"/>
+                    <input type="number" id="areaInput" placeholder="Area" onChange={()=>handleInput('area')}/>
                     <form>
                         <select id="areaGreater" onChange={()=>toggleGreaterThan('area')}>
                             <option value="lesser">Smaller than input</option>
@@ -114,7 +143,7 @@ function FilterDisplay() {
                 </div>
 
                 <div className="inputFields">
-                    <input className="popInput" placeholder="Population"/>
+                    <input id="popInput" type="number" placeholder="Population" onChange={()=>handleInput('pop')}/>
                     <form>
                         <select id="popGreater" onChange={()=>toggleGreaterThan('pop')}>
                             <option value="lesser">Smaller than input</option>
