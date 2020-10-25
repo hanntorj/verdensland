@@ -10,6 +10,10 @@ export interface CountrySummaryInfo {
   capital?: string;
   population?: number;
   region?: string;
+  wish: boolean,
+  flag: boolean,
+  wishSVG: any,
+  flagSVG: any
 }
 
 export interface CountryMoreInfo {
