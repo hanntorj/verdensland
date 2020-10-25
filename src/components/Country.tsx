@@ -72,6 +72,8 @@ export default class Country extends Component<Props, State> {
             <div>
                 <img src={"https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" + this.props.countryID + ".svg"} alt={this.props.countryID} width='400px' height="200px"></img>
                 <div className="ButtonBox">
+                    {//Legger inn en kommentar her for å fikse mergeproblem
+                    }
                     <button className="SVGButton" onClick={() => this.handleFlag()}>
                         <img src={this.state.flagSVG} alt="wish" width="40px" height="40px"/>
                         <p>Visited</p>
