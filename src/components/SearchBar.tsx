@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CountriesResponse,
   searchCountries,
@@ -8,7 +8,6 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, setSearchStringAction, setSkipAction, reduxState } from "../app/store";
 
 function SearchBar() {
-  // const [searchString, setSearchString] = useState<string>("");
   const dispatch = useDispatch();
   const setCountries = (countries : CountriesResponse) => {dispatch(setCountriesAction(countries))};
   const searchString = useSelector((state: reduxState) => state.searchString);
@@ -47,6 +46,7 @@ function SearchBar() {
             type="text"
             name="searchBar"
             onChange={(input) => handleChange(input)}
+            value = {searchString}
           />
         </label>
         <button className="button" type="button" onClick={handleSubmit}>
