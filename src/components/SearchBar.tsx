@@ -8,7 +8,6 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, setSearchStringAction, setSkipAction, reduxState } from "../app/store";
 
 function SearchBar() {
-  // const [searchString, setSearchString] = useState<string>("");
   const dispatch = useDispatch();
   const setCountries = (countries : CountriesResponse) => {dispatch(setCountriesAction(countries))};
   const searchString = useSelector((state: reduxState) => state.searchString);
