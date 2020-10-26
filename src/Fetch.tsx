@@ -1,5 +1,5 @@
-const url = "https://restcountries.eu/rest/v2/";
-//const url = "http://localhost:8080/api/";
+// const url = "https://restcountries.eu/rest/v2/";
+const url = "http://localhost:8080/api/";
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
 

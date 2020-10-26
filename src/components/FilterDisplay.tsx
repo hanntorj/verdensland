@@ -1,41 +1,76 @@
-import React, {useLayoutEffect, useState} from 'react'
-import { connect } from 'react-redux'
+import React, {useLayoutEffect} from 'react'
+import { connect, useDispatch, useSelector } from 'react-redux'
+import { toggleFilterAction, addRegionAction, removeRegionAction, updatePopAction, updateAreaAction, toggleGreaterThanAction, reduxState} from '../app/store'
 import '../css/sliders.css'
 
 function FilterDisplay() {
 
-    const [activeRegions, setactiveRegions] = useState([])
     var regions = [
         "Africa", "Americas", "Antarctica", "Asia", "Europe", "Oceania"
     ]
 
+    // Fetch state from redux-store
+    const filterState = useSelector((state: reduxState) => state.filters)
+    const storeState = useSelector((state: reduxState) => state) // Should consider refactoring <filter>Active in store to be inside state.filters
+
+    // Setup of  actions to change redux-store
+    const dispatch = useDispatch()
+    const addRegion         = (id : string)        => {dispatch(addRegionAction(id))}
+    const removeRegion      = (id : string)        => {dispatch(removeRegionAction(id))}
+    const updatePopNumber   = (amount : number)    => {dispatch(updatePopAction(amount))}
+    const updateAreaNumber  = (amount : number)    => {dispatch(updateAreaAction(amount))}
+    const toggleGreaterThan = (filter : string)    => {dispatch(toggleGreaterThanAction(filter))}
+    const toggleFilter      = (filterType: string) => {dispatch(toggleFilterAction(filterType))}
+
     function toggleButtonClass(id : string){
-        // Function that toggle the display of a button when it is clicked. 
-        // #TODO Link up to redux-store and update this on click
+        // Function that toggle the display of a button when it is clicked.
         let button : HTMLElement = document.getElementById(id)!
-        if(! JSON.parse(sessionStorage.getItem(id+"button")!)){
+        if(! filterState.regions.includes(id)){
             button.setAttribute("class", "RegionButtonClicked")
-            sessionStorage.setItem(id+"button", JSON.stringify(true))
+            addRegion(id)
         } else {
             button.setAttribute("class", "RegionButton")
-            sessionStorage.setItem(id+"button", JSON.stringify(false))
+            removeRegion(id)
         }
     }
 
     useLayoutEffect(()=>{
-        // Hook that handles display of buttons on refresh
+        // Hook that handles display of regional buttons on refreshes
+
         for(var x in regions){
             let region : string = regions[x]
-            console.log(region, sessionStorage.getItem(region+"button"))
-            if(! (sessionStorage.getItem(region+"button"))){
-                sessionStorage.setItem(region+"button", JSON.stringify(false))
-            } 
-            if(JSON.parse(sessionStorage.getItem(region + "button")!)) {
+            if(filterState.regions.includes(region)){
                 let button : HTMLElement = document.getElementById(region)!
-                button.setAttribute("class", "RegionButtonClicked")
+                button.setAttribute('class', 'RegionButtonClicked')
             }
         }
-    }, [])
+    })
+
+    const handleNumberInput = (filter: string) => {
+        // Function that handles change on inputfields
+        let inputField : HTMLInputElement = (document.getElementById(filter+"Input") as HTMLInputElement)!
+
+        let inputStringValue: string = inputField.value
+        let inputValue : number = -1
+        
+        if(inputStringValue === ''){
+            inputValue = 0
+        } else if (JSON.parse(inputStringValue) < 0) {
+            inputField.value = ''
+            inputField.placeholder = 'Please insert a valid number'
+            return 
+        } else {
+            inputValue = JSON.parse(inputStringValue)
+        }
+
+        if (filter === 'pop') {
+            inputField.placeholder = 'Population'
+            updatePopNumber(inputValue)
+        } else if (filter === 'area'){
+            inputField.placeholder = 'Area'
+            updateAreaNumber(inputValue)
+        }
+    }
 
     return (
         <div className="FilterDisplay">
@@ -43,20 +78,20 @@ function FilterDisplay() {
 
                 <div className="FilterTitle">  
                     <p>Area</p>
-                    <div className="Slider">
+                    <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input id="areaCheck" type="checkbox" checked={storeState.areaActive} onClick={()=>toggleFilter('area')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
                 </div>
 
                 <div className="inputFields">
-                    <input placeholder="Area"/>
+                    <input type="number" id="areaInput" placeholder="Area" value={filterState.area > 0 ? JSON.stringify(filterState.area) : ''} onChange={()=>handleNumberInput('area')}/>
                     <form>
-                        <select>
-                            <option value="greater">Larger than input</option>
+                        <select id="areaGreater" value={filterState.areaGreater ? 'greater' : 'lesser'} onChange={()=>toggleGreaterThan('area')}>
                             <option value="lesser">Smaller than input</option>
+                            <option value="greater">Larger than input</option>
                         </select>
                     </form>
                 </div>
@@ -65,20 +100,20 @@ function FilterDisplay() {
             <div className="Filter Population">
                 <div className="FilterTitle">  
                     <p>Population</p>
-                    <div className="Slider">
+                    <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input id="popCheck" type="checkbox" checked={storeState.popActive} onClick={()=>toggleFilter('pop')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
                 </div>
 
                 <div className="inputFields">
-                    <input placeholder="Population"/>
+                    <input id="popInput" type="number" placeholder="Population" value={filterState.pop  > 0 ? JSON.stringify(filterState.pop)  : ''}onChange={()=>handleNumberInput('pop')}/>
                     <form>
-                        <select>
-                            <option value="greater">Larger than input</option>
+                        <select id="popGreater" value={filterState.popGreater  ? 'greater' : 'lesser'} onChange={()=>toggleGreaterThan('pop')}>
                             <option value="lesser">Smaller than input</option>
+                            <option value="greater">Larger than input</option>
                         </select>
                     </form>
                 </div>
@@ -87,9 +122,9 @@ function FilterDisplay() {
             <div className="Filter Region">
                 <div className="FilterTitle">  
                     <p>Region</p>
-                    <div className="Slider">
+                    <div className="SliderDiv">
                         <label className="switch">
-                            <input type="checkbox"/>
+                            <input id="regionCheck" type="checkbox" checked={storeState.regionsActive} onClick={()=>toggleFilter('regions')}/>
                             <span className="slider round"/>
                         </label>
                     </div>

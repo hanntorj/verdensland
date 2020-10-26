@@ -1,93 +1,33 @@
-import React, { Component } from 'react'
-import Wish from '../svg/wish.svg'
-import WishFilled from '../svg/wish_filled.svg'
-import Flag from '../svg/flag.svg'
-import FlagFilled from '../svg/flag_filled.svg'
+import React from "react";
+import { CountrySummaryInfo } from "../Interfaces";
+import UserDataButtons from './UserDataButtons'
 
-interface Props{
-    countryID: string,
+export default function Country({
+  alpha2Code,
+  name,
+  capital,
+  population,
+  region,
+}: CountrySummaryInfo) {
 
-    wish: boolean, //Disse hentes fra databasen og brukes for at symbolene skal settes på refresh 
-    flag: boolean
-}
-
-interface State{
-    name: string,
-    region: string,
-    population: number,
-    capital: string,
-    language: string,
-    wish: boolean,
-    flag: boolean,
-    wishSVG: any,
-    flagSVG: any
-}
-
-export default class Country extends Component<Props, State> {
-    constructor(Props: {countryID : string, wish: boolean, flag: boolean}){
-        super(Props)
-
-        let tempWish = Props.wish ? WishFilled : Wish
-        let tempFlag = Props.flag ? FlagFilled : Flag
-        
-        this.state = {
-            name: 'Loading',
-            region: 'Loading',
-            population: 4,
-            capital: "Loading",
-            language: "Loading",
-            wish: Props.wish,
-            flag: Props.flag,
-            wishSVG: tempWish,
-            flagSVG: tempFlag,
+  return (
+    <div className="character">
+      <img
+        src={
+          "https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" +
+          alpha2Code +
+          ".svg"
         }
-        
-        let apiURL = 'http://localhost:8080/api/country/' + this.props.countryID
-        fetch(apiURL)
-            .then(response => response.json())
-            .then(response => {
-                let country = response[0]
-                this.setState({name: country.name, 
-                    region: country.region, 
-                    population: country.population, 
-                    capital: country.capital,
-                    language: country.demonym
-                })
-            })
-            .catch(err => {console.log(err)})
-    }
-
-    handleFlag() {
-        this.setState({flagSVG: this.state.flag ? Flag : FlagFilled, flag: !this.state.flag})
-        // TODO: Legg inn lagring tel database 
-
-    }
-
-    handleWish() {
-        this.setState({wishSVG: this.state.wish ? Wish : WishFilled, wish: !this.state.wish})
-    }
-
-    render() {
-        return (
-            <div>
-                <img src={"https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" + this.props.countryID + ".svg"} alt={this.props.countryID} width='400px' height="200px"></img>
-                <div className="ButtonBox">
-                    <button className="SVGButton" onClick={() => this.handleFlag()}>
-                        <img src={this.state.flagSVG} alt="wish" width="40px" height="40px"/>
-                        <p>Visited</p>
-                    </button>
-                    <button className="SVGButton" onClick={() => this.handleWish()}>
-                        <img src={this.state.wishSVG} alt="wish" width="40px" height="40px"/>
-                        <p>Wish to travel</p>
-                    </button>
-                </div>
-                <h2>{this.state.name}</h2>
-                <p> Region: {this.state.region} <br/>
-                    Capital: {this.state.capital} <br/> 
-                    Language: {this.state.language} <br/>
-                    Population: {this.state.population} <br/>
-                </p>
-            </div>
-        )
-    }
+        alt={alpha2Code}
+        width="400px"
+        height="200px"
+      ></img>
+      <h2>{name}</h2>
+      <UserDataButtons alpha={alpha2Code!}/>
+      <div>capital: {capital}</div>
+      <div>Population: {population}</div>
+      <div>Region: {region}</div>
+      {/* <Link to={`country/${alpha2Code}`}>See more</Link> */}
+    </div>
+  );
 }
