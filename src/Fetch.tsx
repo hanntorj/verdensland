@@ -67,5 +67,5 @@ export async function getCountryMoreInfo({
   )
   const data = await response.json();
   
-  handleResponse(data);
+  handleResponse(data[0]);
 }

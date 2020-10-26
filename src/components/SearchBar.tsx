@@ -5,9 +5,11 @@ import {
 } from "../Interfaces";
 import { getCountryList } from "../Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import { setCountriesAction, setSearchStringAction, setSkipAction, reduxState } from "../app/store";
 
 function SearchBar() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const setCountries = (countries : CountriesResponse) => {dispatch(setCountriesAction(countries))};
   const searchString = useSelector((state: reduxState) => state.searchString);
@@ -22,6 +24,7 @@ function SearchBar() {
 
   const handleSubmit = () => {
     setSkip(0)
+    // history.push("/");
     const countriesRequest: searchCountries = {
       searchString,
       handleResponse,
@@ -52,6 +55,7 @@ function SearchBar() {
         <button className="button" type="button" onClick={handleSubmit}>
           Søk
         </button>
+   
       </div>
     </div>
   );

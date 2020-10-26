@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {
   setCountryClickedAction,
   reduxState
@@ -50,8 +50,10 @@ function CountryDisplayMoreInfo() {
         <div>capital: {countryClicked.capital}</div>
         <div>Population: {countryClicked.population}</div>
         <div>Region: {countryClicked.region}</div>
+        <Link to={"/"}>
+        Back to main page
+      </Link>
       </div>
-      {console.log(JSON.stringify(countryClicked))}
     </div>
   );
 }
