@@ -35,31 +35,8 @@ function FilterDisplay() {
     }
 
     useLayoutEffect(()=>{
-        // Hook that handles display of component on refreshes
+        // Hook that handles display of regional buttons on refreshes
 
-        //Sliders:
-        let regionSlider : HTMLInputElement = (document.getElementById('regionCheck') as HTMLInputElement)!
-        let popSlider    : HTMLInputElement = (document.getElementById('popCheck')    as HTMLInputElement)!
-        let areaSlider   : HTMLInputElement = (document.getElementById('areaCheck')   as HTMLInputElement)!
-        regionSlider.checked = storeState.regionsActive
-        popSlider.checked = storeState.popActive
-        areaSlider.checked = storeState.areaActive
-
-
-        //Area & population: 
-        let areaInput : HTMLInputElement = (document.getElementById('areaInput') as HTMLInputElement)!
-        let popInput  : HTMLInputElement = (document.getElementById('popInput')  as HTMLInputElement)!
-        areaInput.value = filterState.area > 0 ? JSON.stringify(filterState.area) : ''
-        popInput.value  = filterState.pop  > 0 ? JSON.stringify(filterState.pop)  : ''
-        
-        //Greater than-fields: 
-        let areaSelector : HTMLSelectElement = (document.getElementById("areaGreater") as HTMLSelectElement)!
-        let popSelector  : HTMLSelectElement = (document.getElementById("popGreater")  as HTMLSelectElement)!
-        areaSelector.value = filterState.areaGreater ? 'greater' : 'lesser'
-        popSelector.value  = filterState.popGreater  ? 'greater' : 'lesser'
-
-
-        //Regional buttons:
         for(var x in regions){
             let region : string = regions[x]
             if(filterState.regions.includes(region)){
@@ -103,16 +80,16 @@ function FilterDisplay() {
                     <p>Area</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="areaCheck" type="checkbox" onClick={()=>toggleFilter('area')}/>
+                            <input id="areaCheck" type="checkbox" checked={storeState.areaActive} onClick={()=>toggleFilter('area')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
                 </div>
 
                 <div className="inputFields">
-                    <input type="number" id="areaInput" placeholder="Area" onChange={()=>handleNumberInput('area')}/>
+                    <input type="number" id="areaInput" placeholder="Area" value={filterState.area > 0 ? JSON.stringify(filterState.area) : ''} onChange={()=>handleNumberInput('area')}/>
                     <form>
-                        <select id="areaGreater" onChange={()=>toggleGreaterThan('area')}>
+                        <select id="areaGreater" value={filterState.areaGreater ? 'greater' : 'lesser'} onChange={()=>toggleGreaterThan('area')}>
                             <option value="lesser">Smaller than input</option>
                             <option value="greater">Larger than input</option>
                         </select>
@@ -125,16 +102,16 @@ function FilterDisplay() {
                     <p>Population</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="popCheck" type="checkbox" onClick={()=>toggleFilter('pop')}/>
+                            <input id="popCheck" type="checkbox" checked={storeState.popActive} onClick={()=>toggleFilter('pop')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
                 </div>
 
                 <div className="inputFields">
-                    <input id="popInput" type="number" placeholder="Population" onChange={()=>handleNumberInput('pop')}/>
+                    <input id="popInput" type="number" placeholder="Population" value={filterState.pop  > 0 ? JSON.stringify(filterState.pop)  : ''}onChange={()=>handleNumberInput('pop')}/>
                     <form>
-                        <select id="popGreater" onChange={()=>toggleGreaterThan('pop')}>
+                        <select id="popGreater" value={filterState.popGreater  ? 'greater' : 'lesser'} onChange={()=>toggleGreaterThan('pop')}>
                             <option value="lesser">Smaller than input</option>
                             <option value="greater">Larger than input</option>
                         </select>
@@ -147,7 +124,7 @@ function FilterDisplay() {
                     <p>Region</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="regionCheck" type="checkbox" onClick={()=>toggleFilter('regions')}/>
+                            <input id="regionCheck" type="checkbox" checked={storeState.regionsActive} onClick={()=>toggleFilter('regions')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
