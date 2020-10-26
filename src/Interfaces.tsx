@@ -4,6 +4,9 @@ interface filters {
   popGreater: boolean; // value for sorting out countries with population greater or lesser than pop
   area: number; // threshold for area to filer on
   pop: number; // threshold for population to filter on
+  regionsActive: boolean; // boolean values for if a filter is active or not
+  areaActive: boolean;
+  popActive: boolean;
 }
 
 export interface reduxState {
@@ -12,9 +15,7 @@ export interface reduxState {
   skip: number; // Variable for the current page of the countrydisplay
   limit: number;
   filters: filters;
-  regionsActive: boolean; // boolean values for if a filter is active or not
-  areaActive: boolean;
-  popActive: boolean;
+
 }
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}

@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const routes = require("./router");
 
-mongoose.connect("mongodb://it2810-74.idi.ntnu.no:27017/prosjekt3", {
+mongoose.connect("mongodb://myUserAdmin:gruppe74@it2810-74.idi.ntnu.no:27017/prosjekt3?authSource=admin", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
