@@ -26,14 +26,10 @@ export interface CountrySummaryInfo {
   capital?: string;
   population?: number;
   region?: string;
-  wish?: boolean;
-  flag?: boolean;
-  wishSVG?: any;
-  flagSVG?: any;
 }
 
 export interface CountryMoreInfo {
-  alpha2Code?: string;
+  alpha2Code: string;
   name?: string;
   capital?: string;
   area?: number;

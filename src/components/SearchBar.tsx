@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { reduxState, CountriesResponse, searchCountries } from "../Interfaces";
+import React from "react";
+import {
+  reduxState,
+  CountriesResponse,
+  searchCountries,
+} from "../Interfaces";
 import { getCountryList } from "../Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
@@ -53,6 +57,7 @@ function SearchBar() {
             type="text"
             name="searchBar"
             onChange={(input) => handleChange(input)}
+            value = {searchString}
           />
         </label>
         <button className="button" type="button" onClick={handleSubmit}>

@@ -1,16 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { CountrySummaryInfo } from "../Interfaces";
-import Wish from '../svg/wish.svg'
-import WishFilled from '../svg/wish_filled.svg'
-import Flag from '../svg/flag.svg'
-import FlagFilled from '../svg/flag_filled.svg'
-
-interface Props{
-  countryID: string,
-  wish: boolean, //These are collected from the DB and used so that the symbols can be set on refresh
-  flag: boolean
-}
-
+import UserDataButtons from './UserDataButtons'
 
 export default function Country({
   alpha2Code,
@@ -18,10 +8,6 @@ export default function Country({
   capital,
   population,
   region,
-  wish,
-  flag,
-  wishSVG,
-  flagSVG,
 }: CountrySummaryInfo) {
 
   return (
@@ -37,6 +23,7 @@ export default function Country({
         height="200px"
       ></img>
       <h2>{name}</h2>
+      <UserDataButtons alpha={alpha2Code!}/>
       <div>capital: {capital}</div>
       <div>Population: {population}</div>
       <div>Region: {region}</div>
