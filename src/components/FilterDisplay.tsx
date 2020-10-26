@@ -11,7 +11,6 @@ function FilterDisplay() {
 
     // Fetch state from redux-store
     const filterState = useSelector((state: reduxState) => state.filters)
-    // const storeState = useSelector((state: reduxState) => state) // Should consider refactoring <filter>Active in store to be inside state.filters
 
     // Setup of  actions to change redux-store
     const dispatch = useDispatch()
@@ -34,17 +33,17 @@ function FilterDisplay() {
         }
     }
 
-    useLayoutEffect(()=>{
-        // Hook that handles display of regional buttons on refreshes
-
-        for(var x in regions){
-            let region : string = regions[x]
-            if(filterState.regions.includes(region)){
-                let button : HTMLElement = document.getElementById(region)!
-                button.setAttribute('class', 'RegionButtonClicked')
-            }
-        }
-    })
+    //useLayoutEffect(()=>{
+    //    // Hook that handles display of regional buttons on refreshes
+//
+    //    for(var x in regions){
+    //        let region : string = regions[x]
+    //        if(filterState.regions.includes(region)){
+    //            let button : HTMLElement = document.getElementById(region)!
+    //            button.setAttribute('class', 'RegionButtonClicked')
+    //        }
+    //    }
+    //})
 
     const handleNumberInput = (filter: string) => {
         // Function that handles change on inputfields
@@ -130,12 +129,12 @@ function FilterDisplay() {
                     </div>
                 </div>
                 <div className="RegionalButtons">
-                    <button className="RegionButton" id="Asia"          onClick={()=> toggleButtonClass("Asia")}>Asia</button>
-                    <button className="RegionButton" id="Africa"        onClick={()=> toggleButtonClass("Africa")}>Africa</button>
-                    <button className="RegionButton" id="Americas"      onClick={()=> toggleButtonClass("Americas")}>Americas</button>
-                    <button className="RegionButton" id="Antarctica"    onClick={()=> toggleButtonClass("Antarctica")}>Antarctica</button>
-                    <button className="RegionButton" id="Europe"        onClick={()=> toggleButtonClass("Europe")}>Europe</button>
-                    <button className="RegionButton" id="Oceania"       onClick={()=> toggleButtonClass("Oceania")}>Oceania</button>
+                    <button className={filterState.regions.includes('Asia')       ? 'RegionButtonClicked': 'RegionButton'} id="Asia"          onClick={()=> toggleButtonClass("Asia")}>Asia</button>
+                    <button className={filterState.regions.includes('Africa')     ? 'RegionButtonClicked': 'RegionButton'} id="Africa"        onClick={()=> toggleButtonClass("Africa")}>Africa</button>
+                    <button className={filterState.regions.includes('Americas')   ? 'RegionButtonClicked': 'RegionButton'} id="Americas"      onClick={()=> toggleButtonClass("Americas")}>Americas</button>
+                    <button className={filterState.regions.includes('Antarctica') ? 'RegionButtonClicked': 'RegionButton'} id="Antarctica"    onClick={()=> toggleButtonClass("Antarctica")}>Antarctica</button>
+                    <button className={filterState.regions.includes('Europe')     ? 'RegionButtonClicked': 'RegionButton'} id="Europe"        onClick={()=> toggleButtonClass("Europe")}>Europe</button>
+                    <button className={filterState.regions.includes('Oceania')    ? 'RegionButtonClicked': 'RegionButton'} id="Oceania"       onClick={()=> toggleButtonClass("Oceania")}>Oceania</button>
                 </div>
             </div> 
         </div>
