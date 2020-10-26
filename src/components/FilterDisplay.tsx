@@ -11,7 +11,7 @@ function FilterDisplay() {
 
     // Fetch state from redux-store
     const filterState = useSelector((state: reduxState) => state.filters)
-    const storeState = useSelector((state: reduxState) => state) // Should consider refactoring <filter>Active in store to be inside state.filters
+    // const storeState = useSelector((state: reduxState) => state) // Should consider refactoring <filter>Active in store to be inside state.filters
 
     // Setup of  actions to change redux-store
     const dispatch = useDispatch()
@@ -80,7 +80,7 @@ function FilterDisplay() {
                     <p>Area</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="areaCheck" type="checkbox" checked={storeState.areaActive} onClick={()=>toggleFilter('area')}/>
+                            <input id="areaCheck" type="checkbox" checked={filterState.areaActive} onClick={()=>toggleFilter('area')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
@@ -102,7 +102,7 @@ function FilterDisplay() {
                     <p>Population</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="popCheck" type="checkbox" checked={storeState.popActive} onClick={()=>toggleFilter('pop')}/>
+                            <input id="popCheck" type="checkbox" checked={filterState.popActive} onClick={()=>toggleFilter('pop')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
@@ -124,7 +124,7 @@ function FilterDisplay() {
                     <p>Region</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="regionCheck" type="checkbox" checked={storeState.regionsActive} onClick={()=>toggleFilter('regions')}/>
+                            <input id="regionCheck" type="checkbox" checked={filterState.regionsActive} onClick={()=>toggleFilter('regions')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
