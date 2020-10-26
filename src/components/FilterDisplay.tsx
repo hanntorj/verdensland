@@ -1,18 +1,20 @@
-import React, {useLayoutEffect} from 'react'
+import React from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { toggleFilterAction, addRegionAction, removeRegionAction, updatePopAction, updateAreaAction, toggleGreaterThanAction, reduxState} from '../app/store'
+import { toggleFilterAction, 
+    addRegionAction, 
+    removeRegionAction, 
+    updatePopAction, 
+    updateAreaAction, 
+    toggleGreaterThanAction, 
+    reduxState} from '../app/store'
 import '../css/sliders.css'
 
 function FilterDisplay() {
 
-    var regions = [
-        "Africa", "Americas", "Antarctica", "Asia", "Europe", "Oceania"
-    ]
-
     // Fetch state from redux-store
     const filterState = useSelector((state: reduxState) => state.filters)
 
-    // Setup of  actions to change redux-store
+    // Setup of actions to modify redux-store
     const dispatch = useDispatch()
     const addRegion         = (id : string)        => {dispatch(addRegionAction(id))}
     const removeRegion      = (id : string)        => {dispatch(removeRegionAction(id))}
@@ -21,14 +23,11 @@ function FilterDisplay() {
     const toggleGreaterThan = (filter : string)    => {dispatch(toggleGreaterThanAction(filter))}
     const toggleFilter      = (filterType: string) => {dispatch(toggleFilterAction(filterType))}
 
-    function toggleButtonClass(id : string){
+    const toggleButtonClass = (id : string) => {
         // Function that toggle the display of a button when it is clicked.
-        let button : HTMLElement = document.getElementById(id)!
         if(! filterState.regions.includes(id)){
-            button.setAttribute("class", "RegionButtonClicked")
             addRegion(id)
         } else {
-            button.setAttribute("class", "RegionButton")
             removeRegion(id)
         }
     }
