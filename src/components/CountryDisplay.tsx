@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  reduxState,
   GetCountryList,
   CountriesResponse,
   CountrySummaryInfo,
@@ -7,7 +8,7 @@ import {
 import { getCountryList } from "../Fetch";
 import Country from "./Country";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { setCountriesAction, reduxState, setSkipAction } from "../app/store";
+import { setCountriesAction, setSkipAction } from "../app/store";
 
 function CountryDisplay() {
   const dispatch = useDispatch();

@@ -1,7 +1,8 @@
 import React, {useLayoutEffect} from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { toggleFilterAction, addRegionAction, removeRegionAction, updatePopAction, updateAreaAction, toggleGreaterThanAction, reduxState} from '../app/store'
+import { toggleFilterAction, addRegionAction, removeRegionAction, updatePopAction, updateAreaAction, toggleGreaterThanAction} from '../app/store'
 import '../css/sliders.css'
+import { reduxState } from '../Interfaces'
 
 function FilterDisplay() {
 

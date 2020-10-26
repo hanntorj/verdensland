@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import {
+  reduxState,
   CountriesResponse,
   searchCountries,
 } from "../Interfaces";
 import { getCountryList } from "../Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { setCountriesAction, setSearchStringAction, setSkipAction, reduxState } from "../app/store";
+import { setCountriesAction, setSearchStringAction, setSkipAction} from "../app/store";
 
 function SearchBar() {
   const dispatch = useDispatch();

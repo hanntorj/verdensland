@@ -1,24 +1,6 @@
 import { createStore } from 'redux'
 import { loadState, saveState } from './sessionStorage'
-import {CountriesResponse} from '../Interfaces'
-
-interface filters{
-  regions: Array<string>          // List of current regions to filter on
-  areaGreater : boolean           // value for sorting out countries with area greater or lesser than area
-  popGreater : boolean            // value for sorting out countries with population greater or lesser than pop
-  area: number                    // threshold for area to filer on
-  pop : number                    // threshold for population to filter on
-}
-export interface reduxState{
-  currentCountries: CountriesResponse // List of alpha2code for the current countries that should be visible
-  searchString: string
-  skip : number            // Variable for the current page of the countrydisplay
-  limit : number
-  filters : filters
-  regionsActive : boolean         // boolean values for if a filter is active or not
-  areaActive: boolean
-  popActive: boolean
-}
+import {CountriesResponse, reduxState} from '../Interfaces'
 
 const initialState : reduxState = sessionStorage.getItem("reduxState") ? JSON.parse(sessionStorage.getItem("reduxState")!) : {
   currentCountries: [],
@@ -185,23 +167,3 @@ export const updateAreaAction = (number: number) => ({
   type: "UPDATE_AREA",
   payload: number
 })
-
-//export default configureStore({
-//  reducer: {
-//    //TODO
-//  }
-//})
-
-//eks
-// import { configureStore } from '@reduxjs/toolkit'
-// import usersReducer from '../features/users/usersSlice'
-// import postsReducer from '../features/posts/postsSlice'
-// import commentsReducer from '../features/comments/commentsSlice'
-// 
-// export default configureStore({
-//   reducer: {
-//     users: usersReducer,
-//     posts: postsReducer,
-//     comments: commentsReducer
-//   }
-// })
