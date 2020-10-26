@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import {
-  GetCountryList,
   CountriesResponse,
   CountrySummaryInfo,
 } from "../Interfaces";
-import { getCountryList } from "../Fetch";
+import { GetCountryList, getCountryList } from "../Fetch";
 import Country from "./Country";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, reduxState, setSkipAction } from "../app/store";
