@@ -2,22 +2,22 @@ import { createStore } from 'redux'
 import { loadState, saveState } from './sessionStorage'
 import {CountriesResponse} from '../Interfaces'
 
-interface filters{
+interface Filters{
   regions: Array<string>          // List of current regions to filter on
   areaGreater : boolean           // value for sorting out countries with area greater or lesser than area
   popGreater : boolean            // value for sorting out countries with population greater or lesser than pop
   area: number                    // threshold for area to filer on
   pop : number                    // threshold for population to filter on
+  regionsActive: boolean          // boolean values for if a filter is active or not
+  areaActive: boolean
+  popActive: boolean
 }
 export interface reduxState{
   currentCountries: CountriesResponse // List of alpha2code for the current countries that should be visible
   searchString: string
-  skip : number            // Variable for the current page of the countrydisplay
+  skip : number                       // Variable for the current page of the countrydisplay
   limit : number
-  filters : filters
-  regionsActive : boolean         // boolean values for if a filter is active or not
-  areaActive: boolean
-  popActive: boolean
+  filters : Filters
 }
 
 const initialState : reduxState = sessionStorage.getItem("reduxState") ? JSON.parse(sessionStorage.getItem("reduxState")!) : {
@@ -30,11 +30,11 @@ const initialState : reduxState = sessionStorage.getItem("reduxState") ? JSON.pa
     areaGreater: false,
     popGreater:  false,
     pop: 0, 
-    area: 0
+    area: 0,
+    regionsActive: false,
+    areaActive : false, 
+    popActive: false,
   },
-  regionsActive: false,
-  areaActive : false, 
-  popActive: false,
 
 }
 
@@ -93,17 +93,26 @@ function reducer(state : any, {type, payload} : {type: string, payload: string|b
           console.log("Got into the case")
           return {
             ...state, 
-            regionsActive: !state.regionsActive
+            filters: {
+              ...state.filters, 
+              regionsActive: !state.filters.regionsActive
+            }
           }
         case 'area':
           return {
             ...state, 
-            areaActive: !state.areaActive
+            filters: {
+              ...state.filters, 
+              areaActive: !state.filters.areaActive
+            }
           }
         case 'pop':
           return {
             ...state, 
-            popActive: !state.popActive
+            filters: {
+              ...state.filters,
+              popActive: !state.filters.popActive
+            }
           }
         default: 
           return state;
@@ -137,10 +146,13 @@ function reducer(state : any, {type, payload} : {type: string, payload: string|b
 const currentState = loadState(initialState)
 
 export const store = createStore(reducer, currentState)
+
+//Linking the store up to sessionStorage
 store.subscribe(()=>{
   saveState(store.getState())
 })
 
+//Actions for modifying the redux-store
 export const setCountriesAction = (countries : CountriesResponse) => ({
   type: 'SET_COUNTRIES',
   payload: countries
@@ -185,23 +197,3 @@ export const updateAreaAction = (number: number) => ({
   type: "UPDATE_AREA",
   payload: number
 })
-
-//export default configureStore({
-//  reducer: {
-//    //TODO
-//  }
-//})
-
-//eks
-// import { configureStore } from '@reduxjs/toolkit'
-// import usersReducer from '../features/users/usersSlice'
-// import postsReducer from '../features/posts/postsSlice'
-// import commentsReducer from '../features/comments/commentsSlice'
-// 
-// export default configureStore({
-//   reducer: {
-//     users: usersReducer,
-//     posts: postsReducer,
-//     comments: commentsReducer
-//   }
-// })

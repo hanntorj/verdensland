@@ -1,19 +1,20 @@
-import React, {useLayoutEffect} from 'react'
+import React from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { toggleFilterAction, addRegionAction, removeRegionAction, updatePopAction, updateAreaAction, toggleGreaterThanAction, reduxState} from '../app/store'
+import { toggleFilterAction, 
+    addRegionAction, 
+    removeRegionAction, 
+    updatePopAction, 
+    updateAreaAction, 
+    toggleGreaterThanAction, 
+    reduxState} from '../app/store'
 import '../css/sliders.css'
 
 function FilterDisplay() {
 
-    var regions = [
-        "Africa", "Americas", "Antarctica", "Asia", "Europe", "Oceania"
-    ]
-
     // Fetch state from redux-store
     const filterState = useSelector((state: reduxState) => state.filters)
-    const storeState = useSelector((state: reduxState) => state) // Should consider refactoring <filter>Active in store to be inside state.filters
 
-    // Setup of  actions to change redux-store
+    // Setup of actions to modify redux-store
     const dispatch = useDispatch()
     const addRegion         = (id : string)        => {dispatch(addRegionAction(id))}
     const removeRegion      = (id : string)        => {dispatch(removeRegionAction(id))}
@@ -22,29 +23,14 @@ function FilterDisplay() {
     const toggleGreaterThan = (filter : string)    => {dispatch(toggleGreaterThanAction(filter))}
     const toggleFilter      = (filterType: string) => {dispatch(toggleFilterAction(filterType))}
 
-    function toggleButtonClass(id : string){
+    const toggleButtonClass = (id : string) => {
         // Function that toggle the display of a button when it is clicked.
-        let button : HTMLElement = document.getElementById(id)!
         if(! filterState.regions.includes(id)){
-            button.setAttribute("class", "RegionButtonClicked")
             addRegion(id)
         } else {
-            button.setAttribute("class", "RegionButton")
             removeRegion(id)
         }
     }
-
-    useLayoutEffect(()=>{
-        // Hook that handles display of regional buttons on refreshes
-
-        for(var x in regions){
-            let region : string = regions[x]
-            if(filterState.regions.includes(region)){
-                let button : HTMLElement = document.getElementById(region)!
-                button.setAttribute('class', 'RegionButtonClicked')
-            }
-        }
-    })
 
     const handleNumberInput = (filter: string) => {
         // Function that handles change on inputfields
@@ -80,7 +66,7 @@ function FilterDisplay() {
                     <p>Area</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="areaCheck" type="checkbox" checked={storeState.areaActive} onClick={()=>toggleFilter('area')}/>
+                            <input id="areaCheck" type="checkbox" checked={filterState.areaActive} onClick={()=>toggleFilter('area')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
@@ -102,7 +88,7 @@ function FilterDisplay() {
                     <p>Population</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="popCheck" type="checkbox" checked={storeState.popActive} onClick={()=>toggleFilter('pop')}/>
+                            <input id="popCheck" type="checkbox" checked={filterState.popActive} onClick={()=>toggleFilter('pop')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
@@ -124,18 +110,18 @@ function FilterDisplay() {
                     <p>Region</p>
                     <div className="SliderDiv">
                         <label className="switch">
-                            <input id="regionCheck" type="checkbox" checked={storeState.regionsActive} onClick={()=>toggleFilter('regions')}/>
+                            <input id="regionCheck" type="checkbox" checked={filterState.regionsActive} onClick={()=>toggleFilter('regions')}/>
                             <span className="slider round"/>
                         </label>
                     </div>
                 </div>
                 <div className="RegionalButtons">
-                    <button className="RegionButton" id="Asia"          onClick={()=> toggleButtonClass("Asia")}>Asia</button>
-                    <button className="RegionButton" id="Africa"        onClick={()=> toggleButtonClass("Africa")}>Africa</button>
-                    <button className="RegionButton" id="Americas"      onClick={()=> toggleButtonClass("Americas")}>Americas</button>
-                    <button className="RegionButton" id="Antarctica"    onClick={()=> toggleButtonClass("Antarctica")}>Antarctica</button>
-                    <button className="RegionButton" id="Europe"        onClick={()=> toggleButtonClass("Europe")}>Europe</button>
-                    <button className="RegionButton" id="Oceania"       onClick={()=> toggleButtonClass("Oceania")}>Oceania</button>
+                    <button className={filterState.regions.includes('Asia')       ? 'RegionButtonClicked': 'RegionButton'} id="Asia"          onClick={()=> toggleButtonClass("Asia")}>Asia</button>
+                    <button className={filterState.regions.includes('Africa')     ? 'RegionButtonClicked': 'RegionButton'} id="Africa"        onClick={()=> toggleButtonClass("Africa")}>Africa</button>
+                    <button className={filterState.regions.includes('Americas')   ? 'RegionButtonClicked': 'RegionButton'} id="Americas"      onClick={()=> toggleButtonClass("Americas")}>Americas</button>
+                    <button className={filterState.regions.includes('Antarctica') ? 'RegionButtonClicked': 'RegionButton'} id="Antarctica"    onClick={()=> toggleButtonClass("Antarctica")}>Antarctica</button>
+                    <button className={filterState.regions.includes('Europe')     ? 'RegionButtonClicked': 'RegionButton'} id="Europe"        onClick={()=> toggleButtonClass("Europe")}>Europe</button>
+                    <button className={filterState.regions.includes('Oceania')    ? 'RegionButtonClicked': 'RegionButton'} id="Oceania"       onClick={()=> toggleButtonClass("Oceania")}>Oceania</button>
                 </div>
             </div> 
         </div>
