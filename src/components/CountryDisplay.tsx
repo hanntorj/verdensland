@@ -12,13 +12,16 @@ import { setCountriesAction, setSkipAction } from "../app/store";
 
 function CountryDisplay() {
   const dispatch = useDispatch();
-  const setCountries = (countries : CountriesResponse) => {dispatch(setCountriesAction(countries))};
+  const setCountries = (countries: CountriesResponse) => {
+    dispatch(setCountriesAction(countries));
+  };
   const countries = useSelector((state: reduxState) => state.currentCountries);
   const searchString = useSelector((state: reduxState) => state.searchString);
   const skip = useSelector((state: reduxState) => state.skip);
-  const setSkip = (skip : number) => {dispatch(setSkipAction(skip))};
+  const setSkip = (skip: number) => {
+    dispatch(setSkipAction(skip));
+  };
   const limit = useSelector((state: reduxState) => state.limit);
-
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
     if (countriesResponse) setCountries(countriesResponse);
