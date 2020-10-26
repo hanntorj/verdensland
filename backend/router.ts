@@ -43,7 +43,6 @@ router.get("/name/:id", async (req, res) => {
 // Get all countries from id
 //nb!! case sensitive
 router.get("/countries/:id", async (req, res) => {
-  const test = req.params.id;
   const country = await Country.find();
   return res.send(country);
 });
