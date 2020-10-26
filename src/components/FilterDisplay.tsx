@@ -33,18 +33,6 @@ function FilterDisplay() {
         }
     }
 
-    //useLayoutEffect(()=>{
-    //    // Hook that handles display of regional buttons on refreshes
-//
-    //    for(var x in regions){
-    //        let region : string = regions[x]
-    //        if(filterState.regions.includes(region)){
-    //            let button : HTMLElement = document.getElementById(region)!
-    //            button.setAttribute('class', 'RegionButtonClicked')
-    //        }
-    //    }
-    //})
-
     const handleNumberInput = (filter: string) => {
         // Function that handles change on inputfields
         let inputField : HTMLInputElement = (document.getElementById(filter+"Input") as HTMLInputElement)!
