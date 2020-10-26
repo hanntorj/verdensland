@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from 'react-router-dom'
 import {
-  setCountryClickedAction,
-  reduxState
+  setCountryClickedAction
 } from "../app/store";
 import { getCountryMoreInfo } from "../Fetch";
-import { CountryMoreInfo, GetCountryMoreInfo } from "../Interfaces";
+import { CountryMoreInfo, GetCountryMoreInfo, reduxState } from "../Interfaces";
 import UserDataButtons from "./UserDataButtons";
 
 function CountryDisplayMoreInfo() {

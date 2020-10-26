@@ -40,21 +40,15 @@ export interface CountryMoreInfo {
   currencies?: string;
 }
 
-export interface searchCountries {
-  searchString: string;
-  handleResponse: (countries: CountriesResponse) => void;
-  limit: number;
-  skip: number;
-}
-
-export interface GetCountryMoreInfo {
-  alpha2Code: string;
-  handleResponse: (country: CountryMoreInfo) => void;
-}
-
 export interface GetCountryList {
   searchString: string;
   handleResponse: (countries: CountriesResponse) => void;
   limit: number;
   skip: number;
+}
+
+
+export interface GetCountryMoreInfo {
+  alpha2Code: string;
+  handleResponse: (country: CountryMoreInfo) => void;
 }

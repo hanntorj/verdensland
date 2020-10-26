@@ -1,5 +1,5 @@
 import React from "react";
-import { reduxState, CountriesResponse, searchCountries } from "../Interfaces";
+import { reduxState, CountriesResponse, GetCountryList } from "../Interfaces";
 import { getCountryList } from "../Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -32,7 +32,7 @@ function SearchBar() {
   const handleSubmit = () => {
     setSkip(0);
     // history.push("/");
-    const countriesRequest: searchCountries = {
+    const countriesRequest: GetCountryList = {
       searchString,
       handleResponse,
       limit,
@@ -60,7 +60,7 @@ function SearchBar() {
           />
         </label>
         <button className="button" type="button" onClick={handleSubmit}>
-          Søk
+          Search
         </button>
       </div>
     </div>
