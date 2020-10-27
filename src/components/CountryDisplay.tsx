@@ -37,6 +37,8 @@ function CountryDisplay() {
       skip,
     };
     getCountryList(countryListRequest);
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip, sort]);
 
   const handleNextClick = () => {
@@ -57,6 +59,9 @@ function CountryDisplay() {
             return <Country key={country.alpha2Code} {...country} />;
           })}
         </ul>
+      )}
+      {!!! countries.length  && (
+        <p>No countries to display</p>
       )}
       <div>
         {!!skip && (
