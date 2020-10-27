@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from 'react-router-dom'
-import {
-  setCountryClickedAction
-} from "../app/store";
+import { Link, useLocation } from "react-router-dom";
+import { setCountryClickedAction } from "../app/store";
 import { getCountryMoreInfo } from "../Fetch";
 import { CountryMoreInfo, GetCountryMoreInfo, reduxState } from "../Interfaces";
 import UserDataButtons from "./UserDataButtons";
 
 function CountryDisplayMoreInfo() {
-  const alpha2Code = useLocation().pathname.replace('/country/','');
+  const alpha2Code = useLocation().pathname.replace("/country/", "");
 
   const dispatch = useDispatch();
   const setCountryClicked = (countryClicked: CountryMoreInfo) => {
@@ -49,9 +47,13 @@ function CountryDisplayMoreInfo() {
         <div>capital: {countryClicked.capital}</div>
         <div>Population: {countryClicked.population}</div>
         <div>Region: {countryClicked.region}</div>
-        <Link to={"/"}>
-        Back to main page
-      </Link>
+        <div>
+          <h3>Bordering countries:</h3>
+          {countryClicked.borders.map((neighbour) => (
+              <Link to={`country/${neighbour}`}>{neighbour}, </Link>
+          ))}
+        </div>
+        <Link to={"/"}>Back</Link>
       </div>
     </div>
   );
