@@ -31,7 +31,7 @@ function SearchBar() {
 
   const handleSubmit = () => {
     setSkip(0);
-    // history.push("/");
+    // history.push('/')
     const countriesRequest: GetCountryList = {
       searchString,
       handleResponse,
@@ -59,10 +59,14 @@ function SearchBar() {
             value={searchString}
           />
         </label>
-        <button className="button" type="button" onClick={handleSubmit}>
+        <button className="button" type="button"  onClick={handleSubmit}>
           Search
         </button>
       </div>
+      {
+  console.log(history, 'test')
+
+      }
     </div>
   );
 }

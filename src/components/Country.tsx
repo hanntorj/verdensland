@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { CountrySummaryInfo } from "../Interfaces";
 import UserDataButtons from "./UserDataButtons";
 
-
 function Country({
   alpha2Code,
   name,

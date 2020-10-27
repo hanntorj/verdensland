@@ -1,7 +1,7 @@
 import { GetCountryMoreInfo, GetCountryList } from "./Interfaces";
 
-const url = "https://restcountries.eu/rest/v2/";
-// const url = "http://localhost:8080/api/";
+// const url = "https://restcountries.eu/rest/v2/";
+const url = "http://localhost:8080/api/";
 
 export async function getCountryList({
   searchString,
