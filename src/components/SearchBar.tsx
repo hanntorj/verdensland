@@ -1,19 +1,28 @@
 import React from "react";
-import {
-  CountriesResponse,
-  searchCountries,
-} from "../Interfaces";
+import { reduxState, CountriesResponse, GetCountryList } from "../Interfaces";
 import { getCountryList } from "../Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { setCountriesAction, setSearchStringAction, setSkipAction, reduxState } from "../app/store";
+import { useHistory } from "react-router-dom";
+import {
+  setCountriesAction,
+  setSearchStringAction,
+  setSkipAction,
+} from "../app/store";
 
 function SearchBar() {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const setCountries = (countries : CountriesResponse) => {dispatch(setCountriesAction(countries))};
+  const setCountries = (countries: CountriesResponse) => {
+    dispatch(setCountriesAction(countries));
+  };
   const searchString = useSelector((state: reduxState) => state.searchString);
-  const setSearchString = (searchString : string) => {dispatch(setSearchStringAction(searchString))};
+  const setSearchString = (searchString: string) => {
+    dispatch(setSearchStringAction(searchString));
+  };
   const skip = useSelector((state: reduxState) => state.skip);
-  const setSkip = (skip : number) => {dispatch(setSkipAction(skip))};
+  const setSkip = (skip: number) => {
+    dispatch(setSkipAction(skip));
+  };
   const limit = useSelector((state: reduxState) => state.limit);
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
@@ -21,8 +30,9 @@ function SearchBar() {
   };
 
   const handleSubmit = () => {
-    setSkip(0)
-    const countriesRequest: searchCountries = {
+    setSkip(0);
+    // history.push('/')
+    const countriesRequest: GetCountryList = {
       searchString,
       handleResponse,
       limit,
@@ -46,13 +56,17 @@ function SearchBar() {
             type="text"
             name="searchBar"
             onChange={(input) => handleChange(input)}
-            value = {searchString}
+            value={searchString}
           />
         </label>
-        <button className="button" type="button" onClick={handleSubmit}>
-          Søk
+        <button className="button" type="button"  onClick={handleSubmit}>
+          Search
         </button>
       </div>
+      {
+  console.log(history, 'test')
+
+      }
     </div>
   );
 }

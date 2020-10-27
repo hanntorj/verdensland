@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { toggleFilterAction, 
+import { 
+    toggleFilterAction, 
     addRegionAction, 
     removeRegionAction, 
     updatePopAction, 
     updateAreaAction, 
-    toggleGreaterThanAction, 
-    reduxState} from '../app/store'
+    toggleGreaterThanAction} from '../app/store'
+import { reduxState } from '../Interfaces'
 import '../css/sliders.css'
 
 function FilterDisplay() {
@@ -30,7 +31,7 @@ function FilterDisplay() {
         } else {
             removeRegion(id)
         }
-    }
+      }
 
     const handleNumberInput = (filter: string) => {
         // Function that handles change on inputfields
@@ -123,7 +124,8 @@ function FilterDisplay() {
                     <button className={filterState.regions.includes('Europe')     ? 'RegionButtonClicked': 'RegionButton'} id="Europe"        onClick={()=> toggleButtonClass("Europe")}>Europe</button>
                     <button className={filterState.regions.includes('Oceania')    ? 'RegionButtonClicked': 'RegionButton'} id="Oceania"       onClick={()=> toggleButtonClass("Oceania")}>Oceania</button>
                 </div>
-            </div> 
+            </div>
+
         </div>
     )
 }

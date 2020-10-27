@@ -8,8 +8,8 @@ const router = express.Router();
 
 // Get all country information
 router.get("/all", async (req, res) => {
-  const limit = Number(req.query.limit)
-  const skip = Number(req.query.skip)
+  const limit = Number(req.query.limit);
+  const skip = Number(req.query.skip);
   try {
     const country = await Country.find(
       {},
@@ -43,7 +43,6 @@ router.get("/name/:id", async (req, res) => {
 // Get all countries from id
 //nb!! case sensitive
 router.get("/countries/:id", async (req, res) => {
-  const test = req.params.id;
   const country = await Country.find();
   return res.send(country);
 });
@@ -58,17 +57,17 @@ router.get("/country/:id", async (req, res) => {
 //Search
 
 router.get("/", async (req, res) => {
-  const limit = Number(req.query.limit)
-  const skip = Number(req.query.skip)
+  const limit = Number(req.query.limit);
+  const skip = Number(req.query.skip);
   const search = req.query.search;
   try {
     const country = await Country.find(
       {
         $or: [
-          { name: {$regex: "^" + search, $options: "im" }},
+          { name: { $regex: "^" + search, $options: "im" } },
           { region: { $regex: "^" + search, $options: "im" } },
-          { capital:{ $regex: "^" + search, $options: "im" }},
-          { alpha2Code:{ $regex: "^" + search, $options: "im" }},
+          { capital: { $regex: "^" + search, $options: "im" } },
+          { alpha2Code: { $regex: "^" + search, $options: "im" } },
         ],
       },
       {
@@ -82,10 +81,10 @@ router.get("/", async (req, res) => {
       }
     )
       .skip(skip)
-      .limit(limit)
-    return res.send(country)
+      .limit(limit);
+    return res.send(country);
   } catch (e) {
-    return res.send(e)
+    return res.send(e);
   }
 });
 module.exports = router;

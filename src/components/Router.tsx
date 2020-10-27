@@ -1,7 +1,8 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route} from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import CountryDisplay from "./CountryDisplay";
 import SearchBar from "./SearchBar"
+import CountryDisplayMoreInfo from "./CountryDisplayMoreInfo"
 
 
 export default function Router() {
@@ -10,10 +11,10 @@ export default function Router() {
       <div className="router">
         <Switch>
           <Route exact path="/">
-          <CountryDisplay/>
+            <CountryDisplay />
           </Route>
           <Route exact path="/country/:alpha2Code">
-             <h2>her skal vi ha komponent for enkeltland med mer info</h2>
+             <CountryDisplayMoreInfo/>
           </Route>
           <Route path="/search">
             <SearchBar />
