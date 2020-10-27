@@ -27,6 +27,7 @@ function CountryDisplayMoreInfo() {
       handleResponse,
     };
     getCountryMoreInfo(countryMoreInfoRequest);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alpha2Code]);
 
   return (

@@ -44,9 +44,10 @@ router.get("/name/:id", async (req, res) => {
 router.get("/country/:id", async (req, res) => {
   const id = req.params.id;
   const country = await Country.find({
+    //wrong alphacode returning
     $or: [
-      { alpha2Code: { $regex: "^" + id, $options: "i" } },
-      { alpha3Code: { $regex: "^" + id, $options: "i" } },
+      { alpha2Code: { $regex: id } },
+      //{ alpha3Code: { $regex: id } },
     ],
   });
   return res.send(country);
@@ -87,6 +88,7 @@ router.get("/", async (req, res) => {
           { region: { $regex: "^" + search, $options: "im" } },
           { capital: { $regex: "^" + search, $options: "im" } },
           { alpha2Code: { $regex: "^" + search, $options: "im" } },
+          { altSpellings: {$regex: "^" + search, $options: "im"}},
         ],
         // $and: [
         //   {

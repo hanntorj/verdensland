@@ -47,6 +47,12 @@ function SearchBar() {
     setSearchString(inputValue);
   };
 
+  const handleEnter = (event: any) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
+  }
+
   return (
     <div className="SearchBar">
       <div>
@@ -57,6 +63,7 @@ function SearchBar() {
             type="text"
             name="searchBar"
             onChange={(input) => handleChange(input)}
+            onKeyPress={handleEnter}
             value={searchString}
           />
         </label>
