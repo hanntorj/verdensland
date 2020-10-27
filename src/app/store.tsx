@@ -16,6 +16,7 @@ const initialState : reduxState = sessionStorage.getItem("reduxState")
     subregion: "",
     demonym: "",  
     currencies: "",
+    borders: [],
   },
   searchString: "",
   skip: 0,

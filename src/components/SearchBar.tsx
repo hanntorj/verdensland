@@ -63,10 +63,6 @@ function SearchBar() {
           Search
         </button>
       </div>
-      {
-  console.log(history, 'test')
-
-      }
     </div>
   );
 }

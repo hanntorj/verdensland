@@ -38,6 +38,7 @@ export interface CountryMoreInfo {
   subregion?: string;
   demonym?: string;
   currencies?: string;
+  borders: Array<string>;
 }
 
 export interface GetCountryList {
