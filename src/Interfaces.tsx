@@ -1,3 +1,5 @@
+import { SortedArray } from "typescript";
+
 interface filters {
   regions: Array<string>; // List of current regions to filter on
   areaGreater: boolean; // value for sorting out countries with area greater or lesser than area
@@ -16,6 +18,7 @@ export interface reduxState {
   skip: number; // Variable for the current page of the countrydisplay
   limit: number;
   filters: filters;
+  sort: string;
 }
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
@@ -42,6 +45,7 @@ export interface CountryMoreInfo {
 }
 
 export interface GetCountryList {
+  sort: string;
   searchString: string;
   handleResponse: (countries: CountriesResponse) => void;
   limit: number;

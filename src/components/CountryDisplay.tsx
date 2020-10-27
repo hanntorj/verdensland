@@ -17,6 +17,7 @@ function CountryDisplay() {
   };
   const countries = useSelector((state: reduxState) => state.currentCountries);
   const searchString = useSelector((state: reduxState) => state.searchString);
+  const sort = useSelector((state: reduxState) => state.sort);
   const skip = useSelector((state: reduxState) => state.skip);
   const setSkip = (skip: number) => {
     dispatch(setSkipAction(skip));
@@ -29,13 +30,14 @@ function CountryDisplay() {
 
   useEffect(() => {
     const countryListRequest: GetCountryList = {
+      sort,
       searchString,
       handleResponse,
       limit,
       skip,
     };
     getCountryList(countryListRequest);
-  }, [skip]);
+  }, [skip, sort]);
 
   const handleNextClick = () => {
     const nextSkip = skip + 1 * limit;
