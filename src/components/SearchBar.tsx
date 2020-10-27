@@ -10,7 +10,6 @@ import {
 } from "../app/store";
 
 function SearchBar() {
-  const history = useHistory();
   const dispatch = useDispatch();
   const setCountries = (countries: CountriesResponse) => {
     dispatch(setCountriesAction(countries));
@@ -19,6 +18,7 @@ function SearchBar() {
   const setSearchString = (searchString: string) => {
     dispatch(setSearchStringAction(searchString));
   };
+  const sort = useSelector((state: reduxState) => state.sort);
   const skip = useSelector((state: reduxState) => state.skip);
   const setSkip = (skip: number) => {
     dispatch(setSkipAction(skip));
@@ -33,6 +33,7 @@ function SearchBar() {
     setSkip(0);
     // history.push('/')
     const countriesRequest: GetCountryList = {
+      sort,
       searchString,
       handleResponse,
       limit,

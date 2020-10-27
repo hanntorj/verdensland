@@ -31,6 +31,7 @@ const initialState : reduxState = sessionStorage.getItem("reduxState")
     areaActive : false, 
     popActive: false,
   },
+  sort: "nameAsc",
 
 }
 
@@ -57,6 +58,12 @@ function reducer(state : any, {type, payload} : {type: string, payload: string |
         ...state,
         skip: payload,
       };
+      case "SET_SORT":
+        return {
+          ...state,
+          sort: payload,
+
+        }
     case "ADD_REGION":
       return {
         ...state,
@@ -173,6 +180,11 @@ export const setSearchStringAction = (searchString: string) => ({
 export const setSkipAction = (skip: number) => ({
   type: "SET_SKIP",
   payload: skip,
+});
+
+export const setSortAction = (sort: string) => ({
+  type: "SET_SORT",
+  payload: sort,
 });
 
 export const addRegionAction = (region: string) => ({
