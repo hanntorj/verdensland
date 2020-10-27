@@ -1,5 +1,6 @@
 import express from "express";
 const Country = require("./models/countryModel"); // new
+const userInfo = require("./models/userModel")
 const router = express.Router();
 
 //file containing all endpoints
@@ -88,4 +89,30 @@ router.get("/", async (req, res) => {
     return res.send(e)
   }
 });
+
+//router.patch("/setFlags/:databaseID/:flags/", async (req, res) => {
+//  const user = await userInfo.findOne({
+//    _id: req.params.databaseID,
+//  })
+//  user.flags = req.params.flags
+//  await user.save()
+//  res.send(user)
+//})
+
+router.get("/findUser/:databaseID", async (req, res) => {
+  const user = await userInfo.findOne({
+    _id: req.params.databaseID
+  })
+  return res.send(user)
+})
+
+// This should only be called once per user the first time they visit the page
+router.get("/requestUserID/", async (req, res) => {
+  const user = await userInfo.create({
+    flags: []
+  })
+  await user.save()
+  res.send(user)
+})
+
 module.exports = router;
