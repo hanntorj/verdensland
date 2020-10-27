@@ -90,16 +90,91 @@ router.get("/", async (req, res) => {
   }
 });
 
-//router.patch("/setFlags/:databaseID/:flags/", async (req, res) => {
-//  const user = await userInfo.findOne({
-//    _id: req.params.databaseID,
-//  })
-//  user.flags = req.params.flags
-//  await user.save()
-//  res.send(user)
-//})
+/*router.get("/setUserData/:databaseID/:flags/:wishes", async (req, res) => {
+  try {
+    const user = await userInfo.findOne({
+      _id: req.params.databaseID,
+    })
+    
+    const listParser = (param : string) => param.split('&') 
+    //console.log(listParser(""))
 
-router.get("/findUser/:databaseID", async (req, res) => {
+    user.flags = listParser(req.params.flags)
+    user.wishes = listParser(req.params.wishes)
+    await user.save()
+    res.send(user)
+    
+  } catch (error) {
+    res.status(404)
+    res.send({error: "User was not found in the database"})
+  }
+})*/
+
+router.get("/userAddWish/:userID/:alpha2code", async (req, res) => {
+  try {
+    const user = await userInfo.findOne({
+      _id: req.params.userID
+    })
+
+    user.wishes = [...user.wishes, req.params.alpha2code]
+    await user.save()
+    res.send(user)
+
+  } catch (error) {
+    res.status(404)
+    res.send({error: "Was not able to add the given country to the useres wish in the database"})
+  }
+})
+
+router.get("/userAddFlag/:userID/:alpha2code", async (req, res) => {
+  try {
+    const user = await userInfo.findOne({
+      _id: req.params.userID
+    })
+
+    user.flags = [...user.flags, req.params.alpha2code]
+    await user.save()
+    res.send(user)
+
+  } catch (error) {
+    res.status(404)
+    res.send({error: "Was not able to add the given country to the users flags in the database"})
+  }
+})
+
+router.get("/userRemoveFlag/:userID/:alpha2code", async (req, res) => {
+  try {
+    const user = await userInfo.findOne({
+      _id: req.params.userID
+    })
+
+    user.flags = user.flags.filter((alpha2code: string) => alpha2code !== req.params.alpha2code)
+    await user.save()
+    res.send(user)
+
+  } catch (error) {
+    res.status(404)
+    res.send({error: "Was not able to remove" + req.params.alpha2code + "from the given user's flags"})
+  }
+})
+
+router.get("/userRemoveWish/:userID/:alpha2code", async (req, res) => {
+  try {
+    const user = await userInfo.findOne({
+      _id: req.params.userID
+    })
+
+    user.wishes = user.wishes.filter((alpha2code: string) => alpha2code !== req.params.alpha2code)
+    await user.save()
+    res.send(user)
+
+  } catch (error) {
+    res.status(404)
+    res.send({error: "Was not able to remove" + req.params.alpha2code + "from the given user's flags"})
+  }
+})
+
+router.get("/getUserData/:databaseID", async (req, res) => {
   const user = await userInfo.findOne({
     _id: req.params.databaseID
   })
@@ -109,7 +184,8 @@ router.get("/findUser/:databaseID", async (req, res) => {
 // This should only be called once per user the first time they visit the page
 router.get("/requestUserID/", async (req, res) => {
   const user = await userInfo.create({
-    flags: []
+    flags: [],
+    wishes: []
   })
   await user.save()
   res.send(user)

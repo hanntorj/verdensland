@@ -5,6 +5,7 @@ const UserSchema = new Schema(
   {
     //_id : {type: String},
     flags: { type: Array<String>()},
+    wishes: { type: Array<String>()},
   },
   { collection: "users" }
 );
