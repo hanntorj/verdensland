@@ -10,7 +10,7 @@ const CountrySchema = new Schema(
     population: { type: Number },
     area: { type: Number },
   },
-  { collection: "prosjekt3" }
+  { collection: "countries" }
 );
 
 const country = mongoose.model("Country", CountrySchema);
