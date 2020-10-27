@@ -7,6 +7,8 @@ import {
   updatePopAction,
   updateAreaAction,
   toggleGreaterThanAction,
+  setSortAction,
+  setSkipAction,
 } from "../app/store";
 import { reduxState } from "../Interfaces";
 import "../css/sliders.css";
@@ -17,9 +19,12 @@ function FilterDisplay() {
 
   // Setup of actions to modify redux-store
   const dispatch = useDispatch();
-  const setSortAction = (sort: string) => {
-      dispatch(setSortAction(sort));
-  }
+  const setSort = (sort: string) => {
+    dispatch(setSortAction(sort));
+  };
+  const setSkip = (skip: number) => {
+    dispatch(setSkipAction(skip));
+  };
   const addRegion = (id: string) => {
     dispatch(addRegionAction(id));
   };
@@ -49,10 +54,12 @@ function FilterDisplay() {
   };
 
   const handleSort = () => {
-    let sortBy = (document.getElementById("sortBy") as HTMLInputElement).value
-    let sortOrder = (document.getElementById("sortOrder") as HTMLInputElement).value
-    let sort = "" + sortBy+sortOrder
-    // setSortAction(sort);
+    setSkip(0);
+    let sortBy = (document.getElementById("sortBy") as HTMLInputElement).value;
+    let sortOrder = (document.getElementById("sortOrder") as HTMLInputElement)
+      .value;
+    let sort = "" + sortBy + sortOrder;
+    setSort(sort);
   };
 
   const handleNumberInput = (filter: string) => {
@@ -89,15 +96,15 @@ function FilterDisplay() {
         <div className="inputFields">
           <form>
             <select id="sortBy" onChange={() => handleSort()}>
-              <option value="name">Sort alphabetically</option>
-              <option value="pop">Sort by population</option>
+              <option value="name" selected>Sort alphabetically</option>
               <option value="area">Sort by area</option>
+              <option value="pop">Sort by population</option>
             </select>
           </form>
           <form>
             <select id="sortOrder" onChange={() => handleSort()}>
+              <option value="Asc"selected>Ascending</option>
               <option value="Desc">Descending</option>
-              <option value="Asc">Ascending</option>
             </select>
           </form>
         </div>

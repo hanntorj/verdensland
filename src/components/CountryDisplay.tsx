@@ -37,7 +37,7 @@ function CountryDisplay() {
       skip,
     };
     getCountryList(countryListRequest);
-  }, [skip]);
+  }, [skip, sort]);
 
   const handleNextClick = () => {
     const nextSkip = skip + 1 * limit;
