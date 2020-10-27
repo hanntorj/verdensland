@@ -115,8 +115,10 @@ router.get("/userAddWish/:userID/:alpha2code", async (req, res) => {
     const user = await userInfo.findOne({
       _id: req.params.userID
     })
-
-    user.wishes = [...user.wishes, req.params.alpha2code]
+    
+    if (! user.wishes.includes(req.params.alpha2code)){
+      user.wishes = [...user.wishes, req.params.alpha2code]
+    }
     await user.save()
     res.send(user)
 
@@ -132,7 +134,9 @@ router.get("/userAddFlag/:userID/:alpha2code", async (req, res) => {
       _id: req.params.userID
     })
 
-    user.flags = [...user.flags, req.params.alpha2code]
+    if(! user.flags.includes(req.params.alpha2code)){
+      user.flags = [...user.flags, req.params.alpha2code]
+    }
     await user.save()
     res.send(user)
 
