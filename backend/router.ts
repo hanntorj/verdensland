@@ -96,7 +96,6 @@ router.get("/", async (req, res) => {
       {
         $or: [
           { name: { $regex: "^" + search, $options: "im" } },
-          { region: { $regex: "^" + search, $options: "im" } },
           { capital: { $regex: "^" + search, $options: "im" } },
           { alpha2Code: { $regex: search, $options: "i" } },
           { altSpellings: { $regex: search, $options: "i" } },
