@@ -1,59 +1,61 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect, useSelector, useDispatch } from 'react-redux'
+import { User, reduxState } from '../Interfaces'
+import { addFlagsAction, addWishesAction, removeFlagsAction, removeWishesAction } from '../app/store'
+import { userAddFlag, userAddWish, userRemoveFlag, userRemoveWish} from '../Fetch'
 import Wish from '../svg/wish.svg'
 import WishFilled from '../svg/wish_filled.svg'
 import Flag from '../svg/flag.svg'
 import FlagFilled from '../svg/flag_filled.svg'
 
-interface State {
-    wish : boolean,
-    flag : boolean,
-    flagSVG : any, 
-    wishSVG : any
-}
-
 interface Props {
     alpha: string,
-    //userID : string
 }
 
-export default class UserDataButtons extends Component<Props, State> {
-    constructor(props : {alpha: string}){ //
-        super(props)
-        //let tempWish = props.wish ? WishFilled : Wish
-        //let tempFlag = props.flag ? FlagFilled : Flag
+function UserDataButtons(props: Props) {
 
-        // Fetch userData from db
+    // Setup for fetching redux-store
+    const user : User = useSelector((state: reduxState) => state.user)
 
-        this.state = {
-            wish : false,   // Update these when able to fetch from db
-            flag : false,   // Update these when able to fetch from db
-            flagSVG : Flag,
-            wishSVG : Wish
+    // Setup for actions to modify redux-store
+    const dispatch = useDispatch()
+    const addFlag = (alpha: string) => dispatch(addFlagsAction(alpha))
+    const addWish = (alpha: string) => dispatch(addWishesAction(alpha))
+    const removeFlag = (alpha: string) => dispatch(removeFlagsAction(alpha))
+    const removeWish = (alpha: string) => dispatch(removeWishesAction(alpha))
+
+    const handleFlag = () => {
+        if (user.flags.includes(props.alpha)){
+            userRemoveFlag(props.alpha, user._id)
+            removeFlag(props.alpha)
+        } else {
+            userAddFlag(props.alpha, user._id)
+            addFlag(props.alpha)
         }
     }
 
-
-    handleFlag() {
-        this.setState({flagSVG: this.state.flag ? Flag : FlagFilled, flag: !this.state.flag})
-        // TODO: Legg inn lagring tel database 
-    }
-
-    handleWish() {
-        this.setState({wishSVG: this.state.wish ? Wish : WishFilled, wish: !this.state.wish})
+    const handleWish = () => {
+        if (user.wishes.includes(props.alpha)){
+            userRemoveWish(props.alpha, user._id)
+            removeWish(props.alpha)
+        } else {
+            userAddWish(props.alpha, user._id)
+            addWish(props.alpha)
+        }
     }
     
-    render() {
-        return (
-        <div className="ButtonBox">
-            <button className="SVGButton" onClick={() => this.handleFlag()}>
-                <img src={this.state.flagSVG} alt="wish" width="40px" height="40px"/>
-                <p>Visited</p>
-            </button>
-            <button className="SVGButton" onClick={() => this.handleWish()}>
-                <img src={this.state.wishSVG} alt="wish" width="40px" height="40px"/>
-                <p>Wish to travel</p>
-            </button>
-        </div>
-        )
-    }
+    return (
+    <div className="ButtonBox">
+        <button className="SVGButton" onClick={() => handleFlag()}>
+            <img src={user.flags.includes(props.alpha) ? FlagFilled : Flag} alt="wish" width="40px" height="40px"/>
+            <p>Visited</p>
+        </button>
+        <button className="SVGButton" onClick={() => handleWish()}>
+            <img src={user.wishes.includes(props.alpha) ? WishFilled : Wish} alt="wish" width="40px" height="40px"/>
+            <p>Wish to travel</p>
+        </button>
+    </div>
+    )
 }
+
+export default connect()(UserDataButtons)

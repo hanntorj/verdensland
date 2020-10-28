@@ -1,4 +1,4 @@
-import { GetCountryMoreInfo, GetCountryList, reduxState } from "./Interfaces";
+import { GetCountryMoreInfo, GetCountryList, User } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
 const url = "http://localhost:8080/api/";
@@ -30,4 +30,34 @@ export async function getCountryMoreInfo({
   const data = await response.json();
   
   handleResponse(data[0]);
+}
+
+export async function requestUserID(handleResponse: (data: User) => void) {
+  const response = await fetch(url + "requestUserID")
+  const data = await response.json()
+
+  handleResponse(data)
+}
+
+export async function getUserData(handleResponse: (data: User) => void, userID: string) {
+  const response = await fetch(url + "getUserData/"+ userID)
+  const data = await response.json()
+
+  handleResponse(data)
+}
+
+export async function userRemoveFlag(alpha: string, userID: string) {
+  const response = await fetch(url + "userRemoveFlag/" + userID + "/" + alpha)
+}
+
+export async function userRemoveWish(alpha: string, userID: string) {
+  const response = await fetch(url + "userRemoveWish/" + userID + "/" + alpha)
+}
+
+export async function userAddFlag(alpha: string, userID: string) {
+  const response = await fetch(url + "userAddFlag/" + userID + "/" + alpha)
+}
+
+export async function userAddWish(alpha: string, userID: string) {
+  const response = await fetch(url + "userAddWish/" + userID + "/" + alpha)
 }
