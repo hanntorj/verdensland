@@ -16,17 +16,17 @@ export default function CountryDisplay() {
   };
 
   return (
-      <div>
+    <div>
       {!!skip && (
         <button className="button" type="button" onClick={handlePreviousClick}>
           Previous
         </button>
-        )}
-        {!!skip && (
+      )}
+      {!!skip && (
         <button className="button" type="button" onClick={handleNextClick}>
           Next
-        </button>)}
-      </div>
-
+        </button>
+      )}
+    </div>
   );
 }

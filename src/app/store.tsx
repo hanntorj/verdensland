@@ -1,27 +1,23 @@
 import { createStore } from 'redux'
 import { loadState, saveState } from './sessionStorage'
-import {CountriesResponse} from '../Interfaces'
+import { CountriesResponse, CountryMoreInfo, reduxState } from '../Interfaces'
 
-interface Filters{
-  regions: Array<string>          // List of current regions to filter on
-  areaGreater : boolean           // value for sorting out countries with area greater or lesser than area
-  popGreater : boolean            // value for sorting out countries with population greater or lesser than pop
-  area: number                    // threshold for area to filer on
-  pop : number                    // threshold for population to filter on
-  regionsActive: boolean          // boolean values for if a filter is active or not
-  areaActive: boolean
-  popActive: boolean
-}
-export interface reduxState{
-  currentCountries: CountriesResponse // List of alpha2code for the current countries that should be visible
-  searchString: string
-  skip : number                       // Variable for the current page of the countrydisplay
-  limit : number
-  filters : Filters
-}
-
-const initialState : reduxState = sessionStorage.getItem("reduxState") ? JSON.parse(sessionStorage.getItem("reduxState")!) : {
+const initialState : reduxState = sessionStorage.getItem("reduxState") 
+  ? JSON.parse(sessionStorage.getItem("reduxState")!) 
+  : {
   currentCountries: [],
+  countryClicked: {
+    alpha2Code: "",
+    name: "",
+    capital: "",
+    area: 0,
+    population: 0,
+    region: "",
+    subregion: "",
+    demonym: "",  
+    currencies: "",
+    borders: [],
+  },
   searchString: "",
   skip: 0,
   limit: 10,
@@ -35,62 +31,76 @@ const initialState : reduxState = sessionStorage.getItem("reduxState") ? JSON.pa
     areaActive : false, 
     popActive: false,
   },
+  sort: "nameAsc",
 
 }
 
-function reducer(state : any, {type, payload} : {type: string, payload: string|boolean|number|CountriesResponse}){ //TODO: Change state from any
+function reducer(state : any, {type, payload} : {type: string, payload: string | boolean | number | CountriesResponse | CountryMoreInfo}){ //TODO: Change state from any
+  // TODO: Change state from any
   switch(type){
     case 'SET_COUNTRIES':
       return {
         ...state,
-        currentCountries : payload
-      }
-      case 'SET_SEARCHSTRING':
+        currentCountries: payload,
+      };
+    case "SET_COUNTRYCLICKED":
       return {
         ...state,
-        searchString : payload
-      }
-      case 'SET_SKIP':
+        countryClicked: payload,
+      };
+    case "SET_SEARCHSTRING":
+      return {
+        ...state,
+        searchString: payload,
+      };
+    case "SET_SKIP":
+      return {
+        ...state,
+        skip: payload,
+      };
+      case "SET_SORT":
         return {
           ...state,
-          skip : payload
+          sort: payload,
+
         }
-    case 'ADD_REGION':
+    case "ADD_REGION":
       return {
         ...state,
-        filters : {
+        filters: {
           ...state.filters,
-          regions: [...state.filters.regions, payload]
-        }
-      }
-    case 'REMOVE_REGION':
-      return{
-        ...state,
-        filters:{
-          ...state.filters, 
-          regions: state.filters.regions.filter((region:string) => region !== payload)
-        }
-      }
-    case 'UPDATE_POP': 
+          regions: [...state.filters.regions, payload],
+        },
+      };
+    case "REMOVE_REGION":
       return {
         ...state,
-        filters:{
+        filters: {
           ...state.filters,
-          pop: payload
-        }
-      }
-    case 'UPDATE_AREA': 
+          regions: state.filters.regions.filter(
+            (region: string) => region !== payload
+          ),
+        },
+      };
+    case "UPDATE_POP":
       return {
         ...state,
-        filters:{
+        filters: {
           ...state.filters,
-          area: payload
-        }
-      }
-    case 'TOGGLE_FILTER':
-      switch(payload){
-        case 'regions':
-          console.log("Got into the case")
+          pop: payload,
+        },
+      };
+    case "UPDATE_AREA":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          area: payload,
+        },
+      };
+    case "TOGGLE_FILTER":
+      switch (payload) {
+        case "regions":
           return {
             ...state, 
             filters: {
@@ -117,33 +127,33 @@ function reducer(state : any, {type, payload} : {type: string, payload: string|b
         default: 
           return state;
       }
-    case 'TOGGLE_GREATER':
-      switch(payload){
-        case 'pop':
+    case "TOGGLE_GREATER":
+      switch (payload) {
+        case "pop":
           return {
             ...state,
             filters: {
               ...state.filters,
-              popGreater: !state.filters.popGreater
-            }
-          }
-        case 'area':
+              popGreater: !state.filters.popGreater,
+            },
+          };
+        case "area":
           return {
             ...state,
             filters: {
               ...state.filters,
-              areaGreater: !state.filters.areaGreater
-            }
-          }
-        default: 
-          return state
+              areaGreater: !state.filters.areaGreater,
+            },
+          };
+        default:
+          return state;
       }
-    default: 
+    default:
       return state;
   }
 }
 
-const currentState = loadState(initialState)
+const currentState = loadState(initialState);
 
 export const store = createStore(reducer, currentState)
 
@@ -157,41 +167,50 @@ export const setCountriesAction = (countries : CountriesResponse) => ({
   type: 'SET_COUNTRIES',
   payload: countries
 })
+export const setCountryClickedAction = (countryClicked: CountryMoreInfo) => ({
+  type: "SET_COUNTRYCLICKED",
+  payload: countryClicked,
+});
 
-export const setSearchStringAction = (searchString : string) => ({
-  type: 'SET_SEARCHSTRING',
-  payload: searchString
-})
+export const setSearchStringAction = (searchString: string) => ({
+  type: "SET_SEARCHSTRING",
+  payload: searchString,
+});
 
-export const setSkipAction = (skip : number) => ({
-  type: 'SET_SKIP',
-  payload: skip
-})
+export const setSkipAction = (skip: number) => ({
+  type: "SET_SKIP",
+  payload: skip,
+});
 
-export const addRegionAction = (region : string) => ({
+export const setSortAction = (sort: string) => ({
+  type: "SET_SORT",
+  payload: sort,
+});
+
+export const addRegionAction = (region: string) => ({
   type: "ADD_REGION",
-  payload: region
-})
+  payload: region,
+});
 
 export const removeRegionAction = (region: string) => ({
   type: "REMOVE_REGION",
-  payload: region
-})
+  payload: region,
+});
 
 export const toggleGreaterThanAction = (filter: string) => ({
   type: "TOGGLE_GREATER",
-  payload: filter
-})
+  payload: filter,
+});
 
-export const toggleFilterAction = (filterType : string) => ({
+export const toggleFilterAction = (filterType: string) => ({
   type: "TOGGLE_FILTER",
-  payload: filterType
-})
+  payload: filterType,
+});
 
 export const updatePopAction = (number: number) => ({
   type: "UPDATE_POP",
-  payload: number
-})
+  payload: number,
+});
 
 export const updateAreaAction = (number: number) => ({
   type: "UPDATE_AREA",
