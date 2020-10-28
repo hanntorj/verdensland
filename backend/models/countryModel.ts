@@ -9,6 +9,8 @@ const CountrySchema = new Schema(
     region: { type: String },
     population: { type: Number },
     area: { type: Number },
+    borders: {type: Array }, 
+    altSpellings : {type: Array}
   },
   { collection: "countries" }
 );
