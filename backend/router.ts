@@ -65,6 +65,7 @@ router.get("/", async (req, res) => {
   const limit = Number(req.query.limit);
   const skip = Number(req.query.skip);
   const search = req.query.search;
+  const region = [req.query.region || ["Americas", "Polar", "Europe", "Asia", "Oceania", "Africa"]].flat()
   let mySort;
   if (req.query.sort === "nameAsc") {
     mySort = { name: 1 };
@@ -86,13 +87,9 @@ router.get("/", async (req, res) => {
           { name: { $regex: "^" + search, $options: "im" } },
           { region: { $regex: "^" + search, $options: "im" } },
           { capital: { $regex: "^" + search, $options: "im" } },
-          { alpha2Code: { $regex: "^" + search, $options: "im" } },
+          { alpha2Code: { $regex: search, $options: "i" } },
         ],
-        // $and: [
-        //   {
-        //     $or: [{ region: req.query.region }],
-        //   },
-        // ],
+        $and: [{region: { '$in': region }}]
       },
       {
         _id: 0,
