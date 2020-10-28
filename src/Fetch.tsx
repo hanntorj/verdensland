@@ -6,7 +6,7 @@ import {
 } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
-const url = "http://localhost:8080/api/";
+const url = "http://localhost:5000/api/";
 
 export async function getCountryList(
   { sort, searchString, handleResponse, limit, skip }: GetCountryList,
@@ -16,7 +16,7 @@ export async function getCountryList(
     url +
     "?search=" +
     `${searchString}&limit=${limit}&skip=${skip}&sort=${sort}`;
-  if (filter.pop) {
+  if (filter.popActive) {
     fetchUrl += "&pop=" + filter.pop;
     if (filter.popGreater) {
       fetchUrl += "&popString=gt";
@@ -24,7 +24,7 @@ export async function getCountryList(
       fetchUrl += "&popString=lt";
     }
   }
-  if (filter.area) {
+  if (filter.areaActive) {
     fetchUrl += "&area=" + filter.area;
     if (filter.areaGreater) {
       fetchUrl += "&areaString=gt";
@@ -38,8 +38,8 @@ export async function getCountryList(
     }
   }
   const response = await fetch(fetchUrl);
-  const data = await response.json();
-  handleResponse(data);
+  const responseJSON = await response.json();
+  handleResponse(responseJSON);
 }
 
 export async function getCountryMoreInfo({
@@ -47,26 +47,26 @@ export async function getCountryMoreInfo({
   handleResponse,
 }: GetCountryMoreInfo) {
   const response = await fetch(url + "country/" + `${alpha2Code}`);
-  const data = await response.json();
+  const responseJSON = await response.json();
 
-  handleResponse(data[0]);
+  handleResponse(responseJSON[0]);
 }
 
-export async function requestUserID(handleResponse: (data: User) => void) {
+export async function requestUserID(handleResponse: (responseJSON: User) => void) {
   const response = await fetch(url + "requestUserID");
-  const data = await response.json();
+  const responseJSON = await response.json();
 
-  handleResponse(data);
+  handleResponse(responseJSON);
 }
 
 export async function getUserData(
-  handleResponse: (data: User) => void,
+  handleResponse: (responseJSON: User) => void,
   userID: string
 ) {
   const response = await fetch(url + "getUserData/" + userID);
-  const data = await response.json();
+  const responseJSON = await response.json();
 
-  handleResponse(data);
+  handleResponse(responseJSON);
 }
 
 export async function userRemoveFlag(alpha: string, userID: string) {

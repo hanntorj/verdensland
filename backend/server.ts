@@ -8,7 +8,7 @@ mongoose.connect("mongodb://myUserAdmin:gruppe74@it2810-74.idi.ntnu.no:27017/pro
   useUnifiedTopology: true,
 });
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 5000;
 mongoose.connection.once("open", () => {
   console.log("MongoDB db connection established successfully");
 });

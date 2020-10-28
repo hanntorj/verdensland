@@ -9,6 +9,7 @@ import {
   toggleGreaterThanAction,
   setSortAction,
   setSkipAction,
+  clearRegionsAction,
 } from "../app/store";
 import { reduxState } from "../Interfaces";
 import "../css/sliders.css";
@@ -16,6 +17,9 @@ import "../css/sliders.css";
 function FilterDisplay() {
   // Fetch state from redux-store
   const filterState = useSelector((state: reduxState) => state.filters);
+  let sortType = useSelector((state: reduxState)=> state.sort).replace('Asc','').replace('Desc', '')
+  let sortOrder = useSelector((state: reduxState)=> state.sort).replace('name','').replace('area', '').replace('pop', '')
+
 
   // Setup of actions to modify redux-store
   const dispatch = useDispatch();
@@ -24,6 +28,9 @@ function FilterDisplay() {
   };
   const setSkip = (skip: number) => {
     dispatch(setSkipAction(skip));
+  };
+  const clearRegions = (regions: Array<string>) => {
+    dispatch(clearRegionsAction(regions));
   };
   const addRegion = (id: string) => {
     dispatch(addRegionAction(id));
@@ -90,20 +97,43 @@ function FilterDisplay() {
     }
   };
 
+  const handleSubmit = () => {
+    setSort("nameAsc");
+    if (filterState.areaActive) {
+      toggleFilter("area");
+    }
+    updateAreaNumber(0);
+    if (!filterState.areaGreater) {
+      toggleGreaterThan("area");
+    }
+    if (filterState.popActive) {
+      toggleFilter("pop");
+    }
+    if (!filterState.popGreater) {
+      toggleGreaterThan("pop");
+    }
+    updatePopNumber(0);
+    clearRegions([]);
+  };
+
   return (
     <div className="FilterDisplay">
       <div className="Sort">
         <div className="inputFields">
           <form>
-            <select id="sortBy" onChange={() => handleSort()}>
-              <option value="name" selected>Sort alphabetically</option>
+            <select  id="sortBy" value={sortType} onChange={() => handleSort()}>
+              <option value="name" selected>
+                Sort alphabetically
+              </option>
               <option value="area">Sort by area</option>
               <option value="pop">Sort by population</option>
             </select>
           </form>
           <form>
-            <select id="sortOrder" onChange={() => handleSort()}>
-              <option value="Asc"selected>Ascending</option>
+            <select id="sortOrder" value={sortOrder} onChange={() => handleSort()}>
+              <option value="Asc" selected>
+                Ascending
+              </option>
               <option value="Desc">Descending</option>
             </select>
           </form>
@@ -256,6 +286,9 @@ function FilterDisplay() {
           </button>
         </div>
       </div>
+      <button className="button" type="button" onClick={handleSubmit}>
+        Reset all filters
+      </button>
     </div>
   );
 }
