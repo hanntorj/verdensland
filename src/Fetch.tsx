@@ -50,17 +50,17 @@ export async function getUserData(handleResponse: (data: User) => void, userID: 
 }
 
 export async function userRemoveFlag(alpha: string, userID: string) {
-  const response = await fetch(url + "userRemoveFlag/" + userID + "/" + alpha)
+  await fetch(url + "userRemoveFlag/" + userID + "/" + alpha)
 }
 
 export async function userRemoveWish(alpha: string, userID: string) {
-  const response = await fetch(url + "userRemoveWish/" + userID + "/" + alpha)
+  await fetch(url + "userRemoveWish/" + userID + "/" + alpha)
 }
 
 export async function userAddFlag(alpha: string, userID: string) {
-  const response = await fetch(url + "userAddFlag/" + userID + "/" + alpha)
+  await fetch(url + "userAddFlag/" + userID + "/" + alpha)
 }
 
 export async function userAddWish(alpha: string, userID: string) {
-  const response = await fetch(url + "userAddWish/" + userID + "/" + alpha)
+  await fetch(url + "userAddWish/" + userID + "/" + alpha)
 }

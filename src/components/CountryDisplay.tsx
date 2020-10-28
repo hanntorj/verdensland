@@ -11,19 +11,24 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, setSkipAction } from "../app/store";
 
 function CountryDisplay() {
+
+  // Setup of store-actions
   const dispatch = useDispatch();
   const setCountries = (countries: CountriesResponse) => {
     dispatch(setCountriesAction(countries));
   };
-  const countries = useSelector((state: reduxState) => state.currentCountries);
-  const searchString = useSelector((state: reduxState) => state.searchString);
-  const filter = useSelector((state: reduxState) => state.filters);
-  const sort = useSelector((state: reduxState) => state.sort);
-  const skip = useSelector((state: reduxState) => state.skip);
   const setSkip = (skip: number) => {
     dispatch(setSkipAction(skip));
   };
-  const limit = useSelector((state: reduxState) => state.limit);
+
+  // Setup of store-variables
+  const store = useSelector((state: reduxState) => state)
+  const sort = store.sort;
+  const skip = store.skip;
+  const limit = store.limit;
+  const filter = store.filters;
+  const countries = store.currentCountries;
+  const searchString = store.searchString;
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
     if (countriesResponse) setCountries(countriesResponse);
