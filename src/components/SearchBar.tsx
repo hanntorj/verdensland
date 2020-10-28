@@ -2,7 +2,6 @@ import React from "react";
 import { reduxState, CountriesResponse, GetCountryList } from "../Interfaces";
 import { getCountryList } from "../Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import {
   setCountriesAction,
   setSearchStringAction,
@@ -10,21 +9,25 @@ import {
 } from "../app/store";
 
 function SearchBar() {
+  // Setup of store actions
   const dispatch = useDispatch();
-  const setCountries = (countries: CountriesResponse) => {
-    dispatch(setCountriesAction(countries));
-  };
-  const searchString = useSelector((state: reduxState) => state.searchString);
   const setSearchString = (searchString: string) => {
     dispatch(setSearchStringAction(searchString));
   };
-  const sort = useSelector((state: reduxState) => state.sort);
-  const filter = useSelector((state: reduxState) => state.filters);
-  const skip = useSelector((state: reduxState) => state.skip);
+  const setCountries = (countries: CountriesResponse) => {
+    dispatch(setCountriesAction(countries));
+  };
   const setSkip = (skip: number) => {
     dispatch(setSkipAction(skip));
   };
-  const limit = useSelector((state: reduxState) => state.limit);
+
+  // Setup of store variables
+  const store = useSelector((state: reduxState) => state)
+  const searchString = store.searchString;
+  const sort = store.sort;
+  const filter = store.filters;
+  const skip = store.skip;
+  const limit = store.limit;
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
     if (countriesResponse) setCountries(countriesResponse);

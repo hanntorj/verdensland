@@ -1,7 +1,6 @@
 import { createStore } from 'redux'
 import { loadState, saveState } from './sessionStorage'
 import { CountriesResponse, CountryMoreInfo, reduxState, User } from '../Interfaces'
-import userEvent from '@testing-library/user-event';
 
 const initialState : reduxState = sessionStorage.getItem("reduxState") 
   ? JSON.parse(sessionStorage.getItem("reduxState")!) 
