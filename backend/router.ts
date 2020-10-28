@@ -32,22 +32,14 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// Get all countries starting with
-
-router.get("/name/:id", async (req, res) => {
-  const id = req.params.id;
-  const query = { name: /^Sl/ };
-  const country = await Country.find(query);
-  return res.send(country);
-});
-
 // Get specific country from id
 router.get("/country/:id", async (req, res) => {
   const id = req.params.id;
   const country = await Country.find({
     //wrong alphacode returning
     $or: [
-      { alpha2Code: { $regex: id } },
+      { alpha2Code: id },
+      { alpha3Code: id },
       //{ alpha3Code: { $regex: id } },
     ],
   });
@@ -67,6 +59,24 @@ router.get("/", async (req, res) => {
   const limit = Number(req.query.limit);
   const skip = Number(req.query.skip);
   const search = req.query.search;
+
+  const pop = req.query.pop || 0;
+  const area = req.query.area || 0;
+  let popStr, areaStr;
+  popStr = { $gt: pop };
+  areaStr = { $gt: area };
+
+  if (req.query.popString === "gt") {
+    popStr = { $gt: pop };
+  } else if (req.query.popString === "lt") {
+    popStr = { $lt: pop };
+  }
+  if (req.query.areaString === "gt") {
+    areaStr = { $gt: area };
+  } else if (req.query.areaString === "lt") {
+    areaStr = { $lt: area };
+  }
+
   const region = [
     req.query.region || [
       "Americas",
@@ -100,7 +110,11 @@ router.get("/", async (req, res) => {
           { alpha2Code: { $regex: search, $options: "i" } },
           { altSpellings: { $regex: search, $options: "i" } },
         ],
-        $and: [{ region: { $in: region } }],
+        $and: [
+          { region: { $in: region } },
+          { population: popStr },
+          { area: areaStr },
+        ],
       },
       {
         _id: 0,
