@@ -12,7 +12,7 @@ const CountrySchema = new Schema(
     borders: {type: Array }, 
     altSpellings : {type: Array}
   },
-  { collection: "countries" }
+  { collection: "country" }
 );
 
 const country = mongoose.model("Country", CountrySchema);
