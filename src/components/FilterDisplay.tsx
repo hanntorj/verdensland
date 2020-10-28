@@ -223,12 +223,12 @@ function FilterDisplay() {
           </button>
           <button
             className={
-              filterState.regions.includes("Antarctica")
+              filterState.regions.includes("Polar")
                 ? "RegionButtonClicked"
                 : "RegionButton"
             }
             id="Antarctica"
-            onClick={() => toggleButtonClass("Antarctica")}
+            onClick={() => toggleButtonClass("Polar")}
           >
             Antarctica
           </button>
