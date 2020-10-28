@@ -1,4 +1,4 @@
-import { GetCountryMoreInfo, GetCountryList, reduxState } from "./Interfaces";
+import { GetCountryMoreInfo, GetCountryList, User } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
 const url = "http://localhost:8080/api/";
@@ -30,4 +30,18 @@ export async function getCountryMoreInfo({
   const data = await response.json();
   
   handleResponse(data[0]);
+}
+
+export async function requestUserID(handleResponse: (data: User) => void) {
+  const response = await fetch(url + "requestUserID")
+  const data = await response.json()
+
+  handleResponse(data)
+}
+
+export async function getUserData(handleResponse: (data: User) => void, userID: string) {
+  const response = await fetch(url + "getUserData/"+ userID)
+  const data = await response.json()
+
+  handleResponse(data)
 }

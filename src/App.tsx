@@ -3,6 +3,7 @@ import "./App.css";
 import "./css/components.css";
 import Header from "./components/Header";
 import Router from "./components/Router";
+import SetUser from "./components/SetUser";
 import SearchBar from "./components/SearchBar";
 import FilterDisplay from "./components/FilterDisplay";
 
@@ -13,6 +14,7 @@ function App() {
   const reduxStore = store;
   return (
     <Provider store={reduxStore}>
+      <SetUser/>
       <div className="App">
         <Header />
         <SearchBar />

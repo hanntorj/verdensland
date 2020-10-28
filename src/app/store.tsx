@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 import { loadState, saveState } from './sessionStorage'
-import { CountriesResponse, CountryMoreInfo, reduxState } from '../Interfaces'
+import { CountriesResponse, CountryMoreInfo, reduxState, User } from '../Interfaces'
 
 const initialState : reduxState = sessionStorage.getItem("reduxState") 
   ? JSON.parse(sessionStorage.getItem("reduxState")!) 
@@ -32,10 +32,14 @@ const initialState : reduxState = sessionStorage.getItem("reduxState")
     popActive: false,
   },
   sort: "nameAsc",
-
+  user: {
+    userID: "",
+    flags: [],
+    wishes: []
+  }
 }
 
-function reducer(state : any, {type, payload} : {type: string, payload: string | boolean | number | CountriesResponse | CountryMoreInfo}){ //TODO: Change state from any
+function reducer(state : any, {type, payload} : {type: string, payload: string | boolean | number | CountriesResponse | CountryMoreInfo | User}){ //TODO: Change state from any
   // TODO: Change state from any
   switch(type){
     case 'SET_COUNTRIES':
@@ -148,6 +152,11 @@ function reducer(state : any, {type, payload} : {type: string, payload: string |
         default:
           return state;
       }
+    case 'SET_USER':
+      return {
+        ...state, 
+        user: payload
+      }
     default:
       return state;
   }
@@ -171,6 +180,11 @@ export const setCountryClickedAction = (countryClicked: CountryMoreInfo) => ({
   type: "SET_COUNTRYCLICKED",
   payload: countryClicked,
 });
+
+export const setUserAction = (user: User) => ({
+  type: "SET_USER",
+  payload: user
+})
 
 export const setSearchStringAction = (searchString: string) => ({
   type: "SET_SEARCHSTRING",

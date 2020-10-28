@@ -1,5 +1,3 @@
-import { SortedArray } from "typescript";
-
 interface filters {
   regions: Array<string>; // List of current regions to filter on
   areaGreater: boolean; // value for sorting out countries with area greater or lesser than area
@@ -11,6 +9,12 @@ interface filters {
   popActive: boolean;
 }
 
+export interface User {
+  _id: string,
+  wishes: Array<string>,
+  flags:  Array<string>
+}
+
 export interface reduxState {
   currentCountries: CountriesResponse; // List of alpha2code for the current countries that should be visible
   countryClicked: CountryMoreInfo;
@@ -19,6 +23,7 @@ export interface reduxState {
   limit: number;
   filters: filters;
   sort: string;
+  user: User;
 }
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
