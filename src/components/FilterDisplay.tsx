@@ -186,17 +186,6 @@ function FilterDisplay() {
       <div className="Filter Region">
         <div className="FilterTitle">
           <p>Region</p>
-          <div className="SliderDiv">
-            <label className="switch">
-              <input
-                id="regionCheck"
-                type="checkbox"
-                checked={filterState.regionsActive}
-                onClick={() => toggleFilter("regions")}
-              />
-              <span className="slider round" />
-            </label>
-          </div>
         </div>
         <div className="RegionalButtons">
           <button
@@ -234,12 +223,12 @@ function FilterDisplay() {
           </button>
           <button
             className={
-              filterState.regions.includes("Antarctica")
+              filterState.regions.includes("Polar")
                 ? "RegionButtonClicked"
                 : "RegionButton"
             }
             id="Antarctica"
-            onClick={() => toggleButtonClass("Antarctica")}
+            onClick={() => toggleButtonClass("Polar")}
           >
             Antarctica
           </button>

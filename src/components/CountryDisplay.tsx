@@ -17,6 +17,7 @@ function CountryDisplay() {
   };
   const countries = useSelector((state: reduxState) => state.currentCountries);
   const searchString = useSelector((state: reduxState) => state.searchString);
+  const filter = useSelector((state: reduxState) => state.filters);
   const sort = useSelector((state: reduxState) => state.sort);
   const skip = useSelector((state: reduxState) => state.skip);
   const setSkip = (skip: number) => {
@@ -36,10 +37,10 @@ function CountryDisplay() {
       limit,
       skip,
     };
-    getCountryList(countryListRequest);
+    getCountryList(countryListRequest, filter);
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [skip, sort]);
+  }, [skip, sort, filter]);
 
   const handleNextClick = () => {
     const nextSkip = skip + 1 * limit;

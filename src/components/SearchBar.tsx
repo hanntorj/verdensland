@@ -19,6 +19,7 @@ function SearchBar() {
     dispatch(setSearchStringAction(searchString));
   };
   const sort = useSelector((state: reduxState) => state.sort);
+  const filter = useSelector((state: reduxState) => state.filters);
   const skip = useSelector((state: reduxState) => state.skip);
   const setSkip = (skip: number) => {
     dispatch(setSkipAction(skip));
@@ -39,7 +40,7 @@ function SearchBar() {
       limit,
       skip,
     };
-    getCountryList(countriesRequest);
+    getCountryList(countriesRequest, filter);
   };
 
   const handleChange = (inputEvent: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,4 @@
-import { GetCountryMoreInfo, GetCountryList, User } from "./Interfaces";
+import { GetCountryMoreInfo, GetCountryList, User, Filters } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
 const url = "http://localhost:8080/api/";
@@ -11,11 +11,14 @@ export async function getCountryList({
   handleResponse,
   limit,
   skip,
-}: GetCountryList) {
-  console.log(sort)
-  const response = await fetch(
-    url + "?search=" + `${searchString}&limit=${limit}&skip=${skip}&sort=${sort}`
-  );
+}: GetCountryList, filter: Filters) {
+  let fetchUrl = url + "?search=" + `${searchString}&limit=${limit}&skip=${skip}&sort=${sort}`
+  if (filter.regions) {
+    for (const region in filter.regions) {
+      fetchUrl+= '&region=' + filter.regions[region]
+    }
+  }
+  const response = await fetch(fetchUrl)
   const data = await response.json();
   handleResponse(data);
 }
