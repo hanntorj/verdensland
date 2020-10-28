@@ -1,10 +1,9 @@
-interface filters {
+export interface Filters {
   regions: Array<string>; // List of current regions to filter on
   areaGreater: boolean; // value for sorting out countries with area greater or lesser than area
   popGreater: boolean; // value for sorting out countries with population greater or lesser than pop
   area: number; // threshold for area to filer on
   pop: number; // threshold for population to filter on
-  regionsActive: boolean; // boolean values for if a filter is active or not
   areaActive: boolean;
   popActive: boolean;
 }
@@ -21,7 +20,7 @@ export interface reduxState {
   searchString: string;
   skip: number; // Variable for the current page of the countrydisplay
   limit: number;
-  filters: filters;
+  filters: Filters;
   sort: string;
   user: User;
 }

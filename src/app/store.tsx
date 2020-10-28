@@ -28,7 +28,6 @@ const initialState : reduxState = sessionStorage.getItem("reduxState")
     popGreater:  false,
     pop: 0, 
     area: 0,
-    regionsActive: false,
     areaActive : false, 
     popActive: false,
   },
