@@ -3,6 +3,8 @@ import {
   GetCountryList,
   User,
   Filters,
+  CountrySummaryInfo,
+  CountriesResponse,
 } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
@@ -39,6 +41,15 @@ export async function getCountryList(
   const response = await fetch(fetchUrl);
   const responseJSON = await response.json();
   handleResponse(responseJSON);
+}
+
+export async function getWishes(wishes: Array<string>, handleResponse : (response: CountriesResponse) => void){
+  let fetchUrl :string = url + "getListOfCountries/" + wishes.join("&")
+  console.log("Fetching from: ", fetchUrl)
+  const response = await fetch(fetchUrl)
+  const responseJSON = await response.json()
+
+  handleResponse(responseJSON)
 }
 
 export async function getCountryMoreInfo({

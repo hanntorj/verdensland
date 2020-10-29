@@ -114,9 +114,7 @@ router.get("/", async (req, res) => {
 
 router.get("/getListOfCountries/:countries", async (req, res) => {
   const query = req.params.countries.split('&')
-  console.log(query)
   const countries = await Country.find({alpha2Code: {$in : query}})
-  console.log(countries)
   res.send(countries)
 })
 
