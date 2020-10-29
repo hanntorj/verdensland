@@ -37,7 +37,6 @@ export async function getCountryList(
     }
   }
 
-  console.log(fetchUrl);
   const response = await fetch(fetchUrl);
   const responseJSON = await response.json();
   handleResponse(responseJSON);

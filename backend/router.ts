@@ -7,31 +7,6 @@ const router = express.Router();
 
 // projection does not work in this mongodb version
 
-// Get all country information
-router.get("/all", async (req, res) => {
-  const limit = Number(req.query.limit);
-  const skip = Number(req.query.skip);
-  try {
-    const country = await Country.find(
-      {},
-      {
-        _id: 0,
-        name: 1,
-        alpha2Code: 1,
-        capital: 1,
-        region: 1,
-        population: 1,
-        area: 1,
-      }
-    )
-      .skip(skip)
-      .limit(limit);
-    return res.send(country);
-  } catch (e) {
-    return res.send(e);
-  }
-});
-
 // Get specific country from id
 router.get("/country/:id", async (req, res) => {
   const id = req.params.id;
@@ -101,6 +76,7 @@ router.get("/", async (req, res) => {
         region: 1,
         population: 1,
         area: 1,
+        flag: 1,
       }
     )
       .skip(skip)
