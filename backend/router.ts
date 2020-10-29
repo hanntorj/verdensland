@@ -112,25 +112,13 @@ router.get("/", async (req, res) => {
   }
 });
 
-/*router.get("/setUserData/:databaseID/:flags/:wishes", async (req, res) => {
-  try {
-    const user = await userInfo.findOne({
-      _id: req.params.databaseID,
-    })
-    
-    const listParser = (param : string) => param.split('&') 
-    //console.log(listParser(""))
-
-    user.flags = listParser(req.params.flags)
-    user.wishes = listParser(req.params.wishes)
-    await user.save()
-    res.send(user)
-    
-  } catch (error) {
-    res.status(404)
-    res.send({error: "User was not found in the database"})
-  }
-})*/
+router.get("/getListOfCountries/:countries", async (req, res) => {
+  const query = req.params.countries.split('&')
+  console.log(query)
+  const countries = await Country.find({alpha2Code: {$in : query}})
+  console.log(countries)
+  res.send(countries)
+})
 
 router.post("/userAddWish/:userID/:alpha2code", async (req, res) => {
   try {
