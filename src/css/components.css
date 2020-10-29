@@ -1,7 +1,5 @@
 .App {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 1.5em;
+ margin: 0 auto 40px;
 }
 
 .SearchBar {
@@ -10,6 +8,10 @@
 
 .Header {
   grid-column: 1/5;
+}
+.FilterAndCountry {
+  display: flex;
+  flex-direction: row;
 }
 
 .FilterDisplay {
@@ -38,4 +40,9 @@
 .ButtonBox{
     display: flex;
     justify-content: space-evenly;
+}
+
+.BackButton {
+  display: block;
+  margin: 0 95% 0 5%;
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import CountryDisplay from "./CountryDisplay";
-import SearchBar from "./SearchBar"
-import CountryDisplayMoreInfo from "./CountryDisplayMoreInfo"
-
+import SearchBar from "./SearchBar";
+import CountryDisplayMoreInfo from "./CountryDisplayMoreInfo";
+import FilterDisplay from "./FilterDisplay";
 
 export default function Router() {
   return (
@@ -11,10 +11,14 @@ export default function Router() {
       <div className="router">
         <Switch>
           <Route exact path="/">
-            <CountryDisplay />
+            <SearchBar />
+            <div className="FilterAndCountry">
+              <FilterDisplay />
+              <CountryDisplay />
+            </div>
           </Route>
           <Route exact path="/country/:alpha2Code">
-             <CountryDisplayMoreInfo/>
+            <CountryDisplayMoreInfo />
           </Route>
           <Route path="/search">
             <SearchBar />

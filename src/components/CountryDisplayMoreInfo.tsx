@@ -32,13 +32,12 @@ function CountryDisplayMoreInfo() {
 
   return (
     <div className="CountryDisplayMoreInfo">
+      <Link className="BackButton" to={"/"}>
+        Back
+      </Link>
       <div className="character">
         <img
-          src={
-            "https://raw.githubusercontent.com/cristiroma/countries/c6edc915f71c06441fab4da306deac95a28d70aa/data/flags/SVG/" +
-            alpha2Code +
-            ".svg"
-          }
+          src={countryClicked.flag}
           alt={alpha2Code}
           width="400px"
           height="200px"
@@ -51,10 +50,9 @@ function CountryDisplayMoreInfo() {
         <div>
           <h3>Bordering countries:</h3>
           {countryClicked.borders.map((neighbour) => (
-              <Link to={`${neighbour}`}>{neighbour}, </Link>
+            <Link to={`${neighbour}`}>{neighbour}, </Link>
           ))}
         </div>
-        <Link to={"/"}>Back</Link>
       </div>
     </div>
   );

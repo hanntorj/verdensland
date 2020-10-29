@@ -11,7 +11,6 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, setSkipAction } from "../app/store";
 
 function CountryDisplay() {
-
   // Setup of store-actions
   const dispatch = useDispatch();
   const setCountries = (countries: CountriesResponse) => {
@@ -22,7 +21,7 @@ function CountryDisplay() {
   };
 
   // Setup of store-variables
-  const store = useSelector((state: reduxState) => state)
+  const store = useSelector((state: reduxState) => state);
   const sort = store.sort;
   const skip = store.skip;
   const limit = store.limit;
@@ -43,7 +42,7 @@ function CountryDisplay() {
       skip,
     };
     getCountryList(countryListRequest, filter);
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip, sort, filter]);
 
@@ -66,9 +65,7 @@ function CountryDisplay() {
           })}
         </ul>
       )}
-      {!!! countries.length  && (
-        <p>No countries to display</p>
-      )}
+      {!!!countries.length && <p>No countries to display</p>}
       <div>
         {!!skip && (
           <button
