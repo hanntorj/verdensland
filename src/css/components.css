@@ -1,5 +1,5 @@
 .App {
- margin: 0 auto 40px;
+  margin: 0 auto 40px;
 }
 
 .SearchBar {
@@ -25,24 +25,68 @@
   grid-column: 2/5;
 }
 
-.CountryDisplay{
-    display: flex;
-    grid-column: 2/5;
+.CountryDisplay {
+  display: flex;
+  grid-column: 2/5;
 }
 
-.SVGButton{
-    border: none;
-    outline: none;
-    background: none;
-    text-align: center;
+.SVGButton {
+  border: none;
+  outline: none;
+  background: none;
+  text-align: center;
 }
 
-.ButtonBox{
-    display: flex;
-    justify-content: space-evenly;
+.ButtonBox {
+  display: flex;
+  justify-content: space-evenly;
 }
 
+.Button {
+  border-radius: 12px;
+  padding: 10px 15px;
+  background-color: #e7e7e7;
+  color: black;
+  border: none;
+  margin: 10px;
+}
+
+.Button:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* CountryDisplay */
+.CountryDisplay {
+  display: flex;
+  flex-direction: column;
+}
+
+.NavButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* CountryDisplayMoreInfo */
 .BackButton {
   display: block;
   margin: 0 95% 0 5%;
+}
+
+/* Desktop */
+@media screen and (min-width: 1259px) {
+  .ListCountries {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+  }
+}
+
+/* Tablet */
+@media screen and (max-width: 1024px) {
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
 }

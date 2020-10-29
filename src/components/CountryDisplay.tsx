@@ -58,18 +58,20 @@ function CountryDisplay() {
 
   return (
     <div className="CountryDisplay">
+      <div className="CountriesListed">
       {!!countries && (
-        <ul>
+        <ul className="ListCountries">
           {countries.map((country: CountrySummaryInfo) => {
             return <Country key={country.alpha2Code} {...country} />;
           })}
         </ul>
       )}
       {!!!countries.length && <p>No countries to display</p>}
-      <div>
+      </div>
+      <div className="NavButton">
         {!!skip && (
           <button
-            className="button"
+            className="Button"
             type="button"
             onClick={handlePreviousClick}
           >
@@ -77,7 +79,7 @@ function CountryDisplay() {
           </button>
         )}
         {!!!(countries.length < limit) && (
-          <button className="button" type="button" onClick={handleNextClick}>
+          <button className="Button" type="button" onClick={handleNextClick}>
             Next
           </button>
         )}

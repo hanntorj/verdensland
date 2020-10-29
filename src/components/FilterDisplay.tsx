@@ -101,7 +101,7 @@ function FilterDisplay() {
       inputField.placeholder = "Minimum Area";
       updateAreaMinNumber(inputValue);
     } else if (filter === "areaMax") {
-      inputField.placeholder = "Maximum Area";
+      inputField.placeholder = "Max";
       updateAreaMaxNumber(inputValue);
     } else if (filter === "popMin") {
       inputField.placeholder = "Minimum population";
@@ -311,7 +311,7 @@ function FilterDisplay() {
         </div>
       </div>
       {/* Reset button */}
-      <button className="button" type="button" onClick={handleSubmit}>
+      <button className="Button" type="button" onClick={handleSubmit}>
         Reset all filters
       </button>
     </div>
