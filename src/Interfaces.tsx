@@ -1,9 +1,9 @@
 export interface Filters {
   regions: Array<string>; // List of current regions to filter on
-  areaGreater: boolean; // value for sorting out countries with area greater or lesser than area
-  popGreater: boolean; // value for sorting out countries with population greater or lesser than pop
-  area: number; // threshold for area to filer on
-  pop: number; // threshold for population to filter on
+  areaMin: number; // threshold for minimum area to filer on
+  areaMax: number; // threshold for maximum area to filer on
+  popMin: number; // threshold for minimum population to filter on
+  popMax: number; // threshold for maximum population to filter on
   areaActive: boolean;
   popActive: boolean;
 }
