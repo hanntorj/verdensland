@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 import { loadState, saveState } from './sessionStorage'
-import { CountriesResponse, CountryMoreInfo, reduxState } from '../Interfaces'
+import { CountriesResponse, CountryMoreInfo, reduxState, User } from '../Interfaces'
 
 const initialState : reduxState = sessionStorage.getItem("reduxState") 
   ? JSON.parse(sessionStorage.getItem("reduxState")!) 
@@ -27,15 +27,18 @@ const initialState : reduxState = sessionStorage.getItem("reduxState")
     popGreater:  false,
     pop: 0, 
     area: 0,
-    regionsActive: false,
     areaActive : false, 
     popActive: false,
   },
   sort: "nameAsc",
-
+  user: {
+    userID: "",
+    flags: [],
+    wishes: []
+  }
 }
 
-function reducer(state : any, {type, payload} : {type: string, payload: string | boolean | number | CountriesResponse | CountryMoreInfo}){ //TODO: Change state from any
+function reducer(state : any, {type, payload} : {type: string, payload: string | boolean | number | CountriesResponse | CountryMoreInfo | User}){ //TODO: Change state from any
   // TODO: Change state from any
   switch(type){
     case 'SET_COUNTRIES':
@@ -148,6 +151,43 @@ function reducer(state : any, {type, payload} : {type: string, payload: string |
         default:
           return state;
       }
+    case 'SET_USER':
+      return {
+        ...state, 
+        user: payload
+      }
+    case 'REMOVE_FLAG': 
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          flags: state.user.flags.filter((alpha: string) => alpha !== payload)
+        }
+      }
+    case 'REMOVE_WISH': 
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          wishes: state.user.wishes.filter((alpha: string) => alpha !== payload)
+        }
+      }
+    case 'ADD_WISH': 
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          wishes: [...state.user.wishes, payload]
+        }
+      }
+    case 'ADD_FLAG': 
+      return {
+        ...state,
+        user: {
+          ...state.user, 
+          flags: [...state.user.flags, payload]
+        }
+      }
     default:
       return state;
   }
@@ -171,6 +211,11 @@ export const setCountryClickedAction = (countryClicked: CountryMoreInfo) => ({
   type: "SET_COUNTRYCLICKED",
   payload: countryClicked,
 });
+
+export const setUserAction = (user: User) => ({
+  type: "SET_USER",
+  payload: user
+})
 
 export const setSearchStringAction = (searchString: string) => ({
   type: "SET_SEARCHSTRING",
@@ -215,4 +260,24 @@ export const updatePopAction = (number: number) => ({
 export const updateAreaAction = (number: number) => ({
   type: "UPDATE_AREA",
   payload: number
+})
+
+export const addFlagsAction = (alpha: string) => ({
+  type: "ADD_FLAG",
+  payload: alpha
+})
+
+export const addWishesAction = (alpha: string) => ({
+  type: "ADD_WISH",
+  payload: alpha
+})
+
+export const removeFlagsAction = (alpha: string) => ({
+  type: "REMOVE_FLAG", 
+  payload: alpha
+})
+
+export const removeWishesAction = (alpha: string) => ({
+  type: "REMOVE_WISH", 
+  payload: alpha
 })
