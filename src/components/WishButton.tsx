@@ -3,7 +3,7 @@ import { connect, useDispatch, useSelector } from 'react-redux'
 import { setCountriesAction } from '../app/store'
 import { CountriesResponse, reduxState } from '../Interfaces'
 import { getWishes } from '../Fetch'
-import Flag from '../svg/flag_filled.svg'
+import Wish from '../svg/wish_filled.svg'
 
 function WishButton() {
 
@@ -21,7 +21,7 @@ function WishButton() {
     
     return (
         <button onClick={()=> getWishes(store.user.wishes, handleResponse)}>
-            <img src={Flag} alt="flag" width="30px" height="30px"/>
+            <img src={Wish} alt="flag" width="30px" height="30px"/>
             <p>Want to visit</p>
         </button>
     )
