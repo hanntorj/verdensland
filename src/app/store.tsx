@@ -22,6 +22,7 @@ const initialState: reduxState = sessionStorage.getItem("reduxState")
         demonym: "",
         currencies: "",
         borders: [],
+        flag: '',
       },
       searchString: "",
       skip: 0,

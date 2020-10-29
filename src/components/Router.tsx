@@ -4,6 +4,8 @@ import CountryDisplay from "./CountryDisplay";
 import SearchBar from "./SearchBar"
 import CountryDisplayMoreInfo from "./CountryDisplayMoreInfo"
 import WishButton from "./WishButton";
+import FilterDisplay from "./FilterDisplay";
+
 
 
 export default function Router() {
@@ -12,12 +14,15 @@ export default function Router() {
       <div className="router">
         <Switch>
           <Route exact path="/">
-          <WishButton/>
-            <CountryDisplay />
-            
+            <SearchBar />
+            <WishButton/>
+            <div className="FilterAndCountry">
+              <FilterDisplay />
+              <CountryDisplay />
+            </div>
           </Route>
           <Route exact path="/country/:alpha2Code">
-             <CountryDisplayMoreInfo/>
+            <CountryDisplayMoreInfo />
           </Route>
           <Route path="/search">
             <SearchBar />

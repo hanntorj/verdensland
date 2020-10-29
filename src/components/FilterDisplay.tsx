@@ -98,16 +98,16 @@ function FilterDisplay() {
     }
 
     if (filter === "areaMin") {
-      inputField.placeholder = "Minimum Area";
+      inputField.placeholder = "Min";
       updateAreaMinNumber(inputValue);
     } else if (filter === "areaMax") {
-      inputField.placeholder = "Maximum Area";
+      inputField.placeholder = "Max";
       updateAreaMaxNumber(inputValue);
     } else if (filter === "popMin") {
-      inputField.placeholder = "Minimum population";
+      inputField.placeholder = "Min";
       updatePopMinNumber(inputValue);
     } else if (filter === "popMax") {
-      inputField.placeholder = "Maximum population";
+      inputField.placeholder = "Max";
       updatePopMaxNumber(inputValue);
     }
   };
@@ -182,7 +182,7 @@ function FilterDisplay() {
           <input
             type="number"
             id="areaMin"
-            placeholder="Minimum area"
+            placeholder="Min"
             value={
               filterState.areaMin > 0 ? JSON.stringify(filterState.areaMin) : ""
             }
@@ -191,7 +191,7 @@ function FilterDisplay() {
           <input
             type="number"
             id="areaMax"
-            placeholder="Maximum area"
+            placeholder="Max"
             value={
               filterState.areaMax > 0 ? JSON.stringify(filterState.areaMax) : ""
             }
@@ -219,7 +219,7 @@ function FilterDisplay() {
           <input
             type="number"
             id="popMin"
-            placeholder="Minimum population"
+            placeholder="Min"
             value={
               filterState.popMin > 0 ? JSON.stringify(filterState.popMin) : ""
             }
@@ -228,7 +228,7 @@ function FilterDisplay() {
           <input
             type="number"
             id="popMax"
-            placeholder="Maximum population"
+            placeholder="Max"
             value={
               filterState.popMax > 0 ? JSON.stringify(filterState.popMax) : ""
             }
@@ -311,7 +311,7 @@ function FilterDisplay() {
         </div>
       </div>
       {/* Reset button */}
-      <button className="button" type="button" onClick={handleSubmit}>
+      <button className="Button" type="button" onClick={handleSubmit}>
         Reset all filters
       </button>
     </div>
