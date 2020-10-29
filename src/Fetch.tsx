@@ -3,6 +3,7 @@ import {
   GetCountryList,
   User,
   Filters,
+  FindNeighbours,
 } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
@@ -35,7 +36,6 @@ export async function getCountryList(
     }
   }
 
-  console.log(fetchUrl);
   const response = await fetch(fetchUrl);
   const responseJSON = await response.json();
   handleResponse(responseJSON);
@@ -88,4 +88,15 @@ export async function userAddFlag(alpha: string, userID: string) {
 
 export async function userAddWish(alpha: string, userID: string) {
   await fetch(url + "userAddWish/" + userID + "/" + alpha, { method: "POST" });
+}
+
+// export async function findNeighbours({
+//   borders,
+//   handleNeighboursResponse,
+// }: FindNeighbours) {
+//   let neighbours = borders.join("&ids=")
+//   const response = await fetch(url + "neighbour/?ids=" + `${neighbours}`);
+//   const data = await response.json();
+// 
+//   handleNeighboursResponse(data);
 }
