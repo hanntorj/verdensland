@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import CountryDisplay from "./CountryDisplay";
 import SearchBar from "./SearchBar"
 import CountryDisplayMoreInfo from "./CountryDisplayMoreInfo"
-import WishButton from "./WishButton";
+import UserDisplayButton from "./UserDisplayButton";
 
 
 export default function Router() {
@@ -12,7 +12,8 @@ export default function Router() {
       <div className="router">
         <Switch>
           <Route exact path="/">
-          <WishButton/>
+          <UserDisplayButton type="WISH"/>
+          <UserDisplayButton type="FLAG"/>
             <CountryDisplay />
             
           </Route>
