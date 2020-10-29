@@ -6,7 +6,7 @@ import {
 } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
-const url = "http://localhost:5000/api/";
+const url = "http://localhost:8080/api/";
 
 export async function getCountryList(
   { sort, searchString, handleResponse, limit, skip }: GetCountryList,
@@ -20,7 +20,7 @@ export async function getCountryList(
   if (filter.areaActive) {
     fetchUrl += "&minArea=" + filter.areaMin;
     if (filter.areaMax) {
-      fetchUrl += "&maxArea" + filter.areaMax;
+      fetchUrl += "&maxArea=" + filter.areaMax;
     }
   }
   if (filter.popActive) {
