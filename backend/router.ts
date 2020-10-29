@@ -1,6 +1,4 @@
 import express from "express";
-import { createPrinter } from "typescript";
-import { brotliDecompressSync } from "zlib";
 const Country = require("./models/countryModel"); // new
 const userInfo = require("./models/userModel");
 const router = express.Router();
@@ -37,31 +35,23 @@ router.get("/all", async (req, res) => {
 // Get specific country from id
 router.get("/country/:id", async (req, res) => {
   const id = req.params.id;
-  try {
-    let country = await Country.find({ alpha2Code: id });
-    // country.map((c: any) => ({
-    //   ...c.toObject(),
-    //   borders: c.borders.map(async (alpha2Code: string) => {
-    //     let neighbor = await Country.findOne({ alpha2Code: alpha2Code });
-    //     return neighbor.name
-    //   }),
-    // }));
-    return res.send(country);
-  } catch (e) {
-    return res.send(e);
-  }
+  const country = await Country.find({
+    //wrong alphacode returning
+    $or: [
+      { alpha2Code: id },
+      { alpha3Code: id },
+      //{ alpha3Code: { $regex: id } },
+    ],
+  });
+  return res.send(country);
 });
 
-// Get neighbours
-router.get("/neighbour/", async (req, res) => {
-  const id = req.query.ids;
-  try {
-    const country = await Country.find({ alpha2Code: { $in: id } });
-    return res.send(country);
-  } catch (e) {
-    return res.send(e);
-  }
-});
+//Return borders
+// router.get("/country/:id/borders", async (req, res) => {
+//   const id = req.params.id;
+//   const country = await Country.find().where('alpha3Code').in(alpha2Code.borders).exec()
+//   return res.send(country);
+// });
 
 //Search
 
@@ -69,10 +59,23 @@ router.get("/", async (req, res) => {
   const limit = Number(req.query.limit);
   const skip = Number(req.query.skip);
   const search = req.query.search;
-  const minArea = req.query.minArea || 0;
-  const maxArea = req.query.maxArea || 20000000;
-  const minPop = req.query.minPop || 0;
-  const maxPop = req.query.maxPop || 10000000000;
+
+  const pop = req.query.pop || 0;
+  const area = req.query.area || 0;
+  let popStr, areaStr;
+  popStr = { $gt: pop };
+  areaStr = { $gt: area };
+
+  if (req.query.popString === "gt") {
+    popStr = { $gt: pop };
+  } else if (req.query.popString === "lt") {
+    popStr = { $lt: pop };
+  }
+  if (req.query.areaString === "gt") {
+    areaStr = { $gt: area };
+  } else if (req.query.areaString === "lt") {
+    areaStr = { $lt: area };
+  }
 
   const region = [
     req.query.region || [
@@ -109,8 +112,8 @@ router.get("/", async (req, res) => {
         ],
         $and: [
           { region: { $in: region } },
-          { population: { $gte: minPop, $lte: maxPop } },
-          { area: { $gte: minArea, $lte: maxArea } },
+          { population: popStr },
+          { area: areaStr },
         ],
       },
       {
@@ -131,7 +134,6 @@ router.get("/", async (req, res) => {
     return res.send(e);
   }
 });
-
 
 /*router.get("/setUserData/:databaseID/:flags/:wishes", async (req, res) => {
   try {

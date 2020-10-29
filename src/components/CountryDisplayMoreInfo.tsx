@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setCountryClickedAction } from "../app/store";
-import { findNeighbours, getCountryMoreInfo } from "../Fetch";
-import { CountryMoreInfo, FindNeighbours, GetCountryMoreInfo, reduxState } from "../Interfaces";
+import { getCountryMoreInfo } from "../Fetch";
+import { CountryMoreInfo, GetCountryMoreInfo, reduxState } from "../Interfaces";
 import UserDataButtons from "./UserDataButtons";
 
 function CountryDisplayMoreInfo() {
@@ -21,26 +21,14 @@ function CountryDisplayMoreInfo() {
     if (countryResponse) setCountryClicked(countryResponse);
   };
 
-  const handleNeighboursResponse = (neighboursResponse: any) => {
-    if (neighboursResponse) setNeighboursCountryClicked(neighboursResponse);
-  };
-
   useEffect(() => {
     const countryMoreInfoRequest: GetCountryMoreInfo = {
       alpha2Code,
       handleResponse,
     };
-    const neighboursRequest: FindNeighbours = {
-      countryClicked.borders,
-      handleNeighboursResponse,
-    };
-    }
     getCountryMoreInfo(countryMoreInfoRequest);
-    findNeighbours(countryClicked.borders, han)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alpha2Code]);
-
-
 
   return (
     <div className="CountryDisplayMoreInfo">
