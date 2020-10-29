@@ -26,7 +26,7 @@ export async function getCountryList(
   if (filter.popActive) {
     fetchUrl += "&minPop=" + filter.popMin;
     if (filter.popMax) {
-      fetchUrl += "&maxPop" + filter.popMax;
+      fetchUrl += "&maxPop=" + filter.popMax;
     }
   }
   if (filter.regions) {
