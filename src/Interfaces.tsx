@@ -1,3 +1,5 @@
+import { Dictionary } from "@reduxjs/toolkit";
+
 export interface Filters {
   regions: Array<string>; // List of current regions to filter on
   areaGreater: boolean; // value for sorting out countries with area greater or lesser than area
@@ -9,9 +11,9 @@ export interface Filters {
 }
 
 export interface User {
-  _id: string,
-  wishes: Array<string>,
-  flags:  Array<string>
+  _id: string;
+  wishes: Array<string>;
+  flags: Array<string>;
 }
 
 export interface reduxState {
@@ -45,7 +47,7 @@ export interface CountryMoreInfo {
   subregion?: string;
   demonym?: string;
   currencies?: string;
-  borders: Array<string>;
+  borders?: Dictionary<string>;
 }
 
 export interface GetCountryList {
@@ -56,8 +58,13 @@ export interface GetCountryList {
   skip: number;
 }
 
-
 export interface GetCountryMoreInfo {
   alpha2Code: string;
   handleResponse: (country: CountryMoreInfo) => void;
+}
+
+export interface FindNeighbours {
+  borders: Dictionary<String>;
+  // TODO change any
+  handleNeighboursResponse: (neighbour: any) => void;
 }

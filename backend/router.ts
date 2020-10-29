@@ -1,4 +1,6 @@
 import express from "express";
+import { createPrinter } from "typescript";
+import { brotliDecompressSync } from "zlib";
 const Country = require("./models/countryModel"); // new
 const userInfo = require("./models/userModel");
 const router = express.Router();
@@ -36,7 +38,25 @@ router.get("/all", async (req, res) => {
 router.get("/country/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const country = await Country.find({ alpha2Code: id });
+    let country = await Country.find({ alpha2Code: id });
+    // country.map((c: any) => ({
+    //   ...c.toObject(),
+    //   borders: c.borders.map(async (alpha2Code: string) => {
+    //     let neighbor = await Country.findOne({ alpha2Code: alpha2Code });
+    //     return neighbor.name
+    //   }),
+    // }));
+    return res.send(country);
+  } catch (e) {
+    return res.send(e);
+  }
+});
+
+// Get neighbours
+router.get("/neighbour/", async (req, res) => {
+  const id = req.query.ids;
+  try {
+    const country = await Country.find({ alpha2Code: { $in: id } });
     return res.send(country);
   } catch (e) {
     return res.send(e);
@@ -111,6 +131,7 @@ router.get("/", async (req, res) => {
     return res.send(e);
   }
 });
+
 
 /*router.get("/setUserData/:databaseID/:flags/:wishes", async (req, res) => {
   try {
