@@ -17,7 +17,7 @@ export async function getCountryList(
     "?search=" +
     `${searchString}&limit=${limit}&skip=${skip}&sort=${sort}`;
 
-    if (filter.areaActive) {
+  if (filter.areaActive) {
     fetchUrl += "&minArea=" + filter.areaMin;
     if (filter.areaMax) {
       fetchUrl += "&maxArea" + filter.areaMax;
@@ -71,17 +71,21 @@ export async function getUserData(
 }
 
 export async function userRemoveFlag(alpha: string, userID: string) {
-  await fetch(url + "userRemoveFlag/" + userID + "/" + alpha);
+  await fetch(url + "userRemoveFlag/" + userID + "/" + alpha, {
+    method: "POST",
+  });
 }
 
 export async function userRemoveWish(alpha: string, userID: string) {
-  await fetch(url + "userRemoveWish/" + userID + "/" + alpha);
+  await fetch(url + "userRemoveWish/" + userID + "/" + alpha, {
+    method: "POST",
+  });
 }
 
 export async function userAddFlag(alpha: string, userID: string) {
-  await fetch(url + "userAddFlag/" + userID + "/" + alpha);
+  await fetch(url + "userAddFlag/" + userID + "/" + alpha, { method: "POST" });
 }
 
 export async function userAddWish(alpha: string, userID: string) {
-  await fetch(url + "userAddWish/" + userID + "/" + alpha);
+  await fetch(url + "userAddWish/" + userID + "/" + alpha, { method: "POST" });
 }
