@@ -5,6 +5,7 @@ import { getWishes } from '../Fetch'
 import { setCountriesAction } from '../app/store'
 import { CountriesResponse, reduxState } from '../Interfaces'
 import { connect, useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 interface Props { 
     type: string
@@ -28,7 +29,6 @@ function UserDisplayButton(props: Props) {
             return (
                 <button onClick={()=> getWishes(store.user.wishes, handleResponse)}>
                     <img src={Wish} alt="flag" width="30px" height="30px"/>
-                    <p>Want to visit</p>
                 </button>
             )
         case 'FLAG': 

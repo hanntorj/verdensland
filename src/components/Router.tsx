@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar"
 import CountryDisplayMoreInfo from "./CountryDisplayMoreInfo"
 import UserDisplayButton from "./UserDisplayButton";
 import FilterDisplay from "./FilterDisplay";
+import MainPageButton from "./MainPageButton";
 
 
 export default function Router() {
@@ -15,8 +16,31 @@ export default function Router() {
           <Route exact path="/">
             <div className="TopBar">
               <SearchBar />
-              <UserDisplayButton type="WISH" />
               <UserDisplayButton type="FLAG" />
+              <UserDisplayButton type="WISH" />
+              <MainPageButton/>
+            </div>
+            <div className="FilterAndCountry">
+              <FilterDisplay />
+              <CountryDisplay />
+            </div>
+          </Route>
+          <Route exact path="/wish">
+            <div className="TopBar">
+              <SearchBar />
+              <UserDisplayButton type="FLAG" />
+              <MainPageButton/>
+            </div>
+            <div className="FilterAndCountry">
+              <FilterDisplay />
+              <CountryDisplay />
+            </div>
+          </Route>
+          <Route exact path="/flag">
+            <div className="TopBar">
+              <SearchBar />
+              <UserDisplayButton type="WISH" />
+              <MainPageButton/>
             </div>
             <div className="FilterAndCountry">
               <FilterDisplay />
