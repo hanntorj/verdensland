@@ -28,10 +28,10 @@ const initialState: reduxState = sessionStorage.getItem("reduxState")
       limit: 10,
       filters: {
         regions: [],
-        areaGreater: false,
-        popGreater: false,
-        pop: 0,
-        area: 0,
+        areaMin: 0,
+        areaMax: 0,
+        popMin: 0,
+        popMax: 0,
         areaActive: false,
         popActive: false,
       },
@@ -60,7 +60,6 @@ function reducer(
   }
 ) {
   //TODO: Change state from any
-  // TODO: Change state from any
   switch (type) {
     case "SET_COUNTRIES":
       return {
@@ -121,12 +120,36 @@ function reducer(
           pop: payload,
         },
       };
-    case "UPDATE_AREA":
+    case "UPDATE_AREAMIN":
       return {
         ...state,
         filters: {
           ...state.filters,
-          area: payload,
+          areaMin: payload,
+        },
+      };
+      case "UPDATE_AREAMAX":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          areaMax: payload,
+        },
+      };
+      case "UPDATE_POPMIN":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          popMin: payload,
+        },
+      };
+      case "UPDATE_POPMAX":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          popMax: payload,
         },
       };
     case "TOGGLE_FILTER":
@@ -145,27 +168,6 @@ function reducer(
             filters: {
               ...state.filters,
               popActive: !state.filters.popActive,
-            },
-          };
-        default:
-          return state;
-      }
-    case "TOGGLE_GREATER":
-      switch (payload) {
-        case "pop":
-          return {
-            ...state,
-            filters: {
-              ...state.filters,
-              popGreater: !state.filters.popGreater,
-            },
-          };
-        case "area":
-          return {
-            ...state,
-            filters: {
-              ...state.filters,
-              areaGreater: !state.filters.areaGreater,
             },
           };
         default:
@@ -269,23 +271,26 @@ export const removeRegionAction = (region: string) => ({
   payload: region,
 });
 
-export const toggleGreaterThanAction = (filter: string) => ({
-  type: "TOGGLE_GREATER",
-  payload: filter,
-});
 
 export const toggleFilterAction = (filterType: string) => ({
   type: "TOGGLE_FILTER",
   payload: filterType,
 });
 
-export const updatePopAction = (number: number) => ({
-  type: "UPDATE_POP",
+export const updateAreaMinAction = (number: number) => ({
+  type: "UPDATE_AREAMIN",
   payload: number,
 });
-
-export const updateAreaAction = (number: number) => ({
-  type: "UPDATE_AREA",
+export const updateAreaMaxAction = (number: number) => ({
+  type: "UPDATE_AREAMAX",
+  payload: number,
+});
+export const updatePopMinAction = (number: number) => ({
+  type: "UPDATE_POPMIN",
+  payload: number,
+});
+export const updatePopMaxAction = (number: number) => ({
+  type: "UPDATE_POPMAX",
   payload: number,
 });
 

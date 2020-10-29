@@ -16,20 +16,17 @@ export async function getCountryList(
     url +
     "?search=" +
     `${searchString}&limit=${limit}&skip=${skip}&sort=${sort}`;
-  if (filter.popActive) {
-    fetchUrl += "&pop=" + filter.pop;
-    if (filter.popGreater) {
-      fetchUrl += "&popString=gt";
-    } else {
-      fetchUrl += "&popString=lt";
+
+    if (filter.areaActive) {
+    fetchUrl += "&minArea=" + filter.areaMin;
+    if (filter.areaMax) {
+      fetchUrl += "&maxArea" + filter.areaMax;
     }
   }
-  if (filter.areaActive) {
-    fetchUrl += "&area=" + filter.area;
-    if (filter.areaGreater) {
-      fetchUrl += "&areaString=gt";
-    } else {
-      fetchUrl += "&areaString=lt";
+  if (filter.popActive) {
+    fetchUrl += "&minPop=" + filter.popMin;
+    if (filter.popMax) {
+      fetchUrl += "&maxPop" + filter.popMax;
     }
   }
   if (filter.regions) {
@@ -37,6 +34,8 @@ export async function getCountryList(
       fetchUrl += "&region=" + filter.regions[region];
     }
   }
+
+  console.log(fetchUrl);
   const response = await fetch(fetchUrl);
   const responseJSON = await response.json();
   handleResponse(responseJSON);
@@ -52,7 +51,9 @@ export async function getCountryMoreInfo({
   handleResponse(responseJSON[0]);
 }
 
-export async function requestUserID(handleResponse: (responseJSON: User) => void) {
+export async function requestUserID(
+  handleResponse: (responseJSON: User) => void
+) {
   const response = await fetch(url + "requestUserID");
   const responseJSON = await response.json();
 

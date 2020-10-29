@@ -4,9 +4,10 @@ import {
   toggleFilterAction,
   addRegionAction,
   removeRegionAction,
-  updatePopAction,
-  updateAreaAction,
-  toggleGreaterThanAction,
+  updateAreaMinAction,
+  updateAreaMaxAction,
+  updatePopMinAction,
+  updatePopMaxAction,
   setSortAction,
   setSkipAction,
   clearRegionsAction,
@@ -17,9 +18,13 @@ import "../css/sliders.css";
 function FilterDisplay() {
   // Fetch state from redux-store
   const filterState = useSelector((state: reduxState) => state.filters);
-  let sortType = useSelector((state: reduxState)=> state.sort).replace('Asc','').replace('Desc', '')
-  let sortOrder = useSelector((state: reduxState)=> state.sort).replace('name','').replace('area', '').replace('pop', '')
-
+  let sortType = useSelector((state: reduxState) => state.sort)
+    .replace("Asc", "")
+    .replace("Desc", "");
+  let sortOrder = useSelector((state: reduxState) => state.sort)
+    .replace("name", "")
+    .replace("area", "")
+    .replace("pop", "");
 
   // Setup of actions to modify redux-store
   const dispatch = useDispatch();
@@ -38,15 +43,19 @@ function FilterDisplay() {
   const removeRegion = (id: string) => {
     dispatch(removeRegionAction(id));
   };
-  const updatePopNumber = (amount: number) => {
-    dispatch(updatePopAction(amount));
+  const updateAreaMinNumber = (amount: number) => {
+    dispatch(updateAreaMinAction(amount));
   };
-  const updateAreaNumber = (amount: number) => {
-    dispatch(updateAreaAction(amount));
+  const updateAreaMaxNumber = (amount: number) => {
+    dispatch(updateAreaMaxAction(amount));
   };
-  const toggleGreaterThan = (filter: string) => {
-    dispatch(toggleGreaterThanAction(filter));
+  const updatePopMinNumber = (amount: number) => {
+    dispatch(updatePopMinAction(amount));
   };
+  const updatePopMaxNumber = (amount: number) => {
+    dispatch(updatePopMaxAction(amount));
+  };
+
   const toggleFilter = (filterType: string) => {
     dispatch(toggleFilterAction(filterType));
   };
@@ -72,7 +81,7 @@ function FilterDisplay() {
   const handleNumberInput = (filter: string) => {
     // Function that handles change on inputfields
     let inputField: HTMLInputElement = (document.getElementById(
-      filter + "Input"
+      filter
     ) as HTMLInputElement)!;
 
     let inputStringValue: string = inputField.value;
@@ -88,40 +97,50 @@ function FilterDisplay() {
       inputValue = JSON.parse(inputStringValue);
     }
 
-    if (filter === "pop") {
-      inputField.placeholder = "Population";
-      updatePopNumber(inputValue);
-    } else if (filter === "area") {
-      inputField.placeholder = "Area";
-      updateAreaNumber(inputValue);
+    if (filter === "areaMin") {
+      inputField.placeholder = "Minimum Area";
+      updateAreaMinNumber(inputValue);
+    } else if (filter === "areaMax") {
+      inputField.placeholder = "Maximum Area";
+      updateAreaMaxNumber(inputValue);
+    } else if (filter === "popMin") {
+      inputField.placeholder = "Minimum population";
+      updatePopMinNumber(inputValue);
+    } else if (filter === "popMax") {
+      inputField.placeholder = "Maximum population";
+      updatePopMaxNumber(inputValue);
     }
   };
 
   const handleSubmit = () => {
+    //funtion to reset all filters
+
     setSort("nameAsc");
+
+    //reset area filters
     if (filterState.areaActive) {
       toggleFilter("area");
     }
-    updateAreaNumber(0);
-    if (!filterState.areaGreater) {
-      toggleGreaterThan("area");
-    }
+    updateAreaMinNumber(0);
+    updateAreaMaxNumber(0);
+
+    //reset population filters
     if (filterState.popActive) {
       toggleFilter("pop");
     }
-    if (!filterState.popGreater) {
-      toggleGreaterThan("pop");
-    }
-    updatePopNumber(0);
+    updatePopMinNumber(0);
+    updatePopMaxNumber(0);
+
     clearRegions([]);
   };
 
   return (
     <div className="FilterDisplay">
+      {/* Sorting */}
       <div className="Sort">
         <div className="inputFields">
           <form>
-            <select  id="sortBy" value={sortType} onChange={() => handleSort()}>
+            <select id="sortBy" value={sortType} onChange={() => handleSort()}>
               <option value="name" selected>
                 Sort alphabetically
               </option>
@@ -130,7 +149,11 @@ function FilterDisplay() {
             </select>
           </form>
           <form>
-            <select id="sortOrder" value={sortOrder} onChange={() => handleSort()}>
+            <select
+              id="sortOrder"
+              value={sortOrder}
+              onChange={() => handleSort()}
+            >
               <option value="Asc" selected>
                 Ascending
               </option>
@@ -139,6 +162,7 @@ function FilterDisplay() {
           </form>
         </div>
       </div>
+      {/* Area settings */}
       <div className="Filter Area">
         <div className="FilterTitle">
           <p>Area</p>
@@ -154,28 +178,28 @@ function FilterDisplay() {
             </label>
           </div>
         </div>
-
         <div className="inputFields">
           <input
             type="number"
-            id="areaInput"
-            placeholder="Area"
-            value={filterState.area > 0 ? JSON.stringify(filterState.area) : ""}
-            onChange={() => handleNumberInput("area")}
+            id="areaMin"
+            placeholder="Minimum area"
+            value={
+              filterState.areaMin > 0 ? JSON.stringify(filterState.areaMin) : ""
+            }
+            onChange={() => handleNumberInput("areaMin")}
           />
-          <form>
-            <select
-              id="areaGreater"
-              value={filterState.areaGreater ? "greater" : "lesser"}
-              onChange={() => toggleGreaterThan("area")}
-            >
-              <option value="lesser">Smaller than input</option>
-              <option value="greater">Larger than input</option>
-            </select>
-          </form>
+          <input
+            type="number"
+            id="areaMax"
+            placeholder="Maximum area"
+            value={
+              filterState.areaMax > 0 ? JSON.stringify(filterState.areaMax) : ""
+            }
+            onChange={() => handleNumberInput("areaMax")}
+          />
         </div>
       </div>
-
+      {/* Population settings */}
       <div className="Filter Population">
         <div className="FilterTitle">
           <p>Population</p>
@@ -191,28 +215,28 @@ function FilterDisplay() {
             </label>
           </div>
         </div>
-
         <div className="inputFields">
           <input
-            id="popInput"
             type="number"
-            placeholder="Population"
-            value={filterState.pop > 0 ? JSON.stringify(filterState.pop) : ""}
-            onChange={() => handleNumberInput("pop")}
+            id="popMin"
+            placeholder="Minimum population"
+            value={
+              filterState.popMin > 0 ? JSON.stringify(filterState.popMin) : ""
+            }
+            onChange={() => handleNumberInput("popMin")}
           />
-          <form>
-            <select
-              id="popGreater"
-              value={filterState.popGreater ? "greater" : "lesser"}
-              onChange={() => toggleGreaterThan("pop")}
-            >
-              <option value="lesser">Smaller than input</option>
-              <option value="greater">Larger than input</option>
-            </select>
-          </form>
+          <input
+            type="number"
+            id="popMax"
+            placeholder="Maximum population"
+            value={
+              filterState.popMax > 0 ? JSON.stringify(filterState.popMax) : ""
+            }
+            onChange={() => handleNumberInput("popMax")}
+          />
         </div>
       </div>
-
+      {/* Region settings */}
       <div className="Filter Region">
         <div className="FilterTitle">
           <p>Region</p>
@@ -286,6 +310,7 @@ function FilterDisplay() {
           </button>
         </div>
       </div>
+      {/* Reset button */}
       <button className="button" type="button" onClick={handleSubmit}>
         Reset all filters
       </button>
