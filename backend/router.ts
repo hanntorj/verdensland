@@ -141,7 +141,7 @@ router.get("/", async (req, res) => {
   }
 })*/
 
-router.get("/userAddWish/:userID/:alpha2code", async (req, res) => {
+router.post("/userAddWish/:userID/:alpha2code", async (req, res) => {
   try {
     const user = await userInfo.findOne({
       _id: req.params.userID,
@@ -161,7 +161,7 @@ router.get("/userAddWish/:userID/:alpha2code", async (req, res) => {
   }
 });
 
-router.get("/userAddFlag/:userID/:alpha2code", async (req, res) => {
+router.post("/userAddFlag/:userID/:alpha2code", async (req, res) => {
   try {
     const user = await userInfo.findOne({
       _id: req.params.userID,
@@ -181,7 +181,7 @@ router.get("/userAddFlag/:userID/:alpha2code", async (req, res) => {
   }
 });
 
-router.get("/userRemoveFlag/:userID/:alpha2code", async (req, res) => {
+router.post("/userRemoveFlag/:userID/:alpha2code", async (req, res) => {
   try {
     const user = await userInfo.findOne({
       _id: req.params.userID,
@@ -203,7 +203,7 @@ router.get("/userRemoveFlag/:userID/:alpha2code", async (req, res) => {
   }
 });
 
-router.get("/userRemoveWish/:userID/:alpha2code", async (req, res) => {
+router.post("/userRemoveWish/:userID/:alpha2code", async (req, res) => {
   try {
     const user = await userInfo.findOne({
       _id: req.params.userID,
