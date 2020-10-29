@@ -51,7 +51,7 @@ function CountryDisplayMoreInfo() {
         <div>
           <h3>Bordering countries:</h3>
           {countryClicked.borders.map((neighbour) => (
-              <Link to={`country/${neighbour}`}>{neighbour}, </Link>
+              <Link to={`${neighbour}`}>{neighbour}, </Link>
           ))}
         </div>
         <Link to={"/"}>Back</Link>
