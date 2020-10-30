@@ -320,7 +320,7 @@ function FilterDisplay() {
         </div>
       </div>
       {/* Reset button */}
-      <button className="Button" type="button" onClick={handleSubmit}>
+      <button id="resetButton" className="Button" type="button" onClick={handleSubmit}>
         Reset all filters
       </button>
     </div>

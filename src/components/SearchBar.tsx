@@ -65,6 +65,7 @@ function SearchBar() {
           <input
             className="inputSearch"
             id="searchBar"
+            data-testid="searchInput"
             type="text"
             name="searchBar"
             onChange={(input) => handleChange(input)}
@@ -72,7 +73,7 @@ function SearchBar() {
             value={searchString}
           />
         </label>
-        <button className="Button" type="button"  onClick={handleSubmit}>
+        <button id="searchButton" data-testid="searchButton" className="Button" type="button"  onClick={handleSubmit}>
           Search
         </button>
       </div>
