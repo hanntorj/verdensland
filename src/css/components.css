@@ -113,7 +113,7 @@ a:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-top: 65px;
+  margin: 65px 0;
 }
 .BackButton {
   display: block;
@@ -152,6 +152,22 @@ ul.Neighbours {
 
 a.Neighbours {
   color: black;
+}
+
+.Footer {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  bottom: 0px;
+  background: var(--background);
+  color: var(--text);
+  height: 40px;
+  margin: 30px 0;
+}
+
+.Footer p {
+  margin: 0;
+  font-size: 12px;
 }
 /* Desktop */
 @media screen and (min-width: 1259px) {
