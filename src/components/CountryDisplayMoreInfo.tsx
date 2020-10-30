@@ -61,7 +61,7 @@ function CountryDisplayMoreInfo() {
     <div className="CountryDisplayMoreInfo">
       <div className="CountryHeader">
         <Link className="BackButton" to={"/"}>
-          Back
+          Back to home page
         </Link>
         <h1>{countryClicked.name}</h1>
         <div className="UserButtons">
