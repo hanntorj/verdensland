@@ -20,7 +20,7 @@ const initialState: reduxState = sessionStorage.getItem("reduxState")
         region: "",
         subregion: "",
         demonym: "",
-        currencies: "",
+        currencies: [],
         borders: [],
         flag: "",
       },

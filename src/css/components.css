@@ -1,29 +1,24 @@
+body{
+  background-color: #f3f3f3;
+}
+a {
+  color: black;
+}
 .App {
   margin: 0 20px 40px;
 }
-
-.Header {
-  grid-column: 1/5;
-}
+ 
 .FilterAndCountry {
   display: flex;
   flex-direction: row;
 }
 
-.FilterDisplay {
-  grid-column: 1;
-  border-right: solid #747474 2px;
-  height: 70vh;
+.CountryDisplay {
+  display: flex;
 }
 
 .CountryDisplay {
   display: flex;
-  grid-column: 2/5;
-}
-
-.CountryDisplay {
-  display: flex;
-  grid-column: 2/5;
 }
 
 .SVGButton {
@@ -58,23 +53,31 @@
 /* Top bar */
 .TopBar {
   position: sticky;
+  top: 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  background-color: #f3f3f3;
+  padding-top: 10px;
 }
 
 .SearchBar {
   flex-grow: 2;
   margin-left: 15%;
 }
-.TopBarOptions{
+.TopBarOptions {
   display: flex;
   flex-direction: row;
 }
 /* Filter display */
-
-
-
+.FilterDisplay {
+  border-right: solid #747474 2px;
+  height: 90vh;
+  width: 200vh;;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+}
 
 /* CountryDisplay */
 .CountryDisplay {
@@ -87,18 +90,58 @@
   flex-direction: row;
   justify-content: space-between;
 }
-/* CountryDisplayMoreInfo */
-.BackButton {
-  display: block;
-  margin: 0 95% 0 5%;
+.CountryItem {
+  padding: 20px;
+}
+/* Country more info */
+.Country {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
+.CountryHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.BackButton {
+  display: block;
+  flex:1;
+  text-align: left;
+  padding:20px;
+  font-size: 20px;
+}
+
+.CountryFlag {
+  margin: auto;
+}
+
+.CountryInfo {
+  margin: auto;
+  text-align: left;
+}
+
+.ListItem {
+  margin: 0 5px 0;
+}
+
+ul.Neighbours {
+  list-style-type: none ;
+}
+
+a.Neighbours{
+  color: black;
+}
 /* Desktop */
 @media screen and (min-width: 1259px) {
+
+  
   .ListCountries {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
 }
 

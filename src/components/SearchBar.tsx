@@ -62,7 +62,7 @@ function SearchBar() {
       <div>
         <label htmlFor="countriesSearch">
           <input
-            className="input"
+            className="inputSearch"
             id="searchBar"
             type="text"
             name="searchBar"

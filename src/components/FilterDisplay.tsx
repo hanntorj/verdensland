@@ -136,9 +136,10 @@ function FilterDisplay() {
 
   return (
     <div className="FilterDisplay">
+      <h2>Filters</h2>
       {/* Sorting */}
       <div className="Sort">
-        <div className="inputFields">
+        <div className="inputDropDown">
           <form>
             <select id="sortBy"value={sortType} onChange={() => handleSort()}>
               <option value="name" selected>

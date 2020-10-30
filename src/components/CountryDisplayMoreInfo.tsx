@@ -1,9 +1,14 @@
+import { count } from "console";
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setCountryClickedAction } from "../app/store";
 import { getCountryMoreInfo } from "../utilities/Fetch";
-import { CountryMoreInfo, GetCountryMoreInfo, reduxState } from "../utilities/Interfaces";
+import {
+  CountryMoreInfo,
+  GetCountryMoreInfo,
+  reduxState,
+} from "../utilities/Interfaces";
 import UserDataButtons from "./UserDataButtons";
 
 function CountryDisplayMoreInfo() {
@@ -32,28 +37,69 @@ function CountryDisplayMoreInfo() {
 
   return (
     <div className="CountryDisplayMoreInfo">
-      <Link className="BackButton" to={"/"}>
-        Back
-      </Link>
-      <div className="character">
-        <img
-          src={countryClicked.flag}
-          alt={alpha2Code}
-          width="400px"
-          height="200px"
-        ></img>
-        <h2>{countryClicked.name}</h2>
-        <UserDataButtons alpha={alpha2Code!} />
-        <div>capital: {countryClicked.capital}</div>
-        <div>Population: {countryClicked.population}</div>
-        <div>Region: {countryClicked.region}</div>
-        <div>
-          <h3>Bordering countries:</h3>
-          {countryClicked.borders.map((neighbour) => (
-            <Link to={`${neighbour}`}>{neighbour}, </Link>
-          ))}
+      <div className="CountryHeader">
+        <Link className="BackButton" to={"/"}>
+          Back
+        </Link>
+        <h1>{countryClicked.name}</h1>
+        <div className="BackButton" />
+      </div>
+      <div className="Country">
+        <div className="CountryInfo">
+          <p>
+            <b>Capital:</b> {countryClicked.capital}
+          </p>
+          <p>
+            <b>Population:</b> {countryClicked.population}
+          </p>
+          <p>
+            <b>Area:</b> {countryClicked.area}
+          </p>
+          <p>
+            <b>Region: </b>
+            {countryClicked.region}
+          </p>
+          <p>
+            <b>Sub region:</b> {countryClicked.subregion}
+          </p>
+          {!!countryClicked.languages && <b>Languages:</b>}
+          {!!countryClicked.languages &&
+            countryClicked.languages.map((language, index) => {
+              return (
+                <p className="ListItem" key={language.name}>
+                  {language.name}({language.nativeName})
+                </p>
+              );
+            })}
+          {!!countryClicked.currencies && <b>Currencies:</b>}
+          {!!countryClicked.currencies &&
+            countryClicked.currencies.map((currency, index) => {
+              return (
+                <p className="ListItem" key={currency.name}>
+                  {currency.name}({currency.symbol})({currency.code})
+                </p>
+              );
+            })}
+        </div>
+        <div className="CountryFlag">
+          <img
+            src={countryClicked.flag}
+            alt={alpha2Code}
+            width="400px"
+            height="200px"
+          ></img>
+          <UserDataButtons alpha={alpha2Code!} />
         </div>
       </div>
+      {!!countryClicked.borders && <h3> Bordering countries</h3>}
+      <ul className="Neighbours">
+        {!!countryClicked.borders &&
+          countryClicked.borders.map((neighbour) => (
+            <li>
+              <Link className="Neighbours" to={`${neighbour}`}>{neighbour} </Link>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }
