@@ -42,7 +42,7 @@ const initialState: reduxState = sessionStorage.getItem("reduxState")
         flags: [],
         wishes: [],
       },
-      topMenuPicked: "",
+      topMenuPicked: "all",
     };
 
 function reducer(
