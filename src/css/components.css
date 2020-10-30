@@ -1,4 +1,4 @@
-body{
+body {
   background-color: #f3f3f3;
 }
 a {
@@ -7,7 +7,7 @@ a {
 .App {
   margin: 0 20px 40px;
 }
- 
+
 .FilterAndCountry {
   display: flex;
   flex-direction: row;
@@ -73,16 +73,19 @@ a {
 .FilterDisplay {
   border-right: solid #747474 2px;
   height: 90vh;
-  width: 200vh;;
   padding: 10px;
   position: sticky;
   top: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 250px;
 }
 
 /* CountryDisplay */
 .CountryDisplay {
   display: flex;
   flex-direction: column;
+  min-width: 80vh;
 }
 
 .NavButton {
@@ -94,32 +97,46 @@ a {
   padding: 20px;
 }
 /* Country more info */
-.Country {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
 
 .CountryHeader {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  border-bottom: solid #747474 2px;
+}
+
+.Country {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 65px;
 }
 .BackButton {
   display: block;
-  flex:1;
+  flex: 1;
   text-align: left;
-  padding:20px;
+  padding: 20px 20px 0 20px;
   font-size: 20px;
 }
 
-.CountryFlag {
-  margin: auto;
+.UserButtons {
+  display: block;
+  flex: 1;
+  text-align: left;
+  padding: 20px 20px 0 20px;
+
+}
+
+.UserButtons .ButtonBox {
+  justify-content: flex-end;
 }
 
 .CountryInfo {
-  margin: auto;
   text-align: left;
+}
+
+.ListBorderingCountries {
+  padding: 5px;
 }
 
 .ListItem {
@@ -127,16 +144,14 @@ a {
 }
 
 ul.Neighbours {
-  list-style-type: none ;
+  text-align: left;
 }
 
-a.Neighbours{
+a.Neighbours {
   color: black;
 }
 /* Desktop */
 @media screen and (min-width: 1259px) {
-
-  
   .ListCountries {
     display: flex;
     flex-direction: row;

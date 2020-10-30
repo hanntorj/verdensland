@@ -15,7 +15,7 @@ function Country({
 }: CountrySummaryInfo) {
   return (
     <div className="CountryItem">
-      <img src={flag} alt={alpha2Code} width="400px" height="200px"></img>
+      <img src={flag} alt={alpha2Code} height="200px"></img>
       <h2>{name}</h2>
       <UserDataButtons alpha={alpha2Code!} />
       <div>capital: {capital}</div>

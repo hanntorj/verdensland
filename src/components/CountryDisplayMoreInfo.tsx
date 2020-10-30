@@ -1,10 +1,10 @@
-import { count } from "console";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setCountryClickedAction } from "../app/store";
-import { getCountryMoreInfo } from "../utilities/Fetch";
+import { getCountryMoreInfo, getUserCountries } from "../utilities/Fetch";
 import {
+  CountriesResponse,
   CountryMoreInfo,
   GetCountryMoreInfo,
   reduxState,
@@ -12,6 +12,7 @@ import {
 import UserDataButtons from "./UserDataButtons";
 
 function CountryDisplayMoreInfo() {
+  const [neighboursNames, setNeighboursName] = useState([])
   const alpha2Code = useLocation().pathname.replace("/country/", "");
 
   const dispatch = useDispatch();
@@ -26,12 +27,19 @@ function CountryDisplayMoreInfo() {
     if (countryResponse) setCountryClicked(countryResponse);
   };
 
+  // const handleNeighboursResponse = (response: CountriesResponse) => {
+  //   if (response) setNeighboursName(response);
+  // };
+
   useEffect(() => {
     const countryMoreInfoRequest: GetCountryMoreInfo = {
       alpha2Code,
       handleResponse,
     };
     getCountryMoreInfo(countryMoreInfoRequest);
+    // if (countryClicked.borders) {
+    //   getUserCountries(countryClicked.borders, handleNeighboursResponse)
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alpha2Code]);
 
@@ -42,18 +50,41 @@ function CountryDisplayMoreInfo() {
           Back
         </Link>
         <h1>{countryClicked.name}</h1>
-        <div className="BackButton" />
+        <div className="UserButtons">
+          <UserDataButtons alpha={alpha2Code!} />
+        </div>
       </div>
       <div className="Country">
+        <div className="CountryFlag">
+          <img src={countryClicked.flag} alt={alpha2Code} width="300px"></img>
+          <div className="ListBorderingCountries">
+            {!!countryClicked.borders && <h3> View bordering countries</h3>}
+            <ul className="Neighbours">
+              {!!countryClicked.borders &&
+                countryClicked.borders.map((neighbour) => (
+                  <li>
+                    <Link className="Neighbours" to={`${neighbour}`}>
+                      {neighbour}{" "}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </div>
+
         <div className="CountryInfo">
           <p>
-            <b>Capital:</b> {countryClicked.capital}
+            <b>Capital:</b> The capital of {countryClicked.name} is {countryClicked.capital}
           </p>
           <p>
-            <b>Population:</b> {countryClicked.population}
+            <b>Population name: </b>
+            A person from {countryClicked.name} is called {countryClicked.demonym}
           </p>
           <p>
-            <b>Area:</b> {countryClicked.area}
+            <b>Population:</b> {countryClicked.population} people live in {countryClicked.name}
+          </p>
+          <p>
+            <b>Area:</b> {countryClicked.area} km<sup>2</sup>
           </p>
           <p>
             <b>Region: </b>
@@ -67,7 +98,7 @@ function CountryDisplayMoreInfo() {
             countryClicked.languages.map((language, index) => {
               return (
                 <p className="ListItem" key={language.name}>
-                  {language.name}({language.nativeName})
+                A language spoken in {countryClicked.name} is {language.name} ({language.nativeName})
                 </p>
               );
             })}
@@ -76,30 +107,12 @@ function CountryDisplayMoreInfo() {
             countryClicked.currencies.map((currency, index) => {
               return (
                 <p className="ListItem" key={currency.name}>
-                  {currency.name}({currency.symbol})({currency.code})
+                  The currency used in {countryClicked.name} is {currency.name} ({currency.symbol}) ({currency.code})
                 </p>
               );
             })}
         </div>
-        <div className="CountryFlag">
-          <img
-            src={countryClicked.flag}
-            alt={alpha2Code}
-            width="400px"
-            height="200px"
-          ></img>
-          <UserDataButtons alpha={alpha2Code!} />
-        </div>
       </div>
-      {!!countryClicked.borders && <h3> Bordering countries</h3>}
-      <ul className="Neighbours">
-        {!!countryClicked.borders &&
-          countryClicked.borders.map((neighbour) => (
-            <li>
-              <Link className="Neighbours" to={`${neighbour}`}>{neighbour} </Link>
-            </li>
-          ))}
-      </ul>
     </div>
   );
 }

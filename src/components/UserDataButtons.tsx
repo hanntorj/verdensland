@@ -59,8 +59,8 @@ function UserDataButtons(props: Props) {
         <img
           src={user.flags.includes(props.alpha) ? FlagFilled : Flag}
           alt="wish"
-          width="40px"
-          height="40px"
+          width="30px"
+          height="30px"
         />
         <p>Visited</p>
       </button>
@@ -68,8 +68,8 @@ function UserDataButtons(props: Props) {
         <img
           src={user.wishes.includes(props.alpha) ? WishFilled : Wish}
           alt="wish"
-          width="40px"
-          height="40px"
+          width="30px"
+          height="30px"
         />
         <p>Wish to travel</p>
       </button>
