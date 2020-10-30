@@ -4,8 +4,8 @@ import {
   GetCountryList,
   CountriesResponse,
   CountrySummaryInfo,
-} from "../Interfaces";
-import { getCountryList } from "../Fetch";
+} from "../utilities/Interfaces";
+import { getCountryList } from "../utilities/Fetch";
 import Country from "./Country";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, setSkipAction } from "../app/store";
@@ -47,11 +47,13 @@ function CountryDisplay() {
   }, [skip, sort, filter]);
 
   const handleNextClick = () => {
+    window.scrollTo(0, 0)
     const nextSkip = skip + 1 * limit;
     setSkip(nextSkip);
   };
 
   const handlePreviousClick = () => {
+    window.scrollTo(0, 0)
     const previousSkip = skip - 1 * limit;
     setSkip(previousSkip);
   };

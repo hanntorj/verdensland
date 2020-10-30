@@ -3,7 +3,6 @@ import {
   GetCountryList,
   User,
   Filters,
-  CountrySummaryInfo,
   CountriesResponse,
 } from "./Interfaces";
 
@@ -42,12 +41,10 @@ export async function getCountryList(
   handleResponse(responseJSON);
 }
 
-export async function getWishes(wishes: Array<string>, handleResponse : (response: CountriesResponse) => void){
-  let fetchUrl :string = url + "getListOfCountries/" + wishes.join("&")
-  console.log("Fetching from: ", fetchUrl)
+export async function getUserCountries(countries: Array<string>, handleResponse : (response: CountriesResponse) => void){
+  let fetchUrl :string = url + "getListOfCountries/" + countries.join("&")
   const response = await fetch(fetchUrl)
   const responseJSON = await response.json()
-
   handleResponse(responseJSON)
 }
 
@@ -57,7 +54,6 @@ export async function getCountryMoreInfo({
 }: GetCountryMoreInfo) {
   const response = await fetch(url + "country/" + `${alpha2Code}`);
   const responseJSON = await response.json();
-
   handleResponse(responseJSON[0]);
 }
 
