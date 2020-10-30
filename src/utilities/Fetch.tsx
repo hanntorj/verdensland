@@ -45,7 +45,6 @@ export async function getUserCountries(countries: Array<string>, handleResponse 
   let fetchUrl :string = url + "getListOfCountries/" + countries.join("&")
   const response = await fetch(fetchUrl)
   const responseJSON = await response.json()
-
   handleResponse(responseJSON)
 }
 

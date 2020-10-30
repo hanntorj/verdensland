@@ -3,6 +3,12 @@ body {
 }
 a {
   color: black;
+  text-decoration: none;
+
+}
+
+a:hover {
+  text-decoration: underline;
 }
 .App {
   margin: 0 20px 40px;

@@ -6,13 +6,14 @@ import { getCountryMoreInfo, getUserCountries } from "../utilities/Fetch";
 import {
   CountriesResponse,
   CountryMoreInfo,
+  CountrySummaryInfo,
   GetCountryMoreInfo,
   reduxState,
 } from "../utilities/Interfaces";
 import UserDataButtons from "./UserDataButtons";
 
 function CountryDisplayMoreInfo() {
-  const [neighboursNames, setNeighboursName] = useState([])
+  const [neighboursNames, setNeighboursName] = useState<Array<CountrySummaryInfo>>([])
   const alpha2Code = useLocation().pathname.replace("/country/", "");
 
   const dispatch = useDispatch();
@@ -27,9 +28,9 @@ function CountryDisplayMoreInfo() {
     if (countryResponse) setCountryClicked(countryResponse);
   };
 
-  // const handleNeighboursResponse = (response: CountriesResponse) => {
-  //   if (response) setNeighboursName(response);
-  // };
+  const handleNeighboursResponse = (response: CountriesResponse) => {
+    if (response) setNeighboursName(response);
+  };
 
   useEffect(() => {
     const countryMoreInfoRequest: GetCountryMoreInfo = {
@@ -37,9 +38,9 @@ function CountryDisplayMoreInfo() {
       handleResponse,
     };
     getCountryMoreInfo(countryMoreInfoRequest);
-    // if (countryClicked.borders) {
-    //   getUserCountries(countryClicked.borders, handleNeighboursResponse)
-    // }
+    if (countryClicked.borders) {
+      getUserCountries(countryClicked.borders, handleNeighboursResponse)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alpha2Code]);
 
@@ -61,10 +62,10 @@ function CountryDisplayMoreInfo() {
             {!!countryClicked.borders && <h3> View bordering countries</h3>}
             <ul className="Neighbours">
               {!!countryClicked.borders &&
-                countryClicked.borders.map((neighbour) => (
+                neighboursNames.map((neighbour) => (
                   <li>
-                    <Link className="Neighbours" to={`${neighbour}`}>
-                      {neighbour}{" "}
+                    <Link className="Neighbours" to={`${neighbour.alpha2Code}`}>
+                      {neighbour.name}
                     </Link>
                   </li>
                 ))}

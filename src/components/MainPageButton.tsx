@@ -45,7 +45,6 @@ function MainPageButton() {
 
   return (
     <div>
-      {console.log(store)}
       <button className="SVGButton" onClick={handleSubmit}>
         <img
           src={topMenuPicked === "all" ? EarthFilled : Earth}
