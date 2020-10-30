@@ -9,6 +9,10 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+button:hover {
+  cursor: pointer;
+}
 .App {
   margin: 0 20px 40px;
 }
