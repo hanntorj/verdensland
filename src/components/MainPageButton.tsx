@@ -36,7 +36,7 @@ function MainPageButton() {
 
   return (
     <div>
-      <button onClick={handleSubmit}>All countries</button>;
+      <button onClick={handleSubmit}>All countries</button>
       <Redirect to="/" />
     </div>
   );

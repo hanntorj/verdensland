@@ -18,7 +18,6 @@ export default function Router() {
               <SearchBar />
               <UserDisplayButton type="FLAG" />
               <UserDisplayButton type="WISH" />
-              <MainPageButton/>
             </div>
             <div className="FilterAndCountry">
               <FilterDisplay />
@@ -49,9 +48,6 @@ export default function Router() {
           </Route>
           <Route exact path="/country/:alpha2Code">
             <CountryDisplayMoreInfo />
-          </Route>
-          <Route path="/search">
-            <SearchBar />
           </Route>
         </Switch>
       </div>

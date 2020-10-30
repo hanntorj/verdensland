@@ -44,7 +44,6 @@ export async function getCountryList(
 
 export async function getWishes(wishes: Array<string>, handleResponse : (response: CountriesResponse) => void){
   let fetchUrl :string = url + "getListOfCountries/" + wishes.join("&")
-  console.log("Fetching from: ", fetchUrl)
   const response = await fetch(fetchUrl)
   const responseJSON = await response.json()
 
