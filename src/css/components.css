@@ -97,7 +97,7 @@ a:hover {
 .NavButton {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 .CountryItem {
   padding: 20px;
@@ -172,4 +172,22 @@ a.Neighbours {
 
 /* Mobile */
 @media screen and (max-width: 768px) {
+.FilterAndCountry{
+  flex-direction: column;
 }
+
+  .FilterDisplay {
+    border-bottom: solid #747474 2px;
+    border-right: none;
+    position: relative;
+    top: 0;
+  }
+
+  .FilterMobile {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    justify-content: center;
+  }
+
+}
+

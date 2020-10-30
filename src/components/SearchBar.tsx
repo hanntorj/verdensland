@@ -34,6 +34,7 @@ function SearchBar() {
   };
 
   const handleSubmit = () => {
+    window.scrollTo(0, 0)
     setSkip(0);
     // history.push('/')
     const countriesRequest: GetCountryList = {

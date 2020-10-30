@@ -138,175 +138,185 @@ function FilterDisplay() {
     <div className="FilterDisplay">
       <h2>Filters</h2>
       {/* Sorting */}
-      <div className="Sort">
-        <div className="inputDropDown">
-          <form>
-            <select id="sortBy"value={sortType} onChange={() => handleSort()}>
-              <option value="name" selected>
-                Sort alphabetically
-              </option>
-              <option value="area">Sort by area</option>
-              <option value="pop">Sort by population</option>
-            </select>
-            <select
-              id="sortOrder"
-              value={sortOrder}
-              onChange={() => handleSort()}
+      <div className="FilterMobile">
+        <div className="Sort">
+          <div className="inputDropDown">
+            <form>
+              <select
+                id="sortBy"
+                value={sortType}
+                onChange={() => handleSort()}
+              >
+                <option value="name" selected>
+                  Sort alphabetically
+                </option>
+                <option value="area">Sort by area</option>
+                <option value="pop">Sort by population</option>
+              </select>
+              <select
+                id="sortOrder"
+                value={sortOrder}
+                onChange={() => handleSort()}
+              >
+                <option value="Asc" selected>
+                  Ascending
+                </option>
+                <option value="Desc">Descending</option>
+              </select>
+            </form>
+          </div>
+        </div>
+        {/* Area settings */}
+        <div className="Filter Area">
+          <div className="FilterTitle">
+            <p>Area</p>
+            <div className="SliderDiv">
+              <label className="switch">
+                <input
+                  id="areaCheck"
+                  type="checkbox"
+                  checked={filterState.areaActive}
+                  onClick={() => toggleFilter("area")}
+                />
+                <span className="slider round" />
+              </label>
+            </div>
+          </div>
+          <div className="inputFields">
+            <input
+              type="number"
+              id="areaMin"
+              placeholder="Min"
+              value={
+                filterState.areaMin > 0
+                  ? JSON.stringify(filterState.areaMin)
+                  : ""
+              }
+              onChange={() => handleNumberInput("areaMin")}
+            />
+            <input
+              type="number"
+              id="areaMax"
+              placeholder="Max"
+              value={
+                filterState.areaMax > 0
+                  ? JSON.stringify(filterState.areaMax)
+                  : ""
+              }
+              onChange={() => handleNumberInput("areaMax")}
+            />
+          </div>
+        </div>
+        {/* Population settings */}
+        <div className="Filter Population">
+          <div className="FilterTitle">
+            <p>Population</p>
+            <div className="SliderDiv">
+              <label className="switch">
+                <input
+                  id="popCheck"
+                  type="checkbox"
+                  checked={filterState.popActive}
+                  onClick={() => toggleFilter("pop")}
+                />
+                <span className="slider round" />
+              </label>
+            </div>
+          </div>
+          <div className="inputFields">
+            <input
+              type="number"
+              id="popMin"
+              placeholder="Min"
+              value={
+                filterState.popMin > 0 ? JSON.stringify(filterState.popMin) : ""
+              }
+              onChange={() => handleNumberInput("popMin")}
+            />
+            <input
+              type="number"
+              id="popMax"
+              placeholder="Max"
+              value={
+                filterState.popMax > 0 ? JSON.stringify(filterState.popMax) : ""
+              }
+              onChange={() => handleNumberInput("popMax")}
+            />
+          </div>
+        </div>
+        {/* Region settings */}
+        <div className="Filter Region">
+          <div className="FilterTitle">
+            <p>Region</p>
+          </div>
+          <div className="RegionalButtons">
+            <button
+              className={
+                filterState.regions.includes("Asia")
+                  ? "RegionButtonClicked"
+                  : "RegionButton"
+              }
+              id="Asia"
+              onClick={() => toggleButtonClass("Asia")}
             >
-              <option value="Asc" selected>
-                Ascending
-              </option>
-              <option value="Desc">Descending</option>
-            </select>
-          </form>
-        </div>
-      </div>
-      {/* Area settings */}
-      <div className="Filter Area">
-        <div className="FilterTitle">
-          <p>Area</p>
-          <div className="SliderDiv">
-            <label className="switch">
-              <input
-                id="areaCheck"
-                type="checkbox"
-                checked={filterState.areaActive}
-                onClick={() => toggleFilter("area")}
-              />
-              <span className="slider round" />
-            </label>
+              Asia
+            </button>
+            <button
+              className={
+                filterState.regions.includes("Africa")
+                  ? "RegionButtonClicked"
+                  : "RegionButton"
+              }
+              id="Africa"
+              onClick={() => toggleButtonClass("Africa")}
+            >
+              Africa
+            </button>
+            <button
+              className={
+                filterState.regions.includes("Americas")
+                  ? "RegionButtonClicked"
+                  : "RegionButton"
+              }
+              id="Americas"
+              onClick={() => toggleButtonClass("Americas")}
+            >
+              Americas
+            </button>
+            <button
+              className={
+                filterState.regions.includes("Polar")
+                  ? "RegionButtonClicked"
+                  : "RegionButton"
+              }
+              id="Antarctica"
+              onClick={() => toggleButtonClass("Polar")}
+            >
+              Antarctica
+            </button>
+            <button
+              className={
+                filterState.regions.includes("Europe")
+                  ? "RegionButtonClicked"
+                  : "RegionButton"
+              }
+              id="Europe"
+              onClick={() => toggleButtonClass("Europe")}
+            >
+              Europe
+            </button>
+            <button
+              className={
+                filterState.regions.includes("Oceania")
+                  ? "RegionButtonClicked"
+                  : "RegionButton"
+              }
+              id="Oceania"
+              onClick={() => toggleButtonClass("Oceania")}
+            >
+              Oceania
+            </button>
           </div>
-        </div>
-        <div className="inputFields">
-          <input
-            type="number"
-            id="areaMin"
-            placeholder="Min"
-            value={
-              filterState.areaMin > 0 ? JSON.stringify(filterState.areaMin) : ""
-            }
-            onChange={() => handleNumberInput("areaMin")}
-          />
-          <input
-            type="number"
-            id="areaMax"
-            placeholder="Max"
-            value={
-              filterState.areaMax > 0 ? JSON.stringify(filterState.areaMax) : ""
-            }
-            onChange={() => handleNumberInput("areaMax")}
-          />
-        </div>
-      </div>
-      {/* Population settings */}
-      <div className="Filter Population">
-        <div className="FilterTitle">
-          <p>Population</p>
-          <div className="SliderDiv">
-            <label className="switch">
-              <input
-                id="popCheck"
-                type="checkbox"
-                checked={filterState.popActive}
-                onClick={() => toggleFilter("pop")}
-              />
-              <span className="slider round" />
-            </label>
-          </div>
-        </div>
-        <div className="inputFields">
-          <input
-            type="number"
-            id="popMin"
-            placeholder="Min"
-            value={
-              filterState.popMin > 0 ? JSON.stringify(filterState.popMin) : ""
-            }
-            onChange={() => handleNumberInput("popMin")}
-          />
-          <input
-            type="number"
-            id="popMax"
-            placeholder="Max"
-            value={
-              filterState.popMax > 0 ? JSON.stringify(filterState.popMax) : ""
-            }
-            onChange={() => handleNumberInput("popMax")}
-          />
-        </div>
-      </div>
-      {/* Region settings */}
-      <div className="Filter Region">
-        <div className="FilterTitle">
-          <p>Region</p>
-        </div>
-        <div className="RegionalButtons">
-          <button
-            className={
-              filterState.regions.includes("Asia")
-                ? "RegionButtonClicked"
-                : "RegionButton"
-            }
-            id="Asia"
-            onClick={() => toggleButtonClass("Asia")}
-          >
-            Asia
-          </button>
-          <button
-            className={
-              filterState.regions.includes("Africa")
-                ? "RegionButtonClicked"
-                : "RegionButton"
-            }
-            id="Africa"
-            onClick={() => toggleButtonClass("Africa")}
-          >
-            Africa
-          </button>
-          <button
-            className={
-              filterState.regions.includes("Americas")
-                ? "RegionButtonClicked"
-                : "RegionButton"
-            }
-            id="Americas"
-            onClick={() => toggleButtonClass("Americas")}
-          >
-            Americas
-          </button>
-          <button
-            className={
-              filterState.regions.includes("Polar")
-                ? "RegionButtonClicked"
-                : "RegionButton"
-            }
-            id="Antarctica"
-            onClick={() => toggleButtonClass("Polar")}
-          >
-            Antarctica
-          </button>
-          <button
-            className={
-              filterState.regions.includes("Europe")
-                ? "RegionButtonClicked"
-                : "RegionButton"
-            }
-            id="Europe"
-            onClick={() => toggleButtonClass("Europe")}
-          >
-            Europe
-          </button>
-          <button
-            className={
-              filterState.regions.includes("Oceania")
-                ? "RegionButtonClicked"
-                : "RegionButton"
-            }
-            id="Oceania"
-            onClick={() => toggleButtonClass("Oceania")}
-          >
-            Oceania
-          </button>
         </div>
       </div>
       {/* Reset button */}

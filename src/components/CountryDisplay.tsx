@@ -47,11 +47,13 @@ function CountryDisplay() {
   }, [skip, sort, filter]);
 
   const handleNextClick = () => {
+    window.scrollTo(0, 0)
     const nextSkip = skip + 1 * limit;
     setSkip(nextSkip);
   };
 
   const handlePreviousClick = () => {
+    window.scrollTo(0, 0)
     const previousSkip = skip - 1 * limit;
     setSkip(previousSkip);
   };

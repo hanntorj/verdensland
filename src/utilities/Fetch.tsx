@@ -54,7 +54,6 @@ export async function getCountryMoreInfo({
 }: GetCountryMoreInfo) {
   const response = await fetch(url + "country/" + `${alpha2Code}`);
   const responseJSON = await response.json();
-
   handleResponse(responseJSON[0]);
 }
 
