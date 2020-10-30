@@ -1,4 +1,4 @@
-import { reduxState } from "../Interfaces";
+import { reduxState } from "../utilities/Interfaces";
 
 export const loadState = (state: reduxState) => {
   try {

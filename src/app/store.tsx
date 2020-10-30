@@ -1,47 +1,69 @@
-import { createStore } from 'redux'
-import { loadState, saveState } from './sessionStorage'
-import { CountriesResponse, CountryMoreInfo, reduxState, User } from '../Interfaces'
+import { createStore } from "redux";
+import { loadState, saveState } from "./sessionStorage";
+import {
+  CountriesResponse,
+  CountryMoreInfo,
+  reduxState,
+  User,
+} from "../utilities/Interfaces";
 
-const initialState : reduxState = sessionStorage.getItem("reduxState") 
-  ? JSON.parse(sessionStorage.getItem("reduxState")!) 
+const initialState: reduxState = sessionStorage.getItem("reduxState")
+  ? JSON.parse(sessionStorage.getItem("reduxState")!)
   : {
-  currentCountries: [],
-  countryClicked: {
-    alpha2Code: "",
-    name: "",
-    capital: "",
-    area: 0,
-    population: 0,
-    region: "",
-    subregion: "",
-    demonym: "",  
-    currencies: "",
-    borders: [],
-  },
-  searchString: "",
-  skip: 0,
-  limit: 10,
-  filters: {
-    regions: [],
-    areaGreater: false,
-    popGreater:  false,
-    pop: 0, 
-    area: 0,
-    areaActive : false, 
-    popActive: false,
-  },
-  sort: "nameAsc",
-  user: {
-    userID: "",
-    flags: [],
-    wishes: []
-  }
-}
+      currentCountries: [],
+      countryClicked: {
+        alpha2Code: "",
+        name: "",
+        capital: "",
+        area: 0,
+        population: 0,
+        region: "",
+        subregion: "",
+        demonym: "",
+        currencies: [],
+        borders: [],
+        flag: "",
+      },
+      searchString: "",
+      skip: 0,
+      limit: 10,
+      filters: {
+        regions: [],
+        areaMin: 0,
+        areaMax: 0,
+        popMin: 0,
+        popMax: 0,
+        areaActive: false,
+        popActive: false,
+      },
+      sort: "nameAsc",
+      user: {
+        userID: "",
+        flags: [],
+        wishes: [],
+      },
+      topMenuPicked: "all",
+    };
 
-function reducer(state : any, {type, payload} : {type: string, payload: string | boolean | number | CountriesResponse | CountryMoreInfo | User}){ //TODO: Change state from any
-  // TODO: Change state from any
-  switch(type){
-    case 'SET_COUNTRIES':
+function reducer(
+  state: any,
+  {
+    type,
+    payload,
+  }: {
+    type: string;
+    payload:
+      | string
+      | boolean
+      | number
+      | CountriesResponse
+      | CountryMoreInfo
+      | User;
+  }
+) {
+  //TODO: Change state from any
+  switch (type) {
+    case "SET_COUNTRIES":
       return {
         ...state,
         currentCountries: payload,
@@ -61,12 +83,19 @@ function reducer(state : any, {type, payload} : {type: string, payload: string |
         ...state,
         skip: payload,
       };
-      case "SET_SORT":
-        return {
-          ...state,
-          sort: payload,
-
-        }
+    case "SET_SORT":
+      return {
+        ...state,
+        sort: payload,
+      };
+    case "CLEAR_REGIONS":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          regions: payload,
+        },
+      };
     case "ADD_REGION":
       return {
         ...state,
@@ -93,101 +122,103 @@ function reducer(state : any, {type, payload} : {type: string, payload: string |
           pop: payload,
         },
       };
-    case "UPDATE_AREA":
+    case "UPDATE_AREAMIN":
       return {
         ...state,
         filters: {
           ...state.filters,
-          area: payload,
+          areaMin: payload,
+        },
+      };
+    case "UPDATE_AREAMAX":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          areaMax: payload,
+        },
+      };
+    case "UPDATE_POPMIN":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          popMin: payload,
+        },
+      };
+    case "UPDATE_POPMAX":
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          popMax: payload,
         },
       };
     case "TOGGLE_FILTER":
       switch (payload) {
-        case "regions":
-          return {
-            ...state, 
-            filters: {
-              ...state.filters, 
-              regionsActive: !state.filters.regionsActive
-            }
-          }
-        case 'area':
-          return {
-            ...state, 
-            filters: {
-              ...state.filters, 
-              areaActive: !state.filters.areaActive
-            }
-          }
-        case 'pop':
-          return {
-            ...state, 
-            filters: {
-              ...state.filters,
-              popActive: !state.filters.popActive
-            }
-          }
-        default: 
-          return state;
-      }
-    case "TOGGLE_GREATER":
-      switch (payload) {
-        case "pop":
-          return {
-            ...state,
-            filters: {
-              ...state.filters,
-              popGreater: !state.filters.popGreater,
-            },
-          };
         case "area":
           return {
             ...state,
             filters: {
               ...state.filters,
-              areaGreater: !state.filters.areaGreater,
+              areaActive: !state.filters.areaActive,
+            },
+          };
+        case "pop":
+          return {
+            ...state,
+            filters: {
+              ...state.filters,
+              popActive: !state.filters.popActive,
             },
           };
         default:
           return state;
       }
-    case 'SET_USER':
+    case "SET_USER":
       return {
-        ...state, 
-        user: payload
-      }
-    case 'REMOVE_FLAG': 
+        ...state,
+        user: payload,
+      };
+    case "REMOVE_FLAG":
       return {
         ...state,
         user: {
           ...state.user,
-          flags: state.user.flags.filter((alpha: string) => alpha !== payload)
-        }
-      }
-    case 'REMOVE_WISH': 
+          flags: state.user.flags.filter((alpha: string) => alpha !== payload),
+        },
+      };
+    case "REMOVE_WISH":
       return {
         ...state,
         user: {
           ...state.user,
-          wishes: state.user.wishes.filter((alpha: string) => alpha !== payload)
-        }
-      }
-    case 'ADD_WISH': 
+          wishes: state.user.wishes.filter(
+            (alpha: string) => alpha !== payload
+          ),
+        },
+      };
+    case "ADD_WISH":
       return {
         ...state,
         user: {
           ...state.user,
-          wishes: [...state.user.wishes, payload]
-        }
-      }
-    case 'ADD_FLAG': 
+          wishes: [...state.user.wishes, payload],
+        },
+      };
+    case "ADD_FLAG":
       return {
         ...state,
         user: {
-          ...state.user, 
-          flags: [...state.user.flags, payload]
-        }
-      }
+          ...state.user,
+          flags: [...state.user.flags, payload],
+        },
+      };
+    case "SET_TOPMENUPICKED":
+      return {
+        ...state,
+        topMenuPicked: payload,
+      };
     default:
       return state;
   }
@@ -195,18 +226,18 @@ function reducer(state : any, {type, payload} : {type: string, payload: string |
 
 const currentState = loadState(initialState);
 
-export const store = createStore(reducer, currentState)
+export const store = createStore(reducer, currentState);
 
 //Linking the store up to sessionStorage
-store.subscribe(()=>{
-  saveState(store.getState())
-})
+store.subscribe(() => {
+  saveState(store.getState());
+});
 
 //Actions for modifying the redux-store
-export const setCountriesAction = (countries : CountriesResponse) => ({
-  type: 'SET_COUNTRIES',
-  payload: countries
-})
+export const setCountriesAction = (countries: CountriesResponse) => ({
+  type: "SET_COUNTRIES",
+  payload: countries,
+});
 export const setCountryClickedAction = (countryClicked: CountryMoreInfo) => ({
   type: "SET_COUNTRYCLICKED",
   payload: countryClicked,
@@ -214,8 +245,8 @@ export const setCountryClickedAction = (countryClicked: CountryMoreInfo) => ({
 
 export const setUserAction = (user: User) => ({
   type: "SET_USER",
-  payload: user
-})
+  payload: user,
+});
 
 export const setSearchStringAction = (searchString: string) => ({
   type: "SET_SEARCHSTRING",
@@ -232,6 +263,11 @@ export const setSortAction = (sort: string) => ({
   payload: sort,
 });
 
+export const clearRegionsAction = (regions: Array<string>) => ({
+  type: "CLEAR_REGIONS",
+  payload: regions,
+});
+
 export const addRegionAction = (region: string) => ({
   type: "ADD_REGION",
   payload: region,
@@ -242,42 +278,49 @@ export const removeRegionAction = (region: string) => ({
   payload: region,
 });
 
-export const toggleGreaterThanAction = (filter: string) => ({
-  type: "TOGGLE_GREATER",
-  payload: filter,
-});
-
 export const toggleFilterAction = (filterType: string) => ({
   type: "TOGGLE_FILTER",
   payload: filterType,
 });
 
-export const updatePopAction = (number: number) => ({
-  type: "UPDATE_POP",
+export const updateAreaMinAction = (number: number) => ({
+  type: "UPDATE_AREAMIN",
+  payload: number,
+});
+export const updateAreaMaxAction = (number: number) => ({
+  type: "UPDATE_AREAMAX",
+  payload: number,
+});
+export const updatePopMinAction = (number: number) => ({
+  type: "UPDATE_POPMIN",
+  payload: number,
+});
+export const updatePopMaxAction = (number: number) => ({
+  type: "UPDATE_POPMAX",
   payload: number,
 });
 
-export const updateAreaAction = (number: number) => ({
-  type: "UPDATE_AREA",
-  payload: number
-})
-
 export const addFlagsAction = (alpha: string) => ({
   type: "ADD_FLAG",
-  payload: alpha
-})
+  payload: alpha,
+});
 
 export const addWishesAction = (alpha: string) => ({
   type: "ADD_WISH",
-  payload: alpha
-})
+  payload: alpha,
+});
 
 export const removeFlagsAction = (alpha: string) => ({
-  type: "REMOVE_FLAG", 
-  payload: alpha
-})
+  type: "REMOVE_FLAG",
+  payload: alpha,
+});
 
 export const removeWishesAction = (alpha: string) => ({
-  type: "REMOVE_WISH", 
-  payload: alpha
-})
+  type: "REMOVE_WISH",
+  payload: alpha,
+});
+
+export const setTopMenuPickedAction = (topMenuPicked: string) => ({
+  type: "SET_TOPMENUPICKED",
+  payload: topMenuPicked,
+});

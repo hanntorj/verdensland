@@ -1,17 +1,17 @@
 export interface Filters {
   regions: Array<string>; // List of current regions to filter on
-  areaGreater: boolean; // value for sorting out countries with area greater or lesser than area
-  popGreater: boolean; // value for sorting out countries with population greater or lesser than pop
-  area: number; // threshold for area to filer on
-  pop: number; // threshold for population to filter on
+  areaMin: number; // threshold for minimum area to filer on
+  areaMax: number; // threshold for maximum area to filer on
+  popMin: number; // threshold for minimum population to filter on
+  popMax: number; // threshold for maximum population to filter on
   areaActive: boolean;
   popActive: boolean;
 }
 
 export interface User {
-  _id: string,
-  wishes: Array<string>,
-  flags:  Array<string>
+  _id: string;
+  wishes: Array<string>;
+  flags: Array<string>;
 }
 
 export interface reduxState {
@@ -23,6 +23,7 @@ export interface reduxState {
   filters: Filters;
   sort: string;
   user: User;
+  topMenuPicked: string;
 }
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
@@ -32,7 +33,9 @@ export interface CountrySummaryInfo {
   name?: string;
   capital?: string;
   population?: number;
+  area?: number;
   region?: string;
+  flag?: string;
 }
 
 export interface CountryMoreInfo {
@@ -44,8 +47,20 @@ export interface CountryMoreInfo {
   region?: string;
   subregion?: string;
   demonym?: string;
-  currencies?: string;
-  borders: Array<string>;
+  currencies?: Array<Currencies>;
+  borders?: Array<string>;
+  flag?: string;
+  languages?: Array<Languages>
+}
+
+export interface Languages {
+  name: string;
+  nativeName: string;
+}
+export interface Currencies {
+  name: string;
+  code: string;
+  symbol: string;
 }
 
 export interface GetCountryList {
@@ -55,7 +70,6 @@ export interface GetCountryList {
   limit: number;
   skip: number;
 }
-
 
 export interface GetCountryMoreInfo {
   alpha2Code: string;

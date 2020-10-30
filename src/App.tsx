@@ -1,11 +1,9 @@
 import React from "react";
 import "./App.css";
 import "./css/components.css";
-import Header from "./components/Header";
 import Router from "./components/Router";
 import SetUser from "./components/SetUser";
-import SearchBar from "./components/SearchBar";
-import FilterDisplay from "./components/FilterDisplay";
+import Footer from "./components/Footer";
 
 import { Provider } from "react-redux";
 import { store } from "./app/store";
@@ -16,10 +14,8 @@ function App() {
     <Provider store={reduxStore}>
       <SetUser/>
       <div className="App">
-        <Header />
-        <SearchBar />
-        <FilterDisplay />
         <Router />
+        <Footer/>
       </div>
     </Provider>
   );

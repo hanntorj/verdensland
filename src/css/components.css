@@ -1,41 +1,207 @@
+body {
+  background-color: #f3f3f3;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button:hover {
+  cursor: pointer;
+}
 .App {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 1.5em;
+  margin: 0 20px 40px;
 }
 
-.SearchBar {
-  grid-column: 1/5;
-}
-
-.Header {
-  grid-column: 1/5;
-}
-
-.FilterDisplay {
-  grid-column: 1;
-  border-right: solid #747474 2px;
-  height: 70vh;
+.FilterAndCountry {
+  display: flex;
+  flex-direction: row;
 }
 
 .CountryDisplay {
   display: flex;
-  grid-column: 2/5;
 }
 
-.CountryDisplay{
+.CountryDisplay {
+  display: flex;
+}
+
+.SVGButton {
+  border: none;
+  outline: none;
+  background: none;
+  text-align: center;
+}
+.SVGButton:hover {
+  cursor: pointer;
+}
+
+.ButtonBox {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Button {
+  border-radius: 12px;
+  padding: 10px 15px;
+  background-color: #e7e7e7;
+  color: black;
+  border: none;
+  margin: 10px;
+}
+
+.Button:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Top bar */
+.TopBar {
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  background-color: #f3f3f3;
+  padding-top: 10px;
+}
+
+.SearchBar {
+  flex-grow: 2;
+  margin-left: 15%;
+}
+.TopBarOptions {
+  display: flex;
+  flex-direction: row;
+}
+/* Filter display */
+.FilterDisplay {
+  border-right: solid #747474 2px;
+  height: 90vh;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 250px;
+}
+
+/* CountryDisplay */
+.CountryDisplay {
+  display: flex;
+  flex-direction: column;
+  min-width: 80vh;
+}
+
+.NavButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.CountryItem {
+  padding: 20px;
+}
+/* Country more info */
+
+.CountryHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-bottom: solid #747474 2px;
+}
+
+.Country {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 65px 0;
+}
+.BackButton {
+  display: block;
+  flex: 1;
+  text-align: left;
+  padding: 20px 20px 0 20px;
+  font-size: 20px;
+}
+
+.UserButtons {
+  display: block;
+  flex: 1;
+  text-align: left;
+  padding: 20px 20px 0 20px;
+}
+
+.UserButtons .ButtonBox {
+  justify-content: flex-end;
+}
+
+.CountryInfo {
+  text-align: left;
+}
+
+.ListBorderingCountries {
+  padding: 5px;
+}
+
+.ListItem {
+  margin: 0 5px 0;
+}
+
+ul.Neighbours {
+  text-align: left;
+}
+
+a.Neighbours {
+  color: black;
+}
+
+.Footer {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  bottom: 0px;
+  background: var(--background);
+  color: var(--text);
+  height: 40px;
+  margin: 30px 0;
+}
+
+.Footer p {
+  margin: 0;
+  font-size: 12px;
+}
+/* Desktop */
+@media screen and (min-width: 1259px) {
+  .TopBar {
+    position: sticky;
+  }
+  .ListCountries {
     display: flex;
-    grid-column: 2/5;
-}
-
-.SVGButton{
-    border: none;
-    outline: none;
-    background: none;
-    text-align: center;
-}
-
-.ButtonBox{
-    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .FilterAndCountry {
+    flex-direction: column;
+  }
+
+  .FilterDisplay {
+    border-bottom: solid #747474 2px;
+    border-right: none;
+    position: relative;
+    top: 0;
+  }
+
+  .FilterMobile {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    justify-content: center;
+  }
 }
