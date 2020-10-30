@@ -26,14 +26,14 @@ function UserDisplayButton(props: Props) {
     switch(props.type){
         case 'WISH': 
             return (
-                <button onClick={()=> getWishes(store.user.wishes, handleResponse)}>
+                <button data-testid="UserDisplayButton" onClick={()=> getWishes(store.user.wishes, handleResponse)}>
                     <img src={Wish} alt="flag" width="30px" height="30px"/>
                     <p>Want to visit</p>
                 </button>
             )
         case 'FLAG': 
             return (
-                <button onClick={()=> getWishes(store.user.flags, handleResponse)}>
+                <button data-testid="UserDisplaybutton" onClick={()=> getWishes(store.user.flags, handleResponse)}>
                     <img src={Flag} alt="flag" width="30px" height="30px"/>
                     <p>Visited</p>
                 </button>                
