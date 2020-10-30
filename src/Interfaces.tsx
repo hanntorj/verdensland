@@ -33,6 +33,7 @@ export interface CountrySummaryInfo {
   capital?: string;
   population?: number;
   region?: string;
+  flag?: string;
 }
 
 export interface CountryMoreInfo {
@@ -46,6 +47,7 @@ export interface CountryMoreInfo {
   demonym?: string;
   currencies?: string;
   borders: Array<string>;
+  flag?: string
 }
 
 export interface GetCountryList {

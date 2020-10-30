@@ -71,7 +71,7 @@ function SearchBar() {
             value={searchString}
           />
         </label>
-        <button id="searchButton" className="button" type="button"  onClick={handleSubmit}>
+        <button id="searchButton" className="Button" type="button"  onClick={handleSubmit}>
           Search
         </button>
       </div>
