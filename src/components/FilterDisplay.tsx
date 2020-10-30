@@ -16,6 +16,8 @@ import { reduxState } from "../utilities/Interfaces";
 import "../css/sliders.css";
 
 function FilterDisplay() {
+  // Sorting and filter options for countries
+
   // Fetch state from redux-store
   const filterState = useSelector((state: reduxState) => state.filters);
   let sortType = useSelector((state: reduxState) => state.sort)
@@ -34,14 +36,18 @@ function FilterDisplay() {
   const setSkip = (skip: number) => {
     dispatch(setSkipAction(skip));
   };
-  const clearRegions = (regions: Array<string>) => {
-    dispatch(clearRegionsAction(regions));
-  };
   const addRegion = (id: string) => {
     dispatch(addRegionAction(id));
   };
   const removeRegion = (id: string) => {
     dispatch(removeRegionAction(id));
+  };
+  const clearRegions = (regions: Array<string>) => {
+    dispatch(clearRegionsAction(regions));
+  };
+
+  const toggleFilter = (filterType: string) => {
+    dispatch(toggleFilterAction(filterType));
   };
   const updateAreaMinNumber = (amount: number) => {
     dispatch(updateAreaMinAction(amount));
@@ -56,8 +62,13 @@ function FilterDisplay() {
     dispatch(updatePopMaxAction(amount));
   };
 
-  const toggleFilter = (filterType: string) => {
-    dispatch(toggleFilterAction(filterType));
+  const handleSort = () => {
+    setSkip(0);
+    let sortBy = (document.getElementById("sortBy") as HTMLInputElement).value;
+    let sortOrder = (document.getElementById("sortOrder") as HTMLInputElement)
+      .value;
+    let sort = "" + sortBy + sortOrder;
+    setSort(sort);
   };
 
   const toggleButtonClass = (id: string) => {
@@ -67,15 +78,6 @@ function FilterDisplay() {
     } else {
       removeRegion(id);
     }
-  };
-
-  const handleSort = () => {
-    setSkip(0);
-    let sortBy = (document.getElementById("sortBy") as HTMLInputElement).value;
-    let sortOrder = (document.getElementById("sortOrder") as HTMLInputElement)
-      .value;
-    let sort = "" + sortBy + sortOrder;
-    setSort(sort);
   };
 
   const handleNumberInput = (filter: string) => {
@@ -320,7 +322,12 @@ function FilterDisplay() {
         </div>
       </div>
       {/* Reset button */}
-      <button id="resetButton" className="Button" type="button" onClick={handleSubmit}>
+      <button
+        id="resetButton"
+        className="Button"
+        type="button"
+        onClick={handleSubmit}
+      >
         Reset all filters
       </button>
     </div>

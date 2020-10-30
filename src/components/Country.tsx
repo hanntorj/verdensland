@@ -13,6 +13,7 @@ function Country({
   region,
   flag,
 }: CountrySummaryInfo) {
+  // Renders the country that is passed as function input
   return (
     <div className="CountryItem">
       <img src={flag} alt={alpha2Code} height="200px"></img>
@@ -22,7 +23,9 @@ function Country({
       <div>Population: {population}</div>
       <div>Area: {area}</div>
       <div>Region: {region}</div>
-      <Link to={`country/${alpha2Code}`}>See more</Link>
+      <Link to={`country/${alpha2Code}`}>
+        <b>See more</b>
+      </Link>
     </div>
   );
 }

@@ -12,10 +12,10 @@ function App() {
   const reduxStore = store;
   return (
     <Provider store={reduxStore}>
-      <SetUser/>
+      <SetUser />
       <div className="App">
         <Router />
-        <Footer/>
+        <Footer />
       </div>
     </Provider>
   );
