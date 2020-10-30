@@ -8,7 +8,7 @@ To run the project, first run
 
 ### `cd backend`
 
-### `npm install` and `npm start`.
+### `npm install && npm start`.
 
 Open another terminal and run
 
