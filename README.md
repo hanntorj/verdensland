@@ -46,8 +46,6 @@ The application is tested with automated end-2-end testing using cypress. End-2-
 
 ### `npm run e2e`
 
-Furthermore, unit testing is important to check if components act in the manner that is wished. As such, two tests were written, one which checks that the buttons for viewing the countries the user has interacted with renders correctly, and another for checking that the search bar updates the input field as well as correctly updates the redux-store.
-
-Ultimately, a snapshot test was also created to check that the navigation-buttons render correctly to have testing that covers a broader area of the application. These final tests were created using React’s own testing library in conjunction with jest as both of these are from the same developer, and the team had experience with these from beforehand. These tests run with
+Furthermore, unit testing is important to check if components act in the manner that is wished. As such, two tests were written, one which checks that the buttons for viewing the countries the user has interacted with renders correctly, and another for checking that the search bar updates the input field as well as correctly updates the redux-store. These tests were created using React’s own testing library in conjunction with jest as both of these are from the same developer, and the team had experience with these from beforehand. These tests run with
 
 ### `npm test`
