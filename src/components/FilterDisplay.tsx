@@ -166,7 +166,7 @@ function FilterDisplay() {
       <div className="Filter Area">
         <div className="FilterTitle">
           <p>Area</p>
-          <div className="SliderDiv">
+          <div id="areaSlider" className="SliderDiv">
             <label className="switch">
               <input
                 id="areaCheck"
@@ -203,7 +203,7 @@ function FilterDisplay() {
       <div className="Filter Population">
         <div className="FilterTitle">
           <p>Population</p>
-          <div className="SliderDiv">
+          <div id="popSlider" className="SliderDiv">
             <label className="switch">
               <input
                 id="popCheck"
@@ -311,7 +311,7 @@ function FilterDisplay() {
         </div>
       </div>
       {/* Reset button */}
-      <button className="button" type="button" onClick={handleSubmit}>
+      <button id="resetButton" className="button" type="button" onClick={handleSubmit}>
         Reset all filters
       </button>
     </div>
