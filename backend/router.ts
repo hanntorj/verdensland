@@ -1,11 +1,9 @@
 import express from "express";
-const Country = require("./models/countryModel"); // new
+const Country = require("./models/countryModel");
 const userInfo = require("./models/userModel");
 const router = express.Router();
 
 //file containing all endpoints
-
-// projection does not work in this mongodb version
 
 // Get specific country from id
 router.get("/country/:id", async (req, res) => {
@@ -18,8 +16,7 @@ router.get("/country/:id", async (req, res) => {
   }
 });
 
-//Search
-
+//Search, filtering and sorting
 router.get("/", async (req, res) => {
   const limit = Number(req.query.limit);
   const skip = Number(req.query.skip);
@@ -88,32 +85,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Finds countries from a list of alpha2codes
 router.get("/getListOfCountries/:countries", async (req, res) => {
-  const query = req.params.countries.split('&')
-  const countries = await Country.find({alpha2Code: {$in : query}})
-  res.send(countries)
-})
-
-router.post("/userAddWish/:userID/:alpha2code", async (req, res) => {
-  try {
-    const user = await userInfo.findOne({
-      _id: req.params.userID,
-    });
-
-    if (!user.wishes.includes(req.params.alpha2code)) {
-      user.wishes = [...user.wishes, req.params.alpha2code];
-    }
-    await user.save();
-    res.send(user);
-  } catch (error) {
-    res.status(404);
-    res.send({
-      error:
-        "Was not able to add the given country to the useres wish in the database",
-    });
-  }
+  const query = req.params.countries.split("&");
+  const countries = await Country.find({ alpha2Code: { $in: query } });
+  res.send(countries);
 });
 
+// Adds country to users visited list
 router.post("/userAddFlag/:userID/:alpha2code", async (req, res) => {
   try {
     const user = await userInfo.findOne({
@@ -134,6 +113,7 @@ router.post("/userAddFlag/:userID/:alpha2code", async (req, res) => {
   }
 });
 
+// Removes country from users visited list
 router.post("/userRemoveFlag/:userID/:alpha2code", async (req, res) => {
   try {
     const user = await userInfo.findOne({
@@ -156,6 +136,28 @@ router.post("/userRemoveFlag/:userID/:alpha2code", async (req, res) => {
   }
 });
 
+// Adds country to users wishlist
+router.post("/userAddWish/:userID/:alpha2code", async (req, res) => {
+  try {
+    const user = await userInfo.findOne({
+      _id: req.params.userID,
+    });
+
+    if (!user.wishes.includes(req.params.alpha2code)) {
+      user.wishes = [...user.wishes, req.params.alpha2code];
+    }
+    await user.save();
+    res.send(user);
+  } catch (error) {
+    res.status(404);
+    res.send({
+      error:
+        "Was not able to add the given country to the useres wish in the database",
+    });
+  }
+});
+
+// Removes country from users wishlist
 router.post("/userRemoveWish/:userID/:alpha2code", async (req, res) => {
   try {
     const user = await userInfo.findOne({
@@ -178,6 +180,7 @@ router.post("/userRemoveWish/:userID/:alpha2code", async (req, res) => {
   }
 });
 
+// Gets all information(visited and wish list countries) stored on a userID in the database
 router.get("/getUserData/:databaseID", async (req, res) => {
   const user = await userInfo.findOne({
     _id: req.params.databaseID,
