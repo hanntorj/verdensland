@@ -3,7 +3,6 @@ import {
   GetCountryList,
   User,
   Filters,
-  CountrySummaryInfo,
   CountriesResponse,
 } from "./Interfaces";
 
@@ -42,8 +41,8 @@ export async function getCountryList(
   handleResponse(responseJSON);
 }
 
-export async function getWishes(wishes: Array<string>, handleResponse : (response: CountriesResponse) => void){
-  let fetchUrl :string = url + "getListOfCountries/" + wishes.join("&")
+export async function getUserCountries(countries: Array<string>, handleResponse : (response: CountriesResponse) => void){
+  let fetchUrl :string = url + "getListOfCountries/" + countries.join("&")
   const response = await fetch(fetchUrl)
   const responseJSON = await response.json()
 

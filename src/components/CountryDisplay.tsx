@@ -4,8 +4,8 @@ import {
   GetCountryList,
   CountriesResponse,
   CountrySummaryInfo,
-} from "../Interfaces";
-import { getCountryList } from "../Fetch";
+} from "../utilities/Interfaces";
+import { getCountryList } from "../utilities/Fetch";
 import Country from "./Country";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, setSkipAction } from "../app/store";

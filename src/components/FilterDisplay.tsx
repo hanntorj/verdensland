@@ -12,7 +12,7 @@ import {
   setSkipAction,
   clearRegionsAction,
 } from "../app/store";
-import { reduxState } from "../Interfaces";
+import { reduxState } from "../utilities/Interfaces";
 import "../css/sliders.css";
 
 function FilterDisplay() {
@@ -140,15 +140,13 @@ function FilterDisplay() {
       <div className="Sort">
         <div className="inputFields">
           <form>
-            <select id="sortBy" value={sortType} onChange={() => handleSort()}>
+            <select id="sortBy"value={sortType} onChange={() => handleSort()}>
               <option value="name" selected>
                 Sort alphabetically
               </option>
               <option value="area">Sort by area</option>
               <option value="pop">Sort by population</option>
             </select>
-          </form>
-          <form>
             <select
               id="sortOrder"
               value={sortOrder}

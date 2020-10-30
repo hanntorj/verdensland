@@ -1,6 +1,6 @@
 import React from "react";
-import { reduxState, CountriesResponse, GetCountryList } from "../Interfaces";
-import { getCountryList } from "../Fetch";
+import { reduxState, CountriesResponse, GetCountryList } from "../utilities/Interfaces";
+import { getCountryList } from "../utilities/Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   setCountriesAction,

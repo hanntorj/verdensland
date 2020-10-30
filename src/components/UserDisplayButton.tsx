@@ -1,11 +1,12 @@
 import React from "react";
-import Wish from "../svg/wish_filled.svg";
-import Flag from "../svg/flag_filled.svg";
-import { getWishes } from "../Fetch";
-import { setCountriesAction } from "../app/store";
-import { CountriesResponse, reduxState } from "../Interfaces";
+import Flag from "../svg/flag.svg";
+import FlagFilled from "../svg/flag_filled.svg";
+import Wish from "../svg/wish.svg";
+import WishFilled from "../svg/wish_filled.svg";
+import { getUserCountries } from "../utilities/Fetch";
+import { setCountriesAction, setTopMenuPickedAction } from "../app/store";
+import { CountriesResponse, reduxState } from "../utilities/Interfaces";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
 
 interface Props {
   type: string;
@@ -14,34 +15,42 @@ interface Props {
 function UserDisplayButton(props: Props) {
   // Get redux-store
   const store = useSelector((state: reduxState) => state);
+  const topMenuPicked = store.topMenuPicked;
 
   // Setup of redux actions:
   const dispatch = useDispatch();
   const setCountries = (response: CountriesResponse) =>
     dispatch(setCountriesAction(response));
+  const setTopMenuPicked = (response: string) =>
+    dispatch(setTopMenuPickedAction(response));
 
   const handleResponse = (response: CountriesResponse) => {
     if (response) setCountries(response);
-
-    return (
-      <Route>
-        <Redirect to="/country/AF" />
-      </Route>
-    );
   };
+  
 
   switch (props.type) {
-    case "WISH":
-      return (
-        <button onClick={() => getWishes(store.user.wishes, handleResponse)}>
-          <img src={Wish} alt="flag" width="30px" height="30px" />
-        </button>
-      );
     case "FLAG":
       return (
-        <button onClick={() => getWishes(store.user.flags, handleResponse)}>
-          <img src={Flag} alt="flag" width="30px" height="30px" />
-          <p>Visited</p>
+        <button
+          className="SVGButton"
+          onClick={() => {
+            getUserCountries(store.user.flags, handleResponse);
+            setTopMenuPicked("flag");
+          }}
+        >
+          <img src={topMenuPicked === "flag" ? FlagFilled : Flag} alt="flag" width="30px" height="30px" />
+          <p>Visited</p> {console.log(topMenuPicked)}
+        </button>
+      );
+    case "WISH":
+      return (
+        <button
+          className="SVGButton"
+          onClick={() => {getUserCountries(store.user.wishes, handleResponse); setTopMenuPicked("wish");}}
+        >
+          <img src={topMenuPicked === "wish" ? WishFilled : Wish} alt="wish" width="30px" height="30px" />
+          <p>Wish</p>
         </button>
       );
     default:

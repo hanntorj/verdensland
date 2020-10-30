@@ -23,6 +23,7 @@ export interface reduxState {
   filters: Filters;
   sort: string;
   user: User;
+  topMenuPicked: string;
 }
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}

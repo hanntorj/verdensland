@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { CountrySummaryInfo } from "../Interfaces";
+import { CountrySummaryInfo } from "../utilities/Interfaces";
 import UserDataButtons from "./UserDataButtons";
 
 function Country({

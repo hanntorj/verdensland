@@ -1,9 +1,14 @@
 import React from "react";
-import { setCountriesAction } from "../app/store";
-import { CountriesResponse, GetCountryList, reduxState } from "../Interfaces";
+import Earth from "../svg/earth.svg";
+import EarthFilled from "../svg/earth_filled.svg";
+import { setCountriesAction, setTopMenuPickedAction } from "../app/store";
+import {
+  CountriesResponse,
+  GetCountryList,
+  reduxState,
+} from "../utilities/Interfaces";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { getCountryList } from "../Fetch";
-import { Redirect } from "react-router-dom";
+import { getCountryList } from "../utilities/Fetch";
 
 function MainPageButton() {
   // Get redux-store
@@ -13,11 +18,14 @@ function MainPageButton() {
   const limit = store.limit;
   const filter = store.filters;
   const searchString = store.searchString;
+  const topMenuPicked = store.topMenuPicked;
 
   // Setup of redux actions:
   const dispatch = useDispatch();
   const setCountries = (response: CountriesResponse) =>
     dispatch(setCountriesAction(response));
+  const setTopMenuPicked = (response: string) =>
+    dispatch(setTopMenuPickedAction(response));
 
   const handleResponse = (countriesResponse: CountriesResponse) => {
     if (countriesResponse) setCountries(countriesResponse);
@@ -32,12 +40,21 @@ function MainPageButton() {
       skip,
     };
     getCountryList(countryListRequest, filter);
+    setTopMenuPicked("all");
   };
 
   return (
     <div>
-      <button onClick={handleSubmit}>All countries</button>
-      <Redirect to="/" />
+      {console.log(store)}
+      <button className="SVGButton" onClick={handleSubmit}>
+        <img
+          src={topMenuPicked === "all" ? EarthFilled : Earth}
+          alt="earth"
+          width="30px"
+          height="30px"
+        />
+        <p>All countries</p>
+      </button>
     </div>
   );
 }

@@ -1,9 +1,5 @@
 .App {
-  margin: 0 auto 40px;
-}
-
-.SearchBar {
-  grid-column: 1/5;
+  margin: 0 20px 40px;
 }
 
 .Header {
@@ -36,6 +32,9 @@
   background: none;
   text-align: center;
 }
+.SVGButton:hover {
+  cursor: pointer;
+}
 
 .ButtonBox {
   display: flex;
@@ -56,6 +55,27 @@
   cursor: pointer;
 }
 
+/* Top bar */
+.TopBar {
+  position: sticky;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.SearchBar {
+  flex-grow: 2;
+  margin-left: 15%;
+}
+.TopBarOptions{
+  display: flex;
+  flex-direction: row;
+}
+/* Filter display */
+
+
+
+
 /* CountryDisplay */
 .CountryDisplay {
   display: flex;
@@ -67,7 +87,6 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
 /* CountryDisplayMoreInfo */
 .BackButton {
   display: block;

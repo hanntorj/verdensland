@@ -16,30 +16,11 @@ export default function Router() {
           <Route exact path="/">
             <div className="TopBar">
               <SearchBar />
+              <div className="TopBarOptions">
               <UserDisplayButton type="FLAG" />
               <UserDisplayButton type="WISH" />
-            </div>
-            <div className="FilterAndCountry">
-              <FilterDisplay />
-              <CountryDisplay />
-            </div>
-          </Route>
-          <Route exact path="/wish">
-            <div className="TopBar">
-              <SearchBar />
-              <UserDisplayButton type="FLAG" />
               <MainPageButton/>
-            </div>
-            <div className="FilterAndCountry">
-              <FilterDisplay />
-              <CountryDisplay />
-            </div>
-          </Route>
-          <Route exact path="/flag">
-            <div className="TopBar">
-              <SearchBar />
-              <UserDisplayButton type="WISH" />
-              <MainPageButton/>
+              </div>
             </div>
             <div className="FilterAndCountry">
               <FilterDisplay />
