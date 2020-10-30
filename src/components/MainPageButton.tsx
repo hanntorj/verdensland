@@ -11,6 +11,8 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { getCountryList } from "../utilities/Fetch";
 
 function MainPageButton() {
+  // Button to show all countries depending on search/filter
+
   // Get redux-store
   const store = useSelector((state: reduxState) => state);
   const sort = store.sort;

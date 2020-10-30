@@ -8,8 +8,8 @@ import FilterDisplay from "./FilterDisplay";
 import MainPageButton from "./MainPageButton";
 import Header from "./Header";
 
-
 export default function Router() {
+  // Defines what to render for different paths
   return (
     <BrowserRouter>
       <div className="router">

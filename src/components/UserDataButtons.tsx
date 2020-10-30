@@ -23,6 +23,8 @@ interface Props {
 }
 
 function UserDataButtons(props: Props) {
+  // Buttons to save user countries(as visited or wish to visit) to database
+
   // Setup for fetching redux-store
   const user: User = useSelector((state: reduxState) => state.user);
 
@@ -32,7 +34,7 @@ function UserDataButtons(props: Props) {
   const addWish = (alpha: string) => dispatch(addWishesAction(alpha));
   const removeFlag = (alpha: string) => dispatch(removeFlagsAction(alpha));
   const removeWish = (alpha: string) => dispatch(removeWishesAction(alpha));
- 
+
   const handleFlag = () => {
     if (user.flags.includes(props.alpha)) {
       userRemoveFlag(props.alpha, user._id);

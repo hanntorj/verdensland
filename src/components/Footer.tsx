@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 export default class Footer extends Component {
+  // Footer to display attributions
   render() {
     return (
       <footer className="Footer">

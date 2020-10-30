@@ -13,15 +13,20 @@ import {
 import UserDataButtons from "./UserDataButtons";
 
 function CountryDisplayMoreInfo() {
+  // Fetch and render more information about a specific country. Country is found from path.
+
   const [neighboursNames, setNeighboursName] = useState<
     Array<CountrySummaryInfo>
   >([]);
   const alpha2Code = useLocation().pathname.replace("/country/", "");
 
+  // Setup of store-actions
   const dispatch = useDispatch();
   const setCountryClicked = (countryClicked: CountryMoreInfo) => {
     dispatch(setCountryClickedAction(countryClicked));
   };
+
+  // Setup of store-variables
   const countryClicked = useSelector(
     (state: reduxState) => state.countryClicked
   );
@@ -34,14 +39,8 @@ function CountryDisplayMoreInfo() {
     if (response) setNeighboursName(response);
   };
 
-  const neighboursResponse = () => {
-    if (countryClicked.borders) {
-      getUserCountries(countryClicked.borders, handleNeighboursResponse);
-    }
-    return Promise.resolve(1);
-  };
-
   useEffect(() => {
+    // Get info about country
     const countryMoreInfoRequest: GetCountryMoreInfo = {
       alpha2Code,
       handleResponse,
@@ -53,7 +52,10 @@ function CountryDisplayMoreInfo() {
   }, [alpha2Code]);
 
   useEffect(() => {
-    neighboursResponse();
+    // Gets name of bordering countries
+    if (countryClicked.borders) {
+      getUserCountries(countryClicked.borders, handleNeighboursResponse);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryClicked]);
 

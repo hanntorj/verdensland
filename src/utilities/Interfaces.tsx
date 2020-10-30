@@ -1,19 +1,3 @@
-export interface Filters {
-  regions: Array<string>; // List of current regions to filter on
-  areaMin: number; // threshold for minimum area to filer on
-  areaMax: number; // threshold for maximum area to filer on
-  popMin: number; // threshold for minimum population to filter on
-  popMax: number; // threshold for maximum population to filter on
-  areaActive: boolean;
-  popActive: boolean;
-}
-
-export interface User {
-  _id: string;
-  wishes: Array<string>;
-  flags: Array<string>;
-}
-
 export interface reduxState {
   currentCountries: CountriesResponse; // List of alpha2code for the current countries that should be visible
   countryClicked: CountryMoreInfo;
@@ -24,6 +8,22 @@ export interface reduxState {
   sort: string;
   user: User;
   topMenuPicked: string;
+}
+
+export interface User {
+  _id: string;
+  wishes: Array<string>;
+  flags: Array<string>;
+}
+
+export interface Filters {
+  regions: Array<string>; // List of current regions to filter on
+  areaMin: number; // threshold for minimum area to filer on
+  areaMax: number; // threshold for maximum area to filer on
+  popMin: number; // threshold for minimum population to filter on
+  popMax: number; // threshold for maximum population to filter on
+  areaActive: boolean;
+  popActive: boolean;
 }
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
@@ -50,7 +50,7 @@ export interface CountryMoreInfo {
   currencies?: Array<Currencies>;
   borders?: Array<string>;
   flag?: string;
-  languages?: Array<Languages>
+  languages?: Array<Languages>;
 }
 
 export interface Languages {

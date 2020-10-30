@@ -1,29 +1,44 @@
-import React, { useState, useEffect } from "react";
-// TODO Add this component to app.tsx when countries, skip and limit is added to redux.
+import { useDispatch, useSelector } from "react-redux";
+import { setSkipAction } from "../app/store";
+import React from "react";
+import { reduxState } from "../utilities/Interfaces";
 
-export default function CountryDisplay() {
-  const [skip, setSkip] = useState(0);
-  const limit = 10;
+export default function NavButtons() {
+  // Navigate between results
+
+  // Setup of store-actions
+  const dispatch = useDispatch();
+  const setSkip = (skip: number) => {
+    dispatch(setSkipAction(skip));
+  };
+
+  // Setup of store-variables
+  const store = useSelector((state: reduxState) => state);
+  const skip = store.skip;
+  const limit = store.limit;
+  const countries = store.currentCountries;
 
   const handleNextClick = () => {
+    window.scrollTo(0, 0);
     const nextSkip = skip + 1 * limit;
     setSkip(nextSkip);
   };
 
   const handlePreviousClick = () => {
+    window.scrollTo(0, 0);
     const previousSkip = skip - 1 * limit;
     setSkip(previousSkip);
   };
 
   return (
-    <div>
+    <div className="NavButton">
       {!!skip && (
-        <button className="button" type="button" onClick={handlePreviousClick}>
+        <button className="Button" type="button" onClick={handlePreviousClick}>
           Previous
         </button>
       )}
-      {!!skip && (
-        <button className="button" type="button" onClick={handleNextClick}>
+      {!!!(countries.length < limit) && (
+        <button className="Button" type="button" onClick={handleNextClick}>
           Next
         </button>
       )}

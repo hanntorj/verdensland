@@ -13,6 +13,8 @@ interface Props {
 }
 
 function UserDisplayButton(props: Props) {
+  // Buttons to display countries saved(as visited or wish to visit) by user
+
   // Get redux-store
   const store = useSelector((state: reduxState) => state);
   const topMenuPicked = store.topMenuPicked;
@@ -27,8 +29,8 @@ function UserDisplayButton(props: Props) {
   const handleResponse = (response: CountriesResponse) => {
     if (response) setCountries(response);
   };
-  
 
+  // Switch depending on what type of button is sent in as props
   switch (props.type) {
     case "FLAG":
       return (
@@ -39,7 +41,12 @@ function UserDisplayButton(props: Props) {
             setTopMenuPicked("flag");
           }}
         >
-          <img src={topMenuPicked === "flag" ? FlagFilled : Flag} alt="flag" width="30px" height="30px" />
+          <img
+            src={topMenuPicked === "flag" ? FlagFilled : Flag}
+            alt="flag"
+            width="30px"
+            height="30px"
+          />
           <p>Visited</p> {console.log(topMenuPicked)}
         </button>
       );
@@ -47,9 +54,17 @@ function UserDisplayButton(props: Props) {
       return (
         <button
           className="SVGButton"
-          onClick={() => {getUserCountries(store.user.wishes, handleResponse); setTopMenuPicked("wish");}}
+          onClick={() => {
+            getUserCountries(store.user.wishes, handleResponse);
+            setTopMenuPicked("wish");
+          }}
         >
-          <img src={topMenuPicked === "wish" ? WishFilled : Wish} alt="wish" width="30px" height="30px" />
+          <img
+            src={topMenuPicked === "wish" ? WishFilled : Wish}
+            alt="wish"
+            width="30px"
+            height="30px"
+          />
           <p>Wish</p>
         </button>
       );

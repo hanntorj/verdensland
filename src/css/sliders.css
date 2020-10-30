@@ -62,12 +62,11 @@ input:checked + .slider:before {
   padding: 20px 5%;
 }
 
-
 .inputFields {
-    display: flex;
-    justify-content: space-between;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+}
+
 input {
   border: none;
   background: #f7f7f7;
@@ -81,9 +80,9 @@ input.inputSearch {
 }
 
 select {
-background-color: #f7f7f7;
-padding: 2px;
-margin: 2px;
+  background-color: #f7f7f7;
+  padding: 2px;
+  margin: 2px;
 }
 
 .Filter {
@@ -94,7 +93,6 @@ margin: 2px;
   display: flex;
   justify-content: space-between;
 }
-
 
 .RegionalButtons {
   display: flex;

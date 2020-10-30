@@ -1,5 +1,9 @@
 import React from "react";
-import { reduxState, CountriesResponse, GetCountryList } from "../utilities/Interfaces";
+import {
+  reduxState,
+  CountriesResponse,
+  GetCountryList,
+} from "../utilities/Interfaces";
 import { getCountryList } from "../utilities/Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
@@ -9,6 +13,8 @@ import {
 } from "../app/store";
 
 function SearchBar() {
+  // Searchbar to search after countries in database
+
   // Setup of store actions
   const dispatch = useDispatch();
   const setSearchString = (searchString: string) => {
@@ -22,7 +28,7 @@ function SearchBar() {
   };
 
   // Setup of store variables
-  const store = useSelector((state: reduxState) => state)
+  const store = useSelector((state: reduxState) => state);
   const searchString = store.searchString;
   const sort = store.sort;
   const filter = store.filters;
@@ -33,10 +39,16 @@ function SearchBar() {
     if (countriesResponse) setCountries(countriesResponse);
   };
 
+  const handleChange = (inputEvent: React.ChangeEvent<HTMLInputElement>) => {
+    // Savesinput from searchbar to redux store
+    const inputValue = inputEvent.target.value;
+    setSearchString(inputValue);
+  };
+
   const handleSubmit = () => {
-    window.scrollTo(0, 0)
+    // Handles search for submitet input in searchbar
+    window.scrollTo(0, 0);
     setSkip(0);
-    // history.push('/')
     const countriesRequest: GetCountryList = {
       sort,
       searchString,
@@ -47,16 +59,12 @@ function SearchBar() {
     getCountryList(countriesRequest, filter);
   };
 
-  const handleChange = (inputEvent: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = inputEvent.target.value;
-    setSearchString(inputValue);
-  };
-
   const handleEnter = (event: any) => {
+    // Enter input in searchbar works as submitbutton
     if (event.key === "Enter") {
       handleSubmit();
     }
-  }
+  };
 
   return (
     <div className="SearchBar">
@@ -73,7 +81,13 @@ function SearchBar() {
             value={searchString}
           />
         </label>
-        <button id="searchButton" data-testid="searchButton" className="Button" type="button"  onClick={handleSubmit}>
+        <button
+          id="searchButton"
+          data-testid="searchButton"
+          className="Button"
+          type="button"
+          onClick={handleSubmit}
+        >
           Search
         </button>
       </div>
