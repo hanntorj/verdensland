@@ -3,6 +3,7 @@ import {
   GetCountryList,
   User,
   Filters,
+  CountriesResponse,
 } from "./Interfaces";
 
 // const url = "https://restcountries.eu/rest/v2/";
@@ -35,10 +36,16 @@ export async function getCountryList(
     }
   }
 
-  console.log(fetchUrl);
   const response = await fetch(fetchUrl);
   const responseJSON = await response.json();
   handleResponse(responseJSON);
+}
+
+export async function getUserCountries(countries: Array<string>, handleResponse : (response: CountriesResponse) => void){
+  let fetchUrl :string = url + "getListOfCountries/" + countries.join("&")
+  const response = await fetch(fetchUrl)
+  const responseJSON = await response.json()
+  handleResponse(responseJSON)
 }
 
 export async function getCountryMoreInfo({
@@ -47,7 +54,6 @@ export async function getCountryMoreInfo({
 }: GetCountryMoreInfo) {
   const response = await fetch(url + "country/" + `${alpha2Code}`);
   const responseJSON = await response.json();
-
   handleResponse(responseJSON[0]);
 }
 

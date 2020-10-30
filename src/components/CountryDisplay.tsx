@@ -4,14 +4,13 @@ import {
   GetCountryList,
   CountriesResponse,
   CountrySummaryInfo,
-} from "../Interfaces";
-import { getCountryList } from "../Fetch";
+} from "../utilities/Interfaces";
+import { getCountryList } from "../utilities/Fetch";
 import Country from "./Country";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { setCountriesAction, setSkipAction } from "../app/store";
 
 function CountryDisplay() {
-
   // Setup of store-actions
   const dispatch = useDispatch();
   const setCountries = (countries: CountriesResponse) => {
@@ -22,7 +21,7 @@ function CountryDisplay() {
   };
 
   // Setup of store-variables
-  const store = useSelector((state: reduxState) => state)
+  const store = useSelector((state: reduxState) => state);
   const sort = store.sort;
   const skip = store.skip;
   const limit = store.limit;
@@ -43,36 +42,38 @@ function CountryDisplay() {
       skip,
     };
     getCountryList(countryListRequest, filter);
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip, sort, filter]);
 
   const handleNextClick = () => {
+    window.scrollTo(0, 0)
     const nextSkip = skip + 1 * limit;
     setSkip(nextSkip);
   };
 
   const handlePreviousClick = () => {
+    window.scrollTo(0, 0)
     const previousSkip = skip - 1 * limit;
     setSkip(previousSkip);
   };
 
   return (
     <div className="CountryDisplay">
+      <div className="CountriesListed">
       {!!countries && (
-        <ul>
+        <ul className="ListCountries">
           {countries.map((country: CountrySummaryInfo) => {
             return <Country key={country.alpha2Code} {...country} />;
           })}
         </ul>
       )}
-      {!!! countries.length  && (
-        <p>No countries to display</p>
-      )}
-      <div>
+      {!!!countries.length && <p>No countries to display</p>}
+      </div>
+      <div className="NavButton">
         {!!skip && (
           <button
-            className="button"
+            className="Button"
             type="button"
             onClick={handlePreviousClick}
           >
@@ -80,7 +81,7 @@ function CountryDisplay() {
           </button>
         )}
         {!!!(countries.length < limit) && (
-          <button className="button" type="button" onClick={handleNextClick}>
+          <button className="Button" type="button" onClick={handleNextClick}>
             Next
           </button>
         )}

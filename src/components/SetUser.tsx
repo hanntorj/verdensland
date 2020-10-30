@@ -1,8 +1,8 @@
 import React from 'react'
-import { User } from '../Interfaces' 
+import { User } from '../utilities/Interfaces' 
 import { setUserAction } from '../app/store'
 import { connect, useDispatch } from 'react-redux'
-import { getUserData, requestUserID } from '../Fetch'
+import { getUserData, requestUserID } from '../utilities/Fetch'
 
 function SetUser() {
     

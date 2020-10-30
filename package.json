@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",
+    "@types/react-sticky": "^6.0.3",
     "express": "^4.17.1",
     "mongodb": "^3.6.2",
     "node": "^12.18.3",
@@ -21,6 +22,7 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
+    "react-sticky": "^6.0.3",
     "redux-devtools-extension": "^2.13.8",
     "typescript": "^3.7.5"
   },
@@ -44,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^5.5.0"
   }
 }

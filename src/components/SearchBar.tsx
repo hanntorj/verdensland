@@ -1,6 +1,6 @@
 import React from "react";
-import { reduxState, CountriesResponse, GetCountryList } from "../Interfaces";
-import { getCountryList } from "../Fetch";
+import { reduxState, CountriesResponse, GetCountryList } from "../utilities/Interfaces";
+import { getCountryList } from "../utilities/Fetch";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   setCountriesAction,
@@ -34,6 +34,7 @@ function SearchBar() {
   };
 
   const handleSubmit = () => {
+    window.scrollTo(0, 0)
     setSkip(0);
     // history.push('/')
     const countriesRequest: GetCountryList = {
@@ -62,7 +63,7 @@ function SearchBar() {
       <div>
         <label htmlFor="countriesSearch">
           <input
-            className="input"
+            className="inputSearch"
             id="searchBar"
             type="text"
             name="searchBar"
@@ -71,7 +72,7 @@ function SearchBar() {
             value={searchString}
           />
         </label>
-        <button className="button" type="button"  onClick={handleSubmit}>
+        <button className="Button" type="button"  onClick={handleSubmit}>
           Search
         </button>
       </div>

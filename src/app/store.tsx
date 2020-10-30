@@ -5,7 +5,7 @@ import {
   CountryMoreInfo,
   reduxState,
   User,
-} from "../Interfaces";
+} from "../utilities/Interfaces";
 
 const initialState: reduxState = sessionStorage.getItem("reduxState")
   ? JSON.parse(sessionStorage.getItem("reduxState")!)
@@ -20,8 +20,9 @@ const initialState: reduxState = sessionStorage.getItem("reduxState")
         region: "",
         subregion: "",
         demonym: "",
-        currencies: "",
+        currencies: [],
         borders: [],
+        flag: "",
       },
       searchString: "",
       skip: 0,
@@ -41,6 +42,7 @@ const initialState: reduxState = sessionStorage.getItem("reduxState")
         flags: [],
         wishes: [],
       },
+      topMenuPicked: "all",
     };
 
 function reducer(
@@ -128,7 +130,7 @@ function reducer(
           areaMin: payload,
         },
       };
-      case "UPDATE_AREAMAX":
+    case "UPDATE_AREAMAX":
       return {
         ...state,
         filters: {
@@ -136,7 +138,7 @@ function reducer(
           areaMax: payload,
         },
       };
-      case "UPDATE_POPMIN":
+    case "UPDATE_POPMIN":
       return {
         ...state,
         filters: {
@@ -144,7 +146,7 @@ function reducer(
           popMin: payload,
         },
       };
-      case "UPDATE_POPMAX":
+    case "UPDATE_POPMAX":
       return {
         ...state,
         filters: {
@@ -212,6 +214,11 @@ function reducer(
           flags: [...state.user.flags, payload],
         },
       };
+    case "SET_TOPMENUPICKED":
+      return {
+        ...state,
+        topMenuPicked: payload,
+      };
     default:
       return state;
   }
@@ -271,7 +278,6 @@ export const removeRegionAction = (region: string) => ({
   payload: region,
 });
 
-
 export const toggleFilterAction = (filterType: string) => ({
   type: "TOGGLE_FILTER",
   payload: filterType,
@@ -312,4 +318,9 @@ export const removeFlagsAction = (alpha: string) => ({
 export const removeWishesAction = (alpha: string) => ({
   type: "REMOVE_WISH",
   payload: alpha,
+});
+
+export const setTopMenuPickedAction = (topMenuPicked: string) => ({
+  type: "SET_TOPMENUPICKED",
+  payload: topMenuPicked,
 });

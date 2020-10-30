@@ -9,9 +9,9 @@ export interface Filters {
 }
 
 export interface User {
-  _id: string,
-  wishes: Array<string>,
-  flags:  Array<string>
+  _id: string;
+  wishes: Array<string>;
+  flags: Array<string>;
 }
 
 export interface reduxState {
@@ -23,6 +23,7 @@ export interface reduxState {
   filters: Filters;
   sort: string;
   user: User;
+  topMenuPicked: string;
 }
 
 export interface CountriesResponse extends Array<CountrySummaryInfo> {}
@@ -32,7 +33,9 @@ export interface CountrySummaryInfo {
   name?: string;
   capital?: string;
   population?: number;
+  area?: number;
   region?: string;
+  flag?: string;
 }
 
 export interface CountryMoreInfo {
@@ -44,8 +47,20 @@ export interface CountryMoreInfo {
   region?: string;
   subregion?: string;
   demonym?: string;
-  currencies?: string;
-  borders: Array<string>;
+  currencies?: Array<Currencies>;
+  borders?: Array<string>;
+  flag?: string;
+  languages?: Array<Languages>
+}
+
+export interface Languages {
+  name: string;
+  nativeName: string;
+}
+export interface Currencies {
+  name: string;
+  code: string;
+  symbol: string;
 }
 
 export interface GetCountryList {
@@ -55,7 +70,6 @@ export interface GetCountryList {
   limit: number;
   skip: number;
 }
-
 
 export interface GetCountryMoreInfo {
   alpha2Code: string;
